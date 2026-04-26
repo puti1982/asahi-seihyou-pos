@@ -438,16 +438,16 @@ body {
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
   border-left: none; border-right: none;
-  padding: 14px;                 /* 18 → 14 */
+  padding: 16px;                 /* Absol P1: 14→16、儀式ボタンの格 */
   font-family: var(--serif);
-  font-size: 17px;               /* 19 → 17 */
+  font-size: 18px;               /* 17→18 */
   font-weight: 400;
-  letter-spacing: 0.32em;
-  text-indent: 0.32em;
+  letter-spacing: 0.36em;        /* 0.32→0.36 */
+  text-indent: 0.36em;
   cursor: pointer;
   transition: background 0.2s;
   position: relative;
-  min-height: 48px;              /* 56 → 48 */
+  min-height: 52px;              /* 48→52 */
 }
 .cta::after {
   content: '';
