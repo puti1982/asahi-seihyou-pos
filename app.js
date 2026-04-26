@@ -236,13 +236,14 @@ function tickClock() {
 /* ===== Flavor grid render ===== */
 function renderFlavors() {
   const grid = document.getElementById('flavor-grid');
-  grid.innerHTML = '';
+  // grid-template-rows / grid-auto-flow は CSS 側で完全に定義
+  // (auto-rows + 行方向フロー + 縦スクロール)
+  const allSamePrice = new Set(FLAVORS.map(f => f.price)).size === 1;
   const cellCount = FLAVORS.length;
   const cols = 4;
-  const rows = Math.max(8, Math.ceil(cellCount / cols));
-  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
-  const allSamePrice = new Set(FLAVORS.map(f => f.price)).size === 1;
+  // perf: 一括 DocumentFragment で1回のreflowに
+  const frag = document.createDocumentFragment();
 
   FLAVORS.forEach((f, i) => {
     const cell = document.createElement('button');
@@ -257,18 +258,20 @@ function renderFlavors() {
       <span class="flavor-name">${escapeHtml(f.name)}</span>
       ${allSamePrice ? '' : `<span class="flavor-priceTag"><span class="yen">¥</span>${fmtNum(f.price)}</span>`}`;
     cell.addEventListener('click', () => addToCart(f));
-    grid.appendChild(cell);
+    frag.appendChild(cell);
   });
 
-  // Fill empty cells (P2-24: 中央2px墨点で表現)
-  const total = cols * rows;
+  // 最終行を埋めるため空セル追加 (cols 単位に揃える)
+  const total = Math.ceil(cellCount / cols) * cols;
   for (let i = cellCount; i < total; i++) {
     const empty = document.createElement('div');
     empty.className = 'flavor-cell empty';
     empty.style.setProperty('--flavor-color', 'transparent');
     empty.setAttribute('aria-hidden', 'true');
-    grid.appendChild(empty);
+    frag.appendChild(empty);
   }
+
+  grid.replaceChildren(frag);
 }
 
 function updatePriceRule() {
