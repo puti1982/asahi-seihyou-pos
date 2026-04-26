@@ -337,8 +337,9 @@ body {
 }
 .totalbar .val {
   font-family: var(--num);
-  font-size: 26px; font-weight: 600;       /* 32 → 26 */
+  font-size: 30px; font-weight: 600;       /* Absol P0: 26→30 で御釣銭20との階層を回復 */
   color: var(--shu-2);
+  letter-spacing: 0.02em;
 }
 /* P1-11: 大金額は ¥ → 「円」suffix */
 .totalbar .val .yen-suffix,
