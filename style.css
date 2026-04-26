@@ -197,8 +197,8 @@ body {
 }
 .section-label {
   font-family: var(--serif);
-  font-size: 16px;
-  letter-spacing: 0.18em;        /* 漢字 0.04em だが組見出しは間延び OK */
+  font-size: 14px;               /* 16→14 圧縮 */
+  letter-spacing: 0.18em;
   display: flex; align-items: center; gap: 10px;
 }
 .section-label::before {
