@@ -240,7 +240,7 @@ function renderFlavors() {
   // (auto-rows + 行方向フロー + 縦スクロール)
   const allSamePrice = new Set(FLAVORS.map(f => f.price)).size === 1;
   const cellCount = FLAVORS.length;
-  const cols = 4;
+  const cols = 3;        /* ユーザー要求: 3列固定 (4→3) row-fill で「いちご下＝ブルーハワイ」 */
 
   // perf: 一括 DocumentFragment で1回のreflowに
   const frag = document.createDocumentFragment();
