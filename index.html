@@ -81,13 +81,32 @@
           <div class="receive-row">
             <div class="lbl">お預かり</div>
           </div>
-          <input type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="10" class="receive-input" id="received" placeholder="0" autocomplete="off">
+          <!-- iPad のネイティブ数字キーボードを呼び出さないため input を div display に置換 -->
+          <div class="receive-display" id="received-display" role="textbox" aria-label="お預かり金額"
+               aria-readonly="true">
+            <span class="rec-yen">¥</span><span class="rec-val" id="received-val">0</span>
+          </div>
+          <!-- アプリ内テンキー (3列×4行) -->
+          <div class="numpad" id="numpad">
+            <button class="np-btn" type="button" data-action="np-num" data-num="7">7</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="8">8</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="9">9</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="4">4</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="5">5</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="6">6</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="1">1</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="2">2</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="3">3</button>
+            <button class="np-btn np-fn" type="button" data-action="np-clear" aria-label="消去">消</button>
+            <button class="np-btn" type="button" data-action="np-num" data-num="0">0</button>
+            <button class="np-btn np-fn" type="button" data-action="np-del" aria-label="一文字削除">⌫</button>
+          </div>
+          <!-- クイック加算 (定額の素早い投入) -->
           <div class="quick-amounts">
-            <button class="quick-btn" data-add="500">+500</button>
-            <button class="quick-btn" data-add="1000">+1,000</button>
-            <button class="quick-btn" data-add="5000">+5,000</button>
-            <button class="quick-btn" data-add="10000">+10,000</button>
-            <button class="quick-btn clear" data-clear>消去</button>
+            <button class="quick-btn" type="button" data-add="500">+500</button>
+            <button class="quick-btn" type="button" data-add="1000">+1,000</button>
+            <button class="quick-btn" type="button" data-add="5000">+5,000</button>
+            <button class="quick-btn" type="button" data-add="10000">+10,000</button>
           </div>
         </div>
         <div class="change-row">
