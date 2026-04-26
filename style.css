@@ -549,10 +549,9 @@ body {
   min-height: 100px;
   font-family: inherit;
   color: inherit;
-  /* perf: 画面外セルは描画スキップ */
+  /* perf: 画面外セルは描画スキップ (Luxray P1: contain冗長削除、intrinsic-size auto化) */
   content-visibility: auto;
-  contain-intrinsic-size: 200px 100px;
-  contain: layout style paint;
+  contain-intrinsic-size: auto 100px;
 }
 /* 味イメージ画像を背景に。kinari-zen-overhead 統一スタイル準拠 */
 .flavor-cell.has-image {
