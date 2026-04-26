@@ -367,10 +367,10 @@ body {
   font-weight: 500;
 }
 
-.receive-block { margin-bottom: 6px; }
+.receive-block { margin-bottom: 4px; }
 .receive-row {
   display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 .receive-row .lbl {
   font-family: var(--serif);
