@@ -189,9 +189,9 @@ body {
   min-height: 0;
 }
 
-/* P0-03: 余白リズム (上厚=立ち上がり、下薄=呼吸) - Absol P0: 22/22/14 で和の格回復 */
+/* 余白リズム圧縮版: ユーザー要求「カート部分も上下に動かさず全表示」優先 */
 .cart-header {
-  padding: 22px 22px 14px;
+  padding: 12px 18px 8px;        /* 22/22/14 → 12/18/8 */
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
 }
