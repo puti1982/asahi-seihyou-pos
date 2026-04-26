@@ -488,17 +488,17 @@ body {
   min-height: 0;
   background: var(--paper);
 }
-/* P0-03: 上を厚く (立ち上がりの間)・但し縦余白圧縮 */
+/* flavor-header: ヘッダーをスリムに (ユーザー要求: レモンの上に全要素が収まる) */
 .flavor-header {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  padding: 16px 32px 12px;        /* 36/40/20 → 16/32/12 */
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 20px 8px;        /* 16/32/12 → 10/20/8 */
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
 }
-.flavor-title { display: flex; align-items: baseline; gap: 14px; }
+.flavor-title { display: flex; align-items: baseline; gap: 12px; }
 .flavor-title .ja {
   font-family: var(--serif);
-  font-size: 22px;
+  font-size: 16px;               /* 22→16 圧縮 */
   letter-spacing: 0.18em;
   font-weight: 600;
 }
