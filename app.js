@@ -503,9 +503,56 @@ function openToday() {
   document.getElementById('today-total').textContent = fmtNum(a.total);
   document.getElementById('today-meta').textContent =
     `取引 ${a.transactions} 件 / 平均 ¥${a.transactions ? fmtNum(Math.round(a.total / a.transactions)) : 0}`;
+  /* 取引一覧 (削除可) */
+  renderTodayTransactions(start, end);
   document.getElementById('today-modal').classList.add('show');
 }
 function closeToday() { document.getElementById('today-modal').classList.remove('show'); }
+
+/* 本日の取引リストを描画。各取引に [削除] ボタン付き (会計ミス時の修正用) */
+function renderTodayTransactions(startTs, endTs) {
+  const cont = document.getElementById('today-transactions');
+  if (!cont) return;
+  const sales = loadSales()
+    .filter(s => s.ts >= startTs && s.ts <= endTs)
+    .sort((a, b) => b.ts - a.ts);   // 新しい順
+  if (sales.length === 0) {
+    cont.innerHTML = '<div class="tx-empty">本日の取引はまだありません</div>';
+    return;
+  }
+  cont.innerHTML = sales.map(s => {
+    const dt = new Date(s.ts);
+    const time = `${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+    const itemsSummary = (s.items || []).map(it => {
+      let part = escapeHtml(it.flavor || '');
+      const tops = (it.toppings || []).map(t => typeof t === 'string'
+        ? (TOPPINGS.find(x => x.id === t)?.name || t)
+        : (t.name || t.id || '')).filter(Boolean);
+      if (tops.length) part += '<span class="tx-tops">+' + tops.map(escapeHtml).join('+') + '</span>';
+      return part;
+    }).join('・');
+    return `
+      <div class="tx-row" data-tx-id="${escapeAttr(s.id)}">
+        <div class="tx-time">${time}</div>
+        <div class="tx-items">${itemsSummary || '(空)'}</div>
+        <div class="tx-total">¥${fmtNum(s.total || 0)}</div>
+        <button class="tx-delete" type="button" data-action="delete-tx" data-id="${escapeAttr(s.id)}">削除</button>
+      </div>`;
+  }).join('');
+}
+
+/* 取引削除 (誤会計の取消) */
+function deleteTransaction(id) {
+  if (!confirm('この取引を削除します。よろしいですか？\n（売上集計から取り除かれます）')) return;
+  try {
+    const sales = loadSales().filter(s => s.id !== id);
+    localStorage.setItem(SALES_KEY, JSON.stringify(sales));
+    showToast('取引を削除しました');
+    openToday();   /* 再描画 */
+  } catch (e) {
+    alert('削除に失敗しました: ' + (e && e.message));
+  }
+}
 
 /* ===== Ledger view ===== */
 function setPreset(kind) {
