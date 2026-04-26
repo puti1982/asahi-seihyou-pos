@@ -418,7 +418,7 @@ body {
   font-weight: 500;
   color: var(--ink);
   cursor: pointer;
-  min-height: 36px;
+  min-height: 44px;                /* WCAG 2.5.5 タッチターゲット 44pt */
   letter-spacing: 0;
   transition: background 0.08s, border-color 0.12s, color 0.08s;
   touch-action: manipulation;
