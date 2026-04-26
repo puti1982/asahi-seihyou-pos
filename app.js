@@ -1255,7 +1255,7 @@ function init() {
     navigator.storage.persist().catch(() => {});
   }
   ensureDefaultsInitialized();   /* ★必ず healthCheck より前。FLAVORS_KEY/TOPPINGS_KEY を保証 */
-  seedIfEmpty();
+  clearSampleSales();            /* ★ ユーザー要求: モックデータを起動時に削除 (実会計は保持) */
   restoreCartDraft();
   renderFlavors();
   renderCart();
