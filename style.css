@@ -554,7 +554,7 @@ body {
   background: var(--paper);
   border: none;
   cursor: pointer;
-  padding: 12px 12px 10px;       /* 16/14/14 → 12/12/10 */
+  padding: 10px 8px 8px 10px;     /* 横方向縮小: 12/12 → 8/10 で味名により広いスペース */
   display: flex; flex-direction: column;
   align-items: stretch; justify-content: flex-end;
   text-align: left;
@@ -562,6 +562,7 @@ body {
   position: relative;
   overflow: hidden;
   min-height: 110px;
+  min-width: 0;                   /* 横overflow防止: gridセルが縮められるように */
   font-family: inherit;
   color: inherit;
   /* perf: 画面外セルは描画スキップ */
