@@ -247,6 +247,7 @@ function renderFlavors() {
 
   FLAVORS.forEach((f, i) => {
     const cell = document.createElement('button');
+    cell.type = 'button';                       /* Luxray P1: form包含時のsubmit事故予防 */
     cell.className = 'flavor-cell';
     cell.style.setProperty('--flavor-color', f.color);
     if (f.image) {
