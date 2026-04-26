@@ -561,12 +561,12 @@ body {
   transition: background 0.12s;
   position: relative;
   overflow: hidden;
-  min-height: 100px;
+  min-height: 110px;
   font-family: inherit;
   color: inherit;
-  /* perf: 画面外セルは描画スキップ (Luxray P1: contain冗長削除、intrinsic-size auto化) */
+  /* perf: 画面外セルは描画スキップ */
   content-visibility: auto;
-  contain-intrinsic-size: auto 100px;
+  contain-intrinsic-size: auto 110px;
 }
 /* 味イメージ画像を背景に。kinari-zen-overhead 統一スタイル準拠 */
 .flavor-cell.has-image {
