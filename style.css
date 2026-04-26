@@ -330,27 +330,27 @@ body {
 /* P0-07: hover時の朱変色廃止 */
 .delete-btn:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
-/* ========== Checkout (確実に左カート内に収まるよう更に圧縮) ========== */
+/* ========== Checkout (CTA確実視認のため最圧縮) ========== */
 .checkout {
   background: var(--paper);
   border-top: 1px solid var(--line);
-  padding: 8px 16px 10px;        /* 12/18/14 → 8/16/10 */
+  padding: 4px 14px 6px;         /* 8/16/10→4/14/6 でCTA確保 */
   flex-shrink: 0;
 }
 .totalbar {
   display: flex; justify-content: space-between; align-items: baseline;
-  padding: 2px 4px 8px;
+  padding: 2px 4px 6px;
   border-bottom: 1px solid var(--ink);
-  margin: 0 0 6px;
+  margin: 0 0 4px;
 }
 .totalbar .lbl {
   font-family: var(--serif);
-  font-size: 13px;
-  letter-spacing: 0.14em;
+  font-size: 12px;
+  letter-spacing: 0.12em;
 }
 .totalbar .val {
   font-family: var(--num);
-  font-size: 26px; font-weight: 600;       /* 30→26 高さ確保のため譲歩、御釣銭18で階層維持 */
+  font-size: 22px; font-weight: 600;
   color: var(--shu-2);
   letter-spacing: 0.02em;
 }
