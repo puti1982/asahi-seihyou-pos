@@ -474,11 +474,12 @@ body {
   min-height: 0;
   background: var(--paper);
 }
-/* P0-03: 上を厚く (立ち上がりの間) */
+/* P0-03: 上を厚く (立ち上がりの間)・但し縦余白圧縮 */
 .flavor-header {
   display: flex; justify-content: space-between; align-items: flex-end;
-  padding: 36px 40px 20px;
+  padding: 16px 32px 12px;        /* 36/40/20 → 16/32/12 */
   border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
 }
 .flavor-title { display: flex; align-items: baseline; gap: 14px; }
 .flavor-title .ja {
