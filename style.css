@@ -407,12 +407,14 @@ body {
   border: 1px solid var(--line);
   padding: 7px 0;
   font-family: var(--num);
-  font-size: 12px;
+  font-size: clamp(10px, 1.05vw, 12px);  /* 狭い画面でも overflow しないよう適応 */
   color: var(--ink);
   cursor: pointer;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   transition: border-color 0.15s, background 0.15s;
-  min-height: 36px;            /* 44→36 圧縮優先、タッチ確保はindexで維持 */
+  min-height: 36px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 /* P0-07: hover 朱廃止 → 墨で表現 */
 .quick-btn:hover { background: var(--bg); border-color: var(--ink); }
