@@ -1,6 +1,6 @@
 // 朝日製氷 POS - Service Worker
 // 戦略: cache-first + バージョン固定precache (店舗にWi-Fi無し前提)
-const VERSION = 'v1.0.0';
+const VERSION = 'v20260426222707';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [
@@ -17,6 +17,38 @@ const PRECACHE_URLS = [
   './icons/icon-512.png',
   './icons/icon-maskable-192.png',
   './icons/icon-maskable-512.png',
+  // 味背景SVG (Wi-Fi無しオフライン起動時に画像欠落しないよう全部precache)
+  './images/01-ichigo.svg',
+  './images/02-melon.svg',
+  './images/03-lemon.svg',
+  './images/04-blue-hawaii.svg',
+  './images/05-peach.svg',
+  './images/06-grape.svg',
+  './images/07-mango.svg',
+  './images/08-cola.svg',
+  './images/09-ramune.svg',
+  './images/10-mizore.svg',
+  './images/11-green-apple.svg',
+  './images/12-red-apple.svg',
+  './images/13-watermelon.svg',
+  './images/14-orange.svg',
+  './images/15-muscat.svg',
+  './images/16-double-berry.svg',
+  './images/17-hyuganatsu.svg',
+  './images/18-salty-lychee.svg',
+  './images/19-emerald-pine.svg',
+  './images/20-cassis-orange.svg',
+  './images/21-yogurt.svg',
+  './images/22-matcha.svg',
+  './images/23-coffee.svg',
+  './images/24-black-tea.svg',
+  './images/25-dracula.svg',
+  './images/26-alien.svg',
+  './images/27-princess.svg',
+  './images/28-prince.svg',
+  './images/29-power-energy.svg',
+  './images/30-thunder-ginger.svg',
+  './images/31-beni-imo.svg',
 ];
 
 self.addEventListener('install', (event) => {
