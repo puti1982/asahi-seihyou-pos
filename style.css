@@ -1136,14 +1136,18 @@ body {
   border: 1px solid var(--ink);
   background: transparent;
   color: var(--ink);
-  padding: 6px 14px;
+  padding: 10px 20px;            /* 6/14 → 10/20、タッチ確実に */
   font-family: var(--serif);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.18em;
   cursor: pointer;
-  min-height: 32px;
+  min-height: 44px;              /* 32 → 44 (WCAG タッチターゲット保証) */
+  font-weight: 500;
+  touch-action: manipulation;    /* タップ遅延無し */
 }
 .toast button:hover { background: var(--ink); color: var(--paper); }
+.toast button:active { background: var(--ink); color: var(--paper); }
+.toast button:disabled { opacity: 0.55; cursor: not-allowed; }
 
 /* ========== Misc ========== */
 [hidden] { display: none !important; }
