@@ -33,37 +33,7 @@
 <body>
 <div class="app">
 
-  <!-- Header -->
-  <header class="header">
-    <div class="brand">
-      <!-- P0-01: SVGロゴ。朝陽の円＋極細水平線で氷を暗示 -->
-      <svg class="brand-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="朝日製氷">
-        <!-- 朝陽 外殻 -->
-        <circle cx="32" cy="30" r="15" fill="#B43A2A" opacity="0.10"/>
-        <circle cx="32" cy="30" r="11" fill="#B43A2A" opacity="0.22"/>
-        <!-- 中央コア (P0-01: 朱の濃い方を中央コアに) -->
-        <circle cx="32" cy="30" r="6" fill="#8E2C1F"/>
-        <!-- 氷を暗示する極細水平線 3本 -->
-        <line x1="14" y1="29" x2="50" y2="29" stroke="#1C1813" stroke-width="0.7" opacity="0.85"/>
-        <line x1="17" y1="31" x2="47" y2="31" stroke="#1C1813" stroke-width="0.5" opacity="0.55"/>
-        <line x1="20" y1="33" x2="44" y2="33" stroke="#1C1813" stroke-width="0.4" opacity="0.35"/>
-      </svg>
-      <div class="brand-text">
-        <!-- P0-02: &nbsp;&nbsp; 削除済 / P0-08: 英字並記 brand-en 廃止 -->
-        <div class="brand-name">朝日製氷</div>
-      </div>
-    </div>
-    <div class="header-meta">
-      <!-- P1-13: 時計フォーマット 「2026年4月26日（土）13:45」 明朝 -->
-      <div class="clock" id="clock"></div>
-      <div class="header-buttons" id="header-buttons">
-        <button class="ledger-link" data-action="open-today">売上帳</button>
-        <button class="ledger-link" data-action="go-settings">設定</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- View: POS -->
+  <!-- View: POS (ヘッダーは flavor-panel 内に移動。カートは上端まで拡張) -->
   <div class="view view-pos active" id="view-pos">
     <aside class="cart-panel">
       <div class="cart-header">
