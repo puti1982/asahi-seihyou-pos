@@ -87,15 +87,16 @@ body {
 
 .app {
   display: grid;
-  grid-template-rows: 60px 1fr 20px;       /* ヘッダーとフッターを圧縮、bodyに高さを譲る */
-  height: 100vh;                            /* fallback */
-  height: 100dvh;                           /* Android Chromeのバー込み実効高さ */
+  grid-template-rows: 52px 1fr 16px;       /* 60/20→52/16 でメインコンテンツに高さを譲る */
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
   max-width: 1440px;
   margin: 0 auto;
   background: var(--paper);
   border-left: 1px solid var(--line);
   border-right: 1px solid var(--line);
-  overflow: hidden;                         /* ページ全体スクロール禁止 */
+  overflow: hidden;
 }
 
 /* ========== Header ========== */
@@ -103,9 +104,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
+  padding: 0 20px;                          /* 32→20 で左右スペース圧縮 */
   background: var(--paper);
   border-bottom: 1px solid var(--line);
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .brand { display: flex; align-items: center; gap: 16px; }
