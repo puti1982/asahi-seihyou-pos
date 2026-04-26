@@ -1179,6 +1179,12 @@ function bindEvents() {
   document.querySelector('button[data-action="go-ledger"]').addEventListener('click', () => {
     closeToday(); setView('ledger'); setPreset(30);
   });
+  /* 取引削除ボタン (動的生成のため delegation) */
+  document.getElementById('today-transactions').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action="delete-tx"]');
+    if (!btn) return;
+    deleteTransaction(btn.dataset.id);
+  });
 
   // settings: tables (delegation for input change + button click)
   const settingsView = document.getElementById('view-settings');
