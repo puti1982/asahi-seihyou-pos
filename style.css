@@ -532,8 +532,8 @@ body {
   align-content: start;
   -webkit-overflow-scrolling: touch;
 }
-.flavor-grid::-webkit-scrollbar { width: 6px; }
-.flavor-grid::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+.flavor-grid::-webkit-scrollbar { width: 3px; }     /* Absol P1: 6→3、和に馴染ませる */
+.flavor-grid::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 0; }
 
 /* P0-05 + perf最適化: セル */
 .flavor-cell {
