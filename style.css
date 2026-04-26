@@ -639,12 +639,12 @@ body {
 }
 
 /* ========== Today modal ========== */
-/* P1-17: overlay は生成り側を強くしたbackdrop-filter */
+/* P1-17: overlay は生成り側を強くした半透明 (perf: blur半径削減 4→2) */
 .modal-overlay {
   position: fixed; inset: 0;
-  background: rgba(250, 245, 233, 0.85);
-  -webkit-backdrop-filter: blur(4px) saturate(0.9);
-  backdrop-filter: blur(4px) saturate(0.9);
+  background: rgba(250, 245, 233, 0.92);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   display: none; align-items: center; justify-content: center;
   z-index: 100;
 }
