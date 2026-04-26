@@ -171,6 +171,24 @@ function clearCartDraft() {
 }
 
 /* ===== Sample data (first run only) ===== */
+/* ★ ユーザー要求: モックデータ完全廃止。
+   既存のサンプル(sample-* ID)を起動時に静かに削除し、再シードしない。
+   実会計データ(タイムスタンプID)は完全保持。 */
+function clearSampleSales() {
+  try {
+    const sales = loadSales();
+    const real = sales.filter(s => !String(s.id || '').startsWith('sample-'));
+    if (real.length !== sales.length) {
+      localStorage.setItem(SALES_KEY, JSON.stringify(real));
+    }
+    /* 旧 SEEDED_KEY も除去して二度と seed されないように */
+    localStorage.removeItem(SEEDED_KEY);
+  } catch (e) {
+    console.warn('[clearSampleSales] failed:', e && e.message);
+  }
+}
+
+/* 旧シード関数: 残しているが init() からは呼ばない (デバッグ用にのみ参照可能) */
 function seedIfEmpty() {
   if (localStorage.getItem(SEEDED_KEY)) return;
   const out = [];
