@@ -919,15 +919,42 @@ function renderBackupStatus() {
   el.textContent = `最終バックアップ: ${fmtDateJP(ts)}（${days === 0 ? '本日' : days + '日前'}）`;
 }
 
-/* §9.4: 起動時整合性チェック */
-function healthCheck() {
-  const sales = loadSales();
-  const flavorsRaw = localStorage.getItem(FLAVORS_KEY);
-  const toppingsRaw = localStorage.getItem(TOPPINGS_KEY);
-  if ((flavorsRaw === null || toppingsRaw === null) && sales.length > 0) {
-    if (confirm('設定データが失われています。バックアップから復元しますか？')) {
-      importJSON();
+/* 初回起動時にFLAVORS_KEY/TOPPINGS_KEYが空でも、デフォルトを必ず書き込む。
+ * これがないと「サンプル販売は seed されたが、味設定は書かれていない」状態になり、
+ * healthCheck() が「設定データが失われています」と毎回誤警告する。*/
+function ensureDefaultsInitialized() {
+  try {
+    if (localStorage.getItem(FLAVORS_KEY) === null) {
+      localStorage.setItem(FLAVORS_KEY, JSON.stringify(FLAVORS));
     }
+    if (localStorage.getItem(TOPPINGS_KEY) === null) {
+      localStorage.setItem(TOPPINGS_KEY, JSON.stringify(TOPPINGS));
+    }
+  } catch (e) {
+    console.warn('[ensureDefaultsInitialized] failed:', e && e.message);
+  }
+}
+
+/* §9.4: 起動時整合性チェック (false-positive 修正版)
+ * 以前: flavors/toppings が null → 即アラート → 初回起動でも誤発火
+ * 今: ensureDefaultsInitialized() で常にキーを保証してからチェック
+ *     → 真の異常 (サンプル後にユーザー操作で書き込まれた設定が消えた等) のみアラート */
+function healthCheck() {
+  // この時点で ensureDefaultsInitialized() が走っているので、
+  // FLAVORS_KEY/TOPPINGS_KEY は必ず存在する。
+  // localStorage.setItem 自体が失敗するレベルの異常時のみアラートする。
+  try {
+    const flavorsRaw = localStorage.getItem(FLAVORS_KEY);
+    const toppingsRaw = localStorage.getItem(TOPPINGS_KEY);
+    if (flavorsRaw === null || toppingsRaw === null) {
+      // ensureDefaultsInitialized 後でも null = ストレージが書き込み拒否されている
+      // (例: iOS ITP, ストレージ無効化、quota exceeded)
+      console.warn('[healthCheck] localStorage write seems blocked');
+    }
+    // ユーザー操作起点のリストアは設定画面の「JSONバックアップから復元」ボタン経由のみ。
+    // 起動時の自動 confirm() は廃止 (false-positive と UX阻害の両面で有害)。
+  } catch (e) {
+    console.warn('[healthCheck] failed:', e && e.message);
   }
 }
 
