@@ -601,6 +601,13 @@ body {
   overflow-x: hidden;
   align-content: start;
   -webkit-overflow-scrolling: touch;
+  scroll-padding-bottom: 24px;
+}
+/* 最終行(#31)が必ず完全に見えるよう、grid の最後にスクロール用の余白を確保 */
+.flavor-grid::after {
+  content: '';
+  grid-column: 1 / -1;
+  height: 32px;
 }
 .flavor-grid::-webkit-scrollbar { width: 3px; }     /* Absol P1: 6→3、和に馴染ませる */
 .flavor-grid::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 0; }
