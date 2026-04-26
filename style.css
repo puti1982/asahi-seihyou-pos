@@ -615,14 +615,22 @@ body {
 }
 @keyframes pulse { from { opacity: 0.14; } to { opacity: 0; } }
 
+/* 番号: 背景画像/罫線に埋もれないよう生成りピルで視認性確保 */
 .flavor-num {
   font-family: var(--num);
-  font-size: 11px;
+  font-size: 10px;
   font-style: italic;            /* P0-05: italicで番付感 */
   color: var(--ink-2);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   position: absolute;
-  top: 12px; right: 12px;
+  top: 6px;
+  right: 6px;
+  background: rgba(250, 245, 233, 0.92);    /* 生成り半透明 = 画像/罫線から番号を分離 */
+  padding: 2px 6px;
+  border-radius: 2px;
+  z-index: 2;                                /* 画像overlayの上に */
+  line-height: 1;
+  box-shadow: 0 0 0 0.5px rgba(28,24,19,0.12);
 }
 .flavor-name {
   font-family: var(--serif);
