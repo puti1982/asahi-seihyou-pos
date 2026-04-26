@@ -452,7 +452,7 @@ body {
 
 .quick-amounts {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);   /* 5→4 (消去はnumpadへ統合) */
   gap: 3px;
   margin-top: 4px;
 }
