@@ -41,24 +41,32 @@
 }
 *:focus:not(:focus-visible) { outline: none; }
 
-/* ピンチズーム/ダブルタップズーム抑止 (PWA落とし穴 §6) */
+/* Android Chrome PWA でも viewport を完全拘束。
+   html/bodyに position:fixed + inset:0 を入れることで pinch/scroll が外に漏れない */
 html {
   height: 100%;
+  width: 100%;
   overflow: hidden;
   touch-action: manipulation;
+  position: fixed;
+  inset: 0;
+  overscroll-behavior: none;
 }
 
 body {
   height: 100%;
+  width: 100%;
   overflow: hidden;
   font-family: var(--sans);
   color: var(--ink);
   background: var(--bg);
-  /* P0-01: radial-gradient (砂目擬態) を撤廃。素直な紙地に */
   user-select: none;
   -webkit-user-select: none;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
+  position: fixed;
+  inset: 0;
+  overscroll-behavior: none;
 }
 
 /* P1-10: 全数字に tabular + lining */
