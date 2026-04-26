@@ -625,11 +625,13 @@ body {
 }
 .flavor-name {
   font-family: var(--serif);
-  font-size: 16px;
-  font-weight: 500;              /* 600 → 500 */
-  letter-spacing: 0.04em;
-  line-height: 1.4;
+  font-size: clamp(13px, 1.4vw, 16px);    /* 実画面幅に追従、狭い画面で自動縮小 */
+  font-weight: 500;
+  letter-spacing: 0.02em;                  /* 余白を稼ぐ */
+  line-height: 1.3;
   margin-top: auto;
+  word-break: break-all;                   /* 万が一の長い味名でも overflow しない */
+  overflow-wrap: anywhere;
 }
 .flavor-priceTag {
   font-family: var(--num);
