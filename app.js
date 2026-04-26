@@ -1168,10 +1168,6 @@ function registerServiceWorker() {
 
 /* ===== Event delegation ===== */
 function bindEvents() {
-  // received input
-  const received = document.getElementById('received');
-  received.addEventListener('input', updateChange);
-
   // checkout
   document.getElementById('checkout').addEventListener('click', doCheckout);
 
@@ -1189,13 +1185,21 @@ function bindEvents() {
     b.addEventListener('click', () => setView('pos'))
   );
 
-  // quick amounts
+  /* アプリ内テンキー (delegation) — iPadネイティブ数字キーボード非表示の代替 */
+  document.getElementById('numpad').addEventListener('click', (e) => {
+    const btn = e.target.closest('button.np-btn');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    if (action === 'np-num') npAppendDigit(parseInt(btn.dataset.num, 10));
+    else if (action === 'np-del') npDeleteLast();
+    else if (action === 'np-clear') npClear();
+  });
+
+  // quick amounts (state変数 receivedRaw に直接加算)
   document.querySelectorAll('.quick-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const inp = document.getElementById('received');
-      if (btn.dataset.clear !== undefined) inp.value = '';
-      else inp.value = (parseInt(inp.value) || 0) + parseInt(btn.dataset.add);
-      updateChange();
+      const add = parseInt(btn.dataset.add, 10);
+      if (Number.isFinite(add)) npAddQuick(add);
     });
   });
 
