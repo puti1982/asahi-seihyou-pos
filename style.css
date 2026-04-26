@@ -669,27 +669,26 @@ body {
 }
 @keyframes pulse { from { opacity: 0.14; } to { opacity: 0; } }
 
-/* 番号: 円形ピルでイラストに被らない・コンパクトに収める */
+/* 番号: 円形ピル + normalで視認性最大化 (italic破綻回避) */
 .flavor-num {
   position: absolute;
   top: 6px;
   right: 6px;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;                        /* 円形 */
-  background: rgba(250, 245, 233, 0.94);
-  border: 0.5px solid rgba(28,24,19,0.18);
+  background: rgba(250, 245, 233, 0.96);
+  border: 0.5px solid rgba(28,24,19,0.22);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--num);
-  font-size: 9.5px;
-  font-style: italic;
-  color: var(--ink-2);
+  font-size: 11px;
+  color: var(--ink);
   letter-spacing: 0.02em;
-  z-index: 2;
+  z-index: 3;                                 /* has-image overlay と同等以上を保証 */
   line-height: 1;
-  font-weight: 500;
+  font-weight: 600;
 }
 .flavor-name {
   font-family: var(--serif);
