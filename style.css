@@ -387,19 +387,19 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 4px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 .quick-btn {
   background: transparent;
   border: 1px solid var(--line);
-  padding: 12px 0;
+  padding: 10px 0;             /* 12 → 10 */
   font-family: var(--num);
-  font-size: 14px;
+  font-size: 13px;             /* 14 → 13 */
   color: var(--ink);
   cursor: pointer;
   letter-spacing: 0.03em;
   transition: border-color 0.15s, background 0.15s;
-  min-height: 44px;
+  min-height: 44px;            /* タッチ44pt保証 */
 }
 /* P0-07: hover 朱廃止 → 墨で表現 */
 .quick-btn:hover { background: var(--bg); border-color: var(--ink); }
