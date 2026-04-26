@@ -742,6 +742,91 @@ body {
   font-family: var(--serif);
 }
 
+/* 取引一覧 (誤会計の修正用) */
+.tx-section {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.tx-section-title {
+  font-family: var(--serif);
+  font-size: 12px;
+  color: var(--ink-2);
+  letter-spacing: 0.16em;
+  margin-bottom: 8px;
+}
+.tx-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+.tx-list::-webkit-scrollbar { width: 4px; }
+.tx-list::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 2px; }
+.tx-empty {
+  padding: 16px 12px;
+  text-align: center;
+  color: var(--ink-3);
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+.tx-row {
+  display: grid;
+  grid-template-columns: 50px 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  background: var(--paper);
+}
+.tx-row:last-child { border-bottom: none; }
+.tx-time {
+  font-family: var(--num);
+  color: var(--ink-2);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.tx-items {
+  font-family: var(--serif);
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tx-tops {
+  color: var(--shu);
+  font-size: 10px;
+  margin-left: 4px;
+  letter-spacing: 0;
+}
+.tx-total {
+  font-family: var(--num);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.tx-delete {
+  font-family: var(--serif);
+  font-size: 11px;
+  color: var(--ink-3);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  min-height: 32px;
+  white-space: nowrap;
+}
+.tx-delete:hover {
+  color: var(--shu);
+  border-color: var(--shu);
+}
+
 .modal-actions {
   display: flex; gap: 10px;
   margin-top: 28px;
