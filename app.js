@@ -1171,6 +1171,7 @@ function init() {
   if (navigator.storage && typeof navigator.storage.persist === 'function') {
     navigator.storage.persist().catch(() => {});
   }
+  ensureDefaultsInitialized();   /* ★必ず healthCheck より前。FLAVORS_KEY/TOPPINGS_KEY を保証 */
   seedIfEmpty();
   restoreCartDraft();
   renderFlavors();
