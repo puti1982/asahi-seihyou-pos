@@ -991,8 +991,8 @@ function resetSettings() {
       cart = [];
       nextId = 1;
       clearCartDraft();
-      const recv = document.getElementById('received');
-      if (recv) recv.value = '';
+      receivedRaw = 0;
+      updateReceivedDisplay();
       renderSettings();
       refreshAfterChange();
       showToast('初期値に戻しました');
