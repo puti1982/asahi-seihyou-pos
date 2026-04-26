@@ -52,10 +52,11 @@ const PRECACHE_URLS = [
 ];
 
 self.addEventListener('install', (event) => {
+  // auto-skipWaiting 削除: ユーザーが「適用」タップするまでwaiting状態を維持
+  // (これがないと新SWが即座にactive化し、postMessage('SKIP_WAITING')が no-op になる)
   event.waitUntil(
     caches.open(CACHE)
       .then((cache) => cache.addAll(PRECACHE_URLS))
-      .then(() => self.skipWaiting())
   );
 });
 
