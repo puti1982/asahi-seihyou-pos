@@ -176,9 +176,9 @@ body {
   min-height: 0;
 }
 
-/* P0-03: 余白リズム (上厚=立ち上がり、下薄=呼吸) */
+/* P0-03: 余白リズム (上厚=立ち上がり、下薄=呼吸) - Absol P0: 22/22/14 で和の格回復 */
 .cart-header {
-  padding: 14px 22px 10px;       /* 32/28/18 → 14/22/10、左パネルに収めるため圧縮 */
+  padding: 22px 22px 14px;
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
 }
