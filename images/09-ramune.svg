@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <!-- main body -->
+    <path d="M 680 605 L 680 470 Q 680 458 685 452 L 685 432 Q 680 425 680 415 Q 680 408 690 405 L 695 392 L 745 392 L 750 405 Q 760 408 760 415 Q 760 425 755 432 L 755 452 Q 760 458 760 470 L 760 605 Z"
+          fill="#A8D5E8" opacity="0.32" filter="url(#softer)" transform="translate(2 3)"/>
+    <path d="M 680 605 L 680 470 Q 680 458 685 452 L 685 432 Q 680 425 680 415 Q 680 408 690 405 L 695 392 L 745 392 L 750 405 Q 760 408 760 415 Q 760 425 755 432 L 755 452 Q 760 458 760 470 L 760 605 Z"
+          fill="#A8D5E8" opacity="0.5"/>
+    <!-- inner lighter -->
+    <path d="M 690 595 L 690 470 Q 690 462 695 458 L 695 435 Q 692 430 692 422 Q 692 415 698 412 L 700 400 L 740 400 L 742 412 Q 748 415 748 422 Q 748 430 745 435 L 745 458 Q 750 462 750 470 L 750 595 Z"
+          fill="#E0F0F8" opacity="0.55"/>
+    <!-- marble in neck -->
+    <circle cx="720" cy="430" r="9" fill="#A8D5E8" opacity="0.7"/>
+    <circle cx="720" cy="430" r="9" fill="none" stroke="#1C1813" stroke-width="0.8" opacity="0.45"/>
+    <ellipse cx="717" cy="427" rx="3" ry="2" fill="#FFFFFF" opacity="0.7"/>
+    <!-- highlight stripe -->
+    <path d="M 692 580 L 692 480 Q 692 465 700 458 L 700 432 Q 696 425 698 418"
+          stroke="#FFFFFF" stroke-width="6" fill="none" opacity="0.45" stroke-linecap="round"/>
+    <!-- cap (light blue) -->
+    <rect x="693" y="375" width="54" height="20" rx="2" fill="#5DA9C8" opacity="0.85"/>
+    <rect x="693" y="375" width="54" height="5" rx="1" fill="#3F8AAA" opacity="0.7"/>
+  </g>
+</svg>

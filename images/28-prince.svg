@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <!-- band shadow -->
+    <path d="M 632 540 L 808 540 L 808 588 L 632 588 Z" fill="#4868A8" opacity="0.25" filter="url(#softer)" transform="translate(2 3)"/>
+    <!-- band -->
+    <path d="M 632 540 L 808 540 L 808 588 L 632 588 Z" fill="#4868A8" opacity="0.78"/>
+    <!-- spikes (sharp triangular) -->
+    <path d="M 632 540 L 660 470 L 690 530 L 720 460 L 750 530 L 780 470 L 808 540 Z"
+          fill="#4868A8" opacity="0.88"/>
+    <!-- jewels: square/diamond shapes -->
+    <path d="M 720 488 L 728 478 L 720 468 L 712 478 Z" fill="#5DA9C8" opacity="0.92"/>
+    <path d="M 660 502 L 666 496 L 660 490 L 654 496 Z" fill="#5DA9C8" opacity="0.85"/>
+    <path d="M 780 502 L 786 496 L 780 490 L 774 496 Z" fill="#5DA9C8" opacity="0.85"/>
+    <!-- band cross-pattern -->
+    <g stroke="#1C1813" stroke-width="1" fill="none" opacity="0.4">
+      <line x1="640" y1="558" x2="800" y2="558"/>
+      <line x1="640" y1="572" x2="800" y2="572"/>
+    </g>
+    <!-- gem base markers -->
+    <g fill="#B43A2A" opacity="0.78">
+      <circle cx="660" cy="565" r="3"/>
+      <circle cx="690" cy="565" r="3"/>
+      <circle cx="720" cy="565" r="3"/>
+      <circle cx="750" cy="565" r="3"/>
+      <circle cx="780" cy="565" r="3"/>
+    </g>
+    <ellipse cx="690" cy="488" rx="20" ry="6" fill="#FFFFFF" opacity="0.45"/>
+  </g>
+</svg>

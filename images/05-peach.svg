@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <path d="M 720 605 C 658 605 620 558 620 502 C 620 442 668 410 720 410 C 772 410 820 442 820 502 C 820 558 782 605 720 605 Z" fill="#E8A993" opacity="0.25" filter="url(#softer)" transform="translate(2 3)"/>
+<path d="M 720 605 C 658 605 620 558 620 502 C 620 442 668 410 720 410 C 772 410 820 442 820 502 C 820 558 782 605 720 605 Z" fill="#E8A993" opacity="0.62"/>
+<path d="M 720 605 C 658 605 620 558 620 502 C 620 442 668 410 720 410 C 772 410 820 442 820 502 C 820 558 782 605 720 605 Z" fill="#E8A993" opacity="0.4"/>
+    <!-- cleft (vertical groove down center) -->
+    <path d="M 720 420 Q 718 510 720 595" stroke="#A85040" stroke-width="3" fill="none" opacity="0.32" stroke-linecap="round"/>
+    <path d="M 720 420 Q 716 510 720 595" stroke="#A85040" stroke-width="1.5" fill="none" opacity="0.55" stroke-linecap="round"/>
+    <!-- stem + leaf -->
+    <path d="M 720 422 Q 716 400 724 380" stroke="#7A4F2E" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.82"/>
+    <path d="M 724 384 Q 750 374 768 392 Q 752 402 732 398 Z" fill="#7B9560" opacity="0.88"/>
+    <path d="M 728 388 Q 740 388 750 392" stroke="#5F7142" stroke-width="0.7" fill="none" opacity="0.55"/>
+    <!-- soft fuzz suggestion (tiny dots) -->
+    <g fill="#FFFFFF" opacity="0.35">
+      <circle cx="660" cy="450" r="1"/>
+      <circle cx="675" cy="495" r="1"/>
+      <circle cx="700" cy="540" r="1"/>
+      <circle cx="780" cy="455" r="1"/>
+      <circle cx="775" cy="510" r="1"/>
+      <circle cx="755" cy="560" r="1"/>
+    </g>
+    <ellipse cx="680" cy="470" rx="14" ry="22" fill="#FFFFFF" opacity="0.5" transform="rotate(-10 680 470)"/>
+    <ellipse cx="672" cy="460" rx="5" ry="10" fill="#FFFFFF" opacity="0.85" transform="rotate(-10 672 460)"/>
+  </g>
+</svg>

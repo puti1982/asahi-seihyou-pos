@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g transform="translate(720 510)">
+    <g stroke="#7BA8C8" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.32" filter="url(#soft)">
+      <line x1="0" y1="-100" x2="0" y2="100"/>
+      <line x1="-87" y1="-50" x2="87" y2="50"/>
+      <line x1="-87" y1="50" x2="87" y2="-50"/>
+    </g>
+    <g stroke="#7BA8C8" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85">
+      <line x1="0" y1="-100" x2="0" y2="100"/>
+      <line x1="-87" y1="-50" x2="87" y2="50"/>
+      <line x1="-87" y1="50" x2="87" y2="-50"/>
+    </g>
+    <g stroke="#7BA8C8" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.85">
+      <!-- ornaments at 6 tips -->
+      <path d="M 0 -100 L -10 -90 M 0 -100 L 10 -90"/>
+      <path d="M 0 100 L -10 90 M 0 100 L 10 90"/>
+      <path d="M -87 -50 L -82 -62 M -87 -50 L -75 -47"/>
+      <path d="M 87 50 L 82 62 M 87 50 L 75 47"/>
+      <path d="M -87 50 L -82 62 M -87 50 L -75 47"/>
+      <path d="M 87 -50 L 82 -62 M 87 -50 L 75 -47"/>
+      <!-- inner branches -->
+      <path d="M 0 -55 L -16 -68 M 0 -55 L 16 -68"/>
+      <path d="M 0 55 L -16 68 M 0 55 L 16 68"/>
+      <path d="M -48 -28 L -62 -25 M -48 -28 L -50 -42"/>
+      <path d="M 48 28 L 62 25 M 48 28 L 50 42"/>
+      <path d="M -48 28 L -62 25 M -48 28 L -50 42"/>
+      <path d="M 48 -28 L 62 -25 M 48 -28 L 50 -42"/>
+    </g>
+    <!-- center hexagon -->
+    <circle cx="0" cy="0" r="8" fill="#7BA8C8" opacity="0.7"/>
+  </g>
+</svg>

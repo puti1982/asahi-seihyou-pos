@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <!-- main crown band shadow -->
+    <path d="M 632 540 L 808 540 L 808 588 L 632 588 Z" fill="#D688AC" opacity="0.25" filter="url(#softer)" transform="translate(2 3)"/>
+    <!-- crown band -->
+    <path d="M 632 540 L 808 540 L 808 588 L 632 588 Z" fill="#D688AC" opacity="0.7"/>
+    <!-- spikes (curved princess style) -->
+    <path d="M 632 540 Q 656 478 672 530 Q 696 470 720 528 Q 744 470 768 530 Q 784 478 808 540 Z"
+          fill="#D688AC" opacity="0.78"/>
+    <!-- swirl decorations between spikes -->
+    <g stroke="#D688AC" stroke-width="2" fill="none" opacity="0.55">
+      <path d="M 660 510 Q 670 500 678 510"/>
+      <path d="M 706 510 Q 720 498 734 510"/>
+      <path d="M 762 510 Q 772 500 780 510"/>
+    </g>
+    <!-- jewels (heart-shaped center, round sides) -->
+    <path d="M 720 502 Q 712 488 720 480 Q 728 488 720 502 Z" fill="#B43A2A" opacity="0.92"/>
+    <circle cx="660" cy="498" r="6" fill="#B43A2A" opacity="0.85"/>
+    <circle cx="780" cy="498" r="6" fill="#B43A2A" opacity="0.85"/>
+    <!-- band detail line -->
+    <line x1="632" y1="556" x2="808" y2="556" stroke="#1C1813" stroke-width="0.8" opacity="0.4"/>
+    <!-- pearl row on band -->
+    <g fill="#F8F0E8" opacity="0.85">
+      <circle cx="648" cy="568" r="3"/>
+      <circle cx="672" cy="568" r="3"/>
+      <circle cx="696" cy="568" r="3"/>
+      <circle cx="720" cy="568" r="3"/>
+      <circle cx="744" cy="568" r="3"/>
+      <circle cx="768" cy="568" r="3"/>
+      <circle cx="792" cy="568" r="3"/>
+    </g>
+    <!-- highlight -->
+    <ellipse cx="690" cy="488" rx="20" ry="6" fill="#FFFFFF" opacity="0.45"/>
+  </g>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <!-- 空のグラデ(太陽の周りに薄く拡散) -->
+    <ellipse cx="815" cy="445" rx="120" ry="70" fill="#4FC3F7" opacity="0.22" filter="url(#softer)"/>
+
+    <!-- 太陽 -->
+    <circle cx="820" cy="425" r="32" fill="#4FC3F7" opacity="0.4"/>
+    <circle cx="820" cy="425" r="24" fill="#4FC3F7" opacity="0.85"/>
+    <circle cx="820" cy="425" r="16" fill="#FFFCEC" opacity="0.85"/>
+    <!-- 太陽の光線 -->
+    <g stroke="#4FC3F7" stroke-width="3" stroke-linecap="round" opacity="0.55">
+      <line x1="820" y1="378" x2="820" y2="388"/>
+      <line x1="787" y1="392" x2="794" y2="399"/>
+      <line x1="853" y1="392" x2="846" y2="399"/>
+      <line x1="773" y1="425" x2="783" y2="425"/>
+      <line x1="867" y1="425" x2="857" y2="425"/>
+      <line x1="787" y1="458" x2="794" y2="451"/>
+      <line x1="853" y1="458" x2="846" y2="451"/>
+    </g>
+
+    <!-- ヤシの木の幹 (ベースから上へ湾曲) -->
+    <path d="M 700 600 Q 718 555 706 510 Q 692 460 712 425 Q 722 412 730 408"
+          stroke="#5C3A20" stroke-width="20" fill="none" opacity="0.4" filter="url(#soft)" stroke-linecap="round"/>
+    <path d="M 700 600 Q 718 555 706 510 Q 692 460 712 425 Q 722 412 730 408"
+          stroke="#7A4F2E" stroke-width="14" fill="none" opacity="0.95" stroke-linecap="round"/>
+    <!-- 幹の節(横線で椰子の樹皮感) -->
+    <g stroke="#3A2515" stroke-width="1.4" fill="none" opacity="0.6">
+      <path d="M 698 580 Q 706 578 712 583"/>
+      <path d="M 706 545 Q 714 543 720 548"/>
+      <path d="M 700 510 Q 708 507 714 513"/>
+      <path d="M 696 478 Q 704 475 710 481"/>
+      <path d="M 704 450 Q 712 448 718 453"/>
+      <path d="M 716 425 Q 723 422 730 428"/>
+    </g>
+
+    <!-- ヤシの葉(6枚扇状に展開) -->
+    <g fill="#01579B" opacity="0.88">
+      <path d="M 730 408 Q 660 386 615 360 Q 645 378 678 392 Q 710 405 730 415 Z"/>
+      <path d="M 728 412 Q 645 408 595 422 Q 638 410 680 408 Q 712 410 730 415 Z"/>
+      <path d="M 730 415 Q 660 442 615 478 Q 660 426 700 418 Q 720 418 732 420 Z"/>
+      <path d="M 730 408 Q 800 378 855 354 Q 820 380 788 395 Q 754 408 732 412 Z"/>
+      <path d="M 732 412 Q 815 408 860 422 Q 815 410 770 408 Q 740 408 730 412 Z"/>
+      <path d="M 730 415 Q 800 442 855 478 Q 800 425 762 418 Q 740 418 732 420 Z"/>
+    </g>
+    <!-- 葉のハイライト(明るい青) -->
+    <g fill="#4FC3F7" opacity="0.5">
+      <path d="M 730 410 Q 695 396 660 386"/>
+      <path d="M 730 410 Q 768 396 802 386"/>
+    </g>
+    <!-- 葉の中心線 -->
+    <g stroke="#01579B" stroke-width="1.4" fill="none" opacity="0.85">
+      <path d="M 730 410 Q 678 390 615 360"/>
+      <path d="M 730 412 Q 680 412 595 422"/>
+      <path d="M 730 415 Q 680 425 615 478"/>
+      <path d="M 730 410 Q 782 390 855 354"/>
+      <path d="M 732 412 Q 785 412 860 422"/>
+      <path d="M 730 415 Q 782 425 855 478"/>
+    </g>
+
+    <!-- ココナッツ(幹の上部に房) -->
+    <circle cx="713" cy="422" r="9" fill="#3A2515" opacity="0.95"/>
+    <circle cx="725" cy="418" r="8" fill="#3A2515" opacity="0.95"/>
+    <circle cx="722" cy="430" r="7" fill="#3A2515" opacity="0.95"/>
+    <circle cx="711" cy="420" r="2.5" fill="#FFFFFF" opacity="0.55"/>
+    <circle cx="723" cy="416" r="2" fill="#FFFFFF" opacity="0.55"/>
+    <circle cx="720" cy="428" r="2" fill="#FFFFFF" opacity="0.55"/>
+
+    <!-- 海(下部に多層の波) -->
+    <path d="M 575 580 Q 630 555 690 580 Q 750 605 815 580 Q 870 558 905 580"
+          stroke="#01579B" stroke-width="24" fill="none" stroke-linecap="round" opacity="0.42" filter="url(#soft)"/>
+    <path d="M 575 580 Q 630 555 690 580 Q 750 605 815 580 Q 870 558 905 580"
+          stroke="#0288D1" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.92"/>
+    <path d="M 575 585 Q 630 565 690 585 Q 750 608 815 585 Q 870 565 905 585"
+          stroke="#4FC3F7" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8"/>
+    <!-- もう一段下の波 -->
+    <path d="M 580 612 Q 640 600 700 615 Q 760 628 820 612"
+          stroke="#01579B" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.55"/>
+
+    <!-- 波頭の白いしぶき -->
+    <circle cx="640" cy="568" r="6" fill="#FFFFFF" opacity="0.95"/>
+    <circle cx="635" cy="558" r="3" fill="#FFFFFF" opacity="0.7"/>
+    <circle cx="700" cy="588" r="4" fill="#FFFFFF" opacity="0.85"/>
+    <circle cx="775" cy="595" r="4" fill="#FFFFFF" opacity="0.8"/>
+    <circle cx="830" cy="572" r="6" fill="#FFFFFF" opacity="0.95"/>
+    <circle cx="838" cy="562" r="3" fill="#FFFFFF" opacity="0.7"/>
+    <circle cx="880" cy="568" r="3" fill="#FFFFFF" opacity="0.7"/>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <!-- left leaf -->
+    <g transform="translate(685 510) rotate(-25)">
+      <path d="M -55 0 Q -40 -55 0 -75 Q 40 -55 55 0 Q 40 55 0 75 Q -40 55 -55 0 Z"
+            fill="#894528" opacity="0.32" filter="url(#soft)"/>
+      <path d="M -50 0 Q -36 -50 0 -70 Q 36 -50 50 0 Q 36 50 0 70 Q -36 50 -50 0 Z"
+            fill="#894528" opacity="0.6"/>
+      <line x1="0" y1="-68" x2="0" y2="68" stroke="#5F7142" stroke-width="1.6" opacity="0.65"/>
+      <path d="M 0 -45 Q 14 -38 25 -25" stroke="#5F7142" stroke-width="1" fill="none" opacity="0.55"/>
+      <path d="M 0 -15 Q 18 -8 32 5" stroke="#5F7142" stroke-width="1" fill="none" opacity="0.55"/>
+      <path d="M 0 15 Q 16 22 28 32" stroke="#5F7142" stroke-width="1" fill="none" opacity="0.55"/>
+      <path d="M 0 -45 Q -14 -38 -25 -25" stroke="#5F7142" stroke-width="1" fill="none" opacity="0.55"/>
+      <path d="M 0 -15 Q -18 -8 -32 5" stroke="#5F7142" stroke-width="1" fill="none" opacity="0.55"/>
+      <path d="M 0 15 Q -16 22 -28 32" stroke="#5F7142" stroke-width="1" fill="none" opacity="0.55"/>
+    </g>
+    <!-- right leaf (smaller, behind) -->
+    <g transform="translate(750 535) rotate(20)">
+      <path d="M -45 0 Q -32 -42 0 -58 Q 32 -42 45 0 Q 32 42 0 58 Q -32 42 -45 0 Z"
+            fill="#894528" opacity="0.55"/>
+      <line x1="0" y1="-55" x2="0" y2="55" stroke="#5F7142" stroke-width="1.4" opacity="0.6"/>
+      <path d="M 0 -30 Q 12 -22 22 -10" stroke="#5F7142" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M 0 0 Q 14 8 24 18" stroke="#5F7142" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M 0 -30 Q -12 -22 -22 -10" stroke="#5F7142" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M 0 0 Q -14 8 -24 18" stroke="#5F7142" stroke-width="0.8" fill="none" opacity="0.5"/>
+    </g>
+  </g>
+</svg>

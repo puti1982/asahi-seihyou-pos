@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <path d="M 610 530 Q 600 478 645 462 Q 690 450 720 478 Q 745 460 780 470 Q 820 482 825 530 Q 825 575 780 588 Q 740 595 720 575 Q 695 595 660 590 Q 615 580 610 530 Z" fill="#D6A832" opacity="0.25" filter="url(#softer)" transform="translate(2 3)"/>
+<path d="M 610 530 Q 600 478 645 462 Q 690 450 720 478 Q 745 460 780 470 Q 820 482 825 530 Q 825 575 780 588 Q 740 595 720 575 Q 695 595 660 590 Q 615 580 610 530 Z" fill="#D6A832" opacity="0.62"/>
+<path d="M 610 530 Q 600 478 645 462 Q 690 450 720 478 Q 745 460 780 470 Q 820 482 825 530 Q 825 575 780 588 Q 740 595 720 575 Q 695 595 660 590 Q 615 580 610 530 Z" fill="#D6A832" opacity="0.4"/>
+    <!-- node creases -->
+    <g stroke="#1C1813" stroke-width="1.4" fill="none" opacity="0.32" stroke-linecap="round">
+      <path d="M 660 475 Q 670 510 660 555"/>
+      <path d="M 720 462 Q 728 510 720 580"/>
+      <path d="M 770 478 Q 778 520 770 575"/>
+    </g>
+    <!-- lightning above root -->
+    <path d="M 770 425 L 745 470 L 770 470 L 740 525"
+          stroke="#E8C440" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.4" filter="url(#soft)"/>
+    <path d="M 770 425 L 745 470 L 770 470 L 740 525"
+          stroke="#E8C440" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+    <!-- highlight -->
+    <ellipse cx="668" cy="500" rx="18" ry="6" fill="#FFFFFF" opacity="0.4"/>
+  </g>
+</svg>

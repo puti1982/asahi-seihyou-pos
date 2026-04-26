@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- WCAG 2.1 AA: user-scalable=yes, maximum-scale=5 (Wave3 #9) -->
+<meta name="viewport" content="width=1366, initial-scale=1.0, viewport-fit=cover, maximum-scale=5, user-scalable=yes">
+<!-- CSP: 自身のオリジンに限定。data: は SVG/icon用。inline style は SVGロゴで使用 (Wave3 #7) -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'">
+<title>朝日製氷 — POS</title>
+
+<!-- PWA core -->
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#FAF5E9">
+
+<!-- iOS standalone -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="朝日製氷">
+<meta name="apple-mobile-web-app-orientations" content="landscape">
+
+<!-- Apple touch icons (大→小の順) -->
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png">
+<link rel="apple-touch-icon" sizes="167x167" href="./icons/icon-167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="./icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="120x120" href="./icons/icon-120.png">
+
+<!-- 自動リンク化抑止 (POS画面で誤動作防止) -->
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <!-- P0-01: SVGロゴ。朝陽の円＋極細水平線で氷を暗示 -->
+      <svg class="brand-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="朝日製氷">
+        <!-- 朝陽 外殻 -->
+        <circle cx="32" cy="30" r="15" fill="#B43A2A" opacity="0.10"/>
+        <circle cx="32" cy="30" r="11" fill="#B43A2A" opacity="0.22"/>
+        <!-- 中央コア (P0-01: 朱の濃い方を中央コアに) -->
+        <circle cx="32" cy="30" r="6" fill="#8E2C1F"/>
+        <!-- 氷を暗示する極細水平線 3本 -->
+        <line x1="14" y1="29" x2="50" y2="29" stroke="#1C1813" stroke-width="0.7" opacity="0.85"/>
+        <line x1="17" y1="31" x2="47" y2="31" stroke="#1C1813" stroke-width="0.5" opacity="0.55"/>
+        <line x1="20" y1="33" x2="44" y2="33" stroke="#1C1813" stroke-width="0.4" opacity="0.35"/>
+      </svg>
+      <div class="brand-text">
+        <!-- P0-02: &nbsp;&nbsp; 削除済 / P0-08: 英字並記 brand-en 廃止 -->
+        <div class="brand-name">朝日製氷</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <!-- P1-13: 時計フォーマット 「2026年4月26日（土）13:45」 明朝 -->
+      <div class="clock" id="clock"></div>
+      <div class="header-buttons" id="header-buttons">
+        <button class="ledger-link" data-action="open-today">売上帳</button>
+        <button class="ledger-link" data-action="go-settings">設定</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- View: POS -->
+  <div class="view view-pos active" id="view-pos">
+    <aside class="cart-panel">
+      <div class="cart-header">
+        <div class="section-label">御注文</div>
+        <!-- P0-08: section-en 廃止 -->
+      </div>
+      <div class="cart-list" id="cart-list"></div>
+      <div class="checkout">
+        <div class="totalbar">
+          <div class="lbl">御会計</div>
+          <!-- P1-11: 大金額は「円」suffix -->
+          <div class="val"><span id="subtotal">0</span><span class="yen-suffix">円</span></div>
+        </div>
+        <div class="receive-block">
+          <div class="receive-row">
+            <div class="lbl">お預かり</div>
+          </div>
+          <input type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="10" class="receive-input" id="received" placeholder="0" autocomplete="off">
+          <div class="quick-amounts">
+            <button class="quick-btn" data-add="500">+500</button>
+            <button class="quick-btn" data-add="1000">+1,000</button>
+            <button class="quick-btn" data-add="5000">+5,000</button>
+            <button class="quick-btn" data-add="10000">+10,000</button>
+            <button class="quick-btn clear" data-clear>消去</button>
+          </div>
+        </div>
+        <div class="change-row">
+          <div class="lbl">御釣銭</div>
+          <!-- P0-07: 釣銭は墨に戻し、¥ prefix維持 (小金額側) -->
+          <div class="val"><span class="yen">¥</span><span id="change">0</span></div>
+        </div>
+        <button class="cta" id="checkout" disabled>御 会 計</button>
+      </div>
+    </aside>
+
+    <main class="flavor-panel">
+      <div class="flavor-header">
+        <div class="flavor-title">
+          <span class="ja">品書</span>
+          <!-- P0-08: 英字並記 廃止 -->
+        </div>
+        <div class="price-rule" id="price-rule">
+          <span class="word">全 品</span>
+          <span class="num"><span class="yen">¥</span><span id="rule-price">250</span></span>
+        </div>
+      </div>
+      <div class="flavor-grid" id="flavor-grid"></div>
+    </main>
+  </div>
+
+  <!-- View: Ledger detail -->
+  <div class="view view-ledger" id="view-ledger">
+    <div class="doc-wrap">
+      <button class="doc-back" data-action="go-pos">← レジに戻る</button>
+      <div class="doc-headline">
+        <div>
+          <span class="ja">売上詳細</span>
+          <!-- P0-08: 英字並記 廃止 -->
+        </div>
+      </div>
+      <div class="period-presets">
+        <button class="preset-btn" data-preset="7">直近7日</button>
+        <button class="preset-btn" data-preset="30">直近30日</button>
+        <button class="preset-btn" data-preset="90">直近90日</button>
+        <button class="preset-btn" data-preset="month">今月</button>
+        <button class="preset-btn" data-preset="all">全期間</button>
+      </div>
+      <div class="period-block">
+        <span class="lbl">期間</span>
+        <input type="date" class="date-input" id="ledger-from">
+        <span class="period-tilde">〜</span>
+        <input type="date" class="date-input" id="ledger-to">
+        <button class="period-go" data-action="render-ledger">集計</button>
+      </div>
+      <div class="total-card">
+        <div class="lbl">期 間 合 計</div>
+        <!-- P1-11: 大金額「円」suffix -->
+        <div class="val"><span id="ledger-total">0</span><span class="yen-suffix">円</span></div>
+        <div class="meta" id="ledger-meta">取引 0 件 / 平均 ¥0</div>
+      </div>
+      <div class="doc-section-title">項目別 内訳</div>
+      <table class="breakdown-table">
+        <thead>
+          <tr><th>項目</th><th>単価</th><th>個数</th><th>小計</th></tr>
+        </thead>
+        <tbody id="breakdown-body"></tbody>
+      </table>
+      <div class="doc-section-title">日別 売上</div>
+      <table class="breakdown-table">
+        <thead id="daily-thead"></thead>
+        <tbody id="daily-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- View: Settings -->
+  <div class="view view-settings" id="view-settings">
+    <div class="doc-wrap">
+      <button class="doc-back" data-action="go-pos">← レジに戻る</button>
+      <div class="doc-headline">
+        <div>
+          <span class="ja">設定</span>
+          <!-- P0-08: 英字並記 廃止 -->
+        </div>
+      </div>
+
+      <!-- 品書き -->
+      <div class="doc-section-title">
+        <span>品書き</span>
+        <span class="count" id="flavor-count"></span>
+      </div>
+      <table class="settings-table">
+        <thead>
+          <tr>
+            <th style="width:32px;">順</th>
+            <th style="width:48px;">色</th>
+            <th>品名</th>
+            <th style="text-align:right; width:120px;">価格 (円)</th>
+            <th style="width:200px;"></th>
+          </tr>
+        </thead>
+        <tbody id="settings-flavors"></tbody>
+      </table>
+      <button class="add-row-btn" data-action="add-flavor">＋ 新しい品を追加</button>
+
+      <!-- トッピング -->
+      <div class="doc-section-title">
+        <span>トッピング</span>
+        <span class="count" id="topping-count"></span>
+      </div>
+      <table class="settings-table">
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th style="text-align:right; width:160px;">追加金額 (円)</th>
+            <th style="width:120px;"></th>
+          </tr>
+        </thead>
+        <tbody id="settings-toppings"></tbody>
+      </table>
+      <button class="add-row-btn" data-action="add-topping">＋ 新しいトッピングを追加</button>
+
+      <!-- 営業中の動作 (Wake Lock) -->
+      <div class="doc-section-title">
+        <span>営業中の動作</span>
+      </div>
+      <div class="data-actions">
+        <button id="wakelock-toggle" data-action="toggle-wakelock">スリープ防止: OFF</button>
+      </div>
+      <div class="info-note">
+        営業中、画面を常に点灯させたい場合は有効化してください。バッテリー消費が増えます。
+      </div>
+
+      <!-- データ管理 -->
+      <div class="doc-section-title">
+        <span>データ管理</span>
+      </div>
+      <div class="data-actions">
+        <button data-action="export-json">JSONバックアップを書き出し</button>
+        <button data-action="import-json">JSONバックアップから復元</button>
+        <button class="danger" data-action="reset-sample">サンプル取引履歴を削除</button>
+        <button class="danger" data-action="clear-all-sales">全ての販売履歴を消去</button>
+        <button class="danger" data-action="reset-settings">品書き・トッピングを初期値に戻す</button>
+      </div>
+      <div class="info-note">
+        変更は入力欄から離れた瞬間に自動保存されます。販売履歴は会計完了の度にiPad内に書き込まれ、電源を切っても保持されます。<br>
+        JSONバックアップは自宅Wi-Fi復帰時にiCloud Drive等へ保存することで、iPad故障時の備えになります。<br>
+        ※ 価格・トッピングの変更は次回会計から反映されます。すでにカート内にある商品の価格は変わりません。
+      </div>
+      <!-- 最終バックアップ日時 (落とし穴3対策) -->
+      <div class="backup-status" id="backup-status">バックアップ未取得</div>
+      <input type="file" id="import-file" accept="application/json" hidden>
+    </div>
+  </div>
+
+  <!-- Footer (P2-23) -->
+  <footer class="app-footer">
+    <span class="app-footer-mark">朝日製氷 © 令和八年</span>
+  </footer>
+
+</div>
+
+<!-- Today's sales modal -->
+<div class="modal-overlay" id="today-modal">
+  <div class="modal">
+    <div class="modal-title">本日の売上</div>
+    <!-- P0-08: modal-title-en 廃止 -->
+    <div class="today-date" id="today-date"></div>
+    <div class="breakdown" id="today-breakdown"></div>
+    <div class="bd-total">
+      <div class="lbl">合 計</div>
+      <!-- P1-11: 大金額「円」suffix -->
+      <div class="val"><span id="today-total">0</span><span class="yen-suffix">円</span></div>
+    </div>
+    <div class="bd-meta" id="today-meta"></div>
+    <div class="modal-actions">
+      <button data-action="close-today">閉じる</button>
+      <button class="primary" data-action="go-ledger">詳細を見る →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast (P1-16: 紙が浮いた表現 + P2-21 朝日製氷印) -->
+<div class="toast" id="toast">
+  <span class="toast-msg">御会計 完了</span>
+</div>
+
+<!-- 角印 SVG テンプレ (P2-21) - JSから innerHTML で挿入 -->
+<template id="seal-svg">
+  <svg class="seal" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="0.5" y="0.5" width="15" height="15" fill="none" stroke="#B43A2A" stroke-width="1"/>
+    <text x="8" y="11" font-family="Hiragino Mincho ProN, serif" font-size="10" font-weight="600" text-anchor="middle" fill="#B43A2A" letter-spacing="0">朝</text>
+  </svg>
+</template>
+
+<script defer src="./app.js"></script>
+</body>
+</html>

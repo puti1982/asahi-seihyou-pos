@@ -1,0 +1,293 @@
+{
+  "style_name": "kinari-yamato-illustration",
+  "size": "1024x1024",
+  "model_recommended": "dall-e-3",
+  "master_template": "Soft watercolor and ink wash illustration of [INGREDIENT_EN], in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+  "checklist": [
+    "角度: 31枚すべて真俯瞰（皿のフチが真円）。斜め・見下ろしが1枚でもあればNG",
+    "背景: 31枚すべて生成り #FAF5E9 単色。並べた時に和紙1枚のように繋がる",
+    "余白: 31枚すべて皿が画面右1/3配置・左2/3が空（POSテキストと干渉しない）"
+  ],
+  "flavors": [
+    {
+      "id": "01",
+      "name_ja": "いちご",
+      "name_en": "strawberry",
+      "syrup_hex": "#D67285",
+      "filename": "01-ichigo.png",
+      "prompt": "Soft watercolor and ink wash illustration of a single ripe strawberry with green leafy crown, fresh and elegant, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a single ripe strawberry with green leafy crown, fresh and elegant"
+    },
+    {
+      "id": "02",
+      "name_ja": "メロン",
+      "name_en": "melon",
+      "syrup_hex": "#9DBE7A",
+      "filename": "02-melon.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole round melon with subtle netted skin texture, stem and small leaf, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole round melon with subtle netted skin texture, stem and small leaf"
+    },
+    {
+      "id": "03",
+      "name_ja": "レモン",
+      "name_en": "lemon",
+      "syrup_hex": "#E5C44A",
+      "filename": "03-lemon.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole oval lemon citrus fruit with slight pointed ends, one small green leaf, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole oval lemon citrus fruit with slight pointed ends, one small green leaf"
+    },
+    {
+      "id": "04",
+      "name_ja": "ブルーハワイ",
+      "name_en": "blue hawaii (cyan blue)",
+      "syrup_hex": "#0288D1",
+      "filename": "04-blue-hawaii.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small Hawaiian palm tree silhouette with curved trunk and fanning fronds, with a few coconuts at the top, a vivid bright blue ocean wave below, and a soft sun in the upper background, in vivid Hawaiian blue tones, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small Hawaiian palm tree silhouette with curved trunk and fanning fronds, with a few coconuts at the top, a vivid bright blue ocean wave below, and a soft sun in the upper background, in vivid Hawaiian blue tones"
+    },
+    {
+      "id": "05",
+      "name_ja": "ピーチ",
+      "name_en": "peach",
+      "syrup_hex": "#E8A993",
+      "filename": "05-peach.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole round peach fruit with subtle cleft, soft fuzz suggestion, small leaf, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole round peach fruit with subtle cleft, soft fuzz suggestion, small leaf"
+    },
+    {
+      "id": "06",
+      "name_ja": "グレープ",
+      "name_en": "grape",
+      "syrup_hex": "#7B5A95",
+      "filename": "06-grape.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small cluster of dark grapes hanging in triangular bunch, one curled vine leaf, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small cluster of dark grapes hanging in triangular bunch, one curled vine leaf"
+    },
+    {
+      "id": "07",
+      "name_ja": "マンゴー",
+      "name_en": "mango",
+      "syrup_hex": "#E2A148",
+      "filename": "07-mango.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole oval mango fruit with elegant curved silhouette, small stem, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole oval mango fruit with elegant curved silhouette, small stem"
+    },
+    {
+      "id": "08",
+      "name_ja": "コーラ",
+      "name_en": "cola (dark caramel brown)",
+      "syrup_hex": "#5C3A20",
+      "filename": "08-cola.png",
+      "prompt": "Soft watercolor and ink wash illustration of a vintage glass cola bottle silhouette, simple and graphic, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a vintage glass cola bottle silhouette, simple and graphic"
+    },
+    {
+      "id": "09",
+      "name_ja": "ラムネ",
+      "name_en": "ramune (pale sky blue)",
+      "syrup_hex": "#A8D5E8",
+      "filename": "09-ramune.png",
+      "prompt": "Soft watercolor and ink wash illustration of a Japanese ramune soda bottle silhouette with marble shape suggestion, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a Japanese ramune soda bottle silhouette with marble shape suggestion"
+    },
+    {
+      "id": "10",
+      "name_ja": "みぞれ",
+      "name_en": "mizore (translucent off-white sugar syrup)",
+      "syrup_hex": "#D9D0BD",
+      "filename": "10-mizore.png",
+      "prompt": "Soft watercolor and ink wash illustration of a single delicate snowflake or ice crystal, geometric and minimal, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a single delicate snowflake or ice crystal, geometric and minimal"
+    },
+    {
+      "id": "11",
+      "name_ja": "青リンゴ",
+      "name_en": "green apple",
+      "syrup_hex": "#A6C25C",
+      "filename": "11-green-apple.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole round green apple with single leaf and stem, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole round green apple with single leaf and stem"
+    },
+    {
+      "id": "12",
+      "name_ja": "真っ赤なリンゴ",
+      "name_en": "red apple",
+      "syrup_hex": "#B83A3A",
+      "filename": "12-red-apple.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole round bright red apple with single leaf and stem, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole round bright red apple with single leaf and stem"
+    },
+    {
+      "id": "13",
+      "name_ja": "スイカ",
+      "name_en": "watermelon",
+      "syrup_hex": "#C84545",
+      "filename": "13-watermelon.png",
+      "prompt": "Soft watercolor and ink wash illustration of a single watermelon wedge cross-section showing red flesh, white pith, green rind, few seeds, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a single watermelon wedge cross-section showing red flesh, white pith, green rind, few seeds"
+    },
+    {
+      "id": "14",
+      "name_ja": "オレンジ",
+      "name_en": "orange",
+      "syrup_hex": "#D88B47",
+      "filename": "14-orange.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole round orange citrus fruit with one small leaf, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole round orange citrus fruit with one small leaf"
+    },
+    {
+      "id": "15",
+      "name_ja": "マスカット",
+      "name_en": "muscat green grape",
+      "syrup_hex": "#92AC4A",
+      "filename": "15-muscat.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small cluster of green muscat grapes hanging in triangular bunch with leaf, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small cluster of green muscat grapes hanging in triangular bunch with leaf"
+    },
+    {
+      "id": "16",
+      "name_ja": "ダブルベリー",
+      "name_en": "double berry (deep wine red)",
+      "syrup_hex": "#7A325E",
+      "filename": "16-double-berry.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small handful of mixed berries, blackberries and raspberries clustered together, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small handful of mixed berries, blackberries and raspberries clustered together"
+    },
+    {
+      "id": "17",
+      "name_ja": "日向夏",
+      "name_en": "hyuganatsu citrus (golden yellow)",
+      "syrup_hex": "#E5BE48",
+      "filename": "17-hyuganatsu.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole round hyuganatsu Japanese citrus fruit, golden yellow, one leaf, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole round hyuganatsu Japanese citrus fruit, golden yellow, one leaf"
+    },
+    {
+      "id": "18",
+      "name_ja": "ソルティーライチ",
+      "name_en": "salty lychee (pale dusty pink)",
+      "syrup_hex": "#D6BCC8",
+      "filename": "18-salty-lychee.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small cluster of fresh lychee fruits with delicate skin texture, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small cluster of fresh lychee fruits with delicate skin texture"
+    },
+    {
+      "id": "19",
+      "name_ja": "エメラルドパイン",
+      "name_en": "emerald pineapple (teal green)",
+      "syrup_hex": "#4E9A85",
+      "filename": "19-emerald-pine.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole pineapple silhouette with crown leaves, simplified, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole pineapple silhouette with crown leaves, simplified"
+    },
+    {
+      "id": "20",
+      "name_ja": "カシスオレンジ",
+      "name_en": "cassis orange (deep magenta)",
+      "syrup_hex": "#9A3D5C",
+      "filename": "20-cassis-orange.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small cluster of dark cassis blackcurrant berries with leaves, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small cluster of dark cassis blackcurrant berries with leaves"
+    },
+    {
+      "id": "21",
+      "name_ja": "ヨーグルト",
+      "name_en": "yogurt (warm cream)",
+      "syrup_hex": "#E8E0CC",
+      "filename": "21-yogurt.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small wooden bowl filled with creamy white yogurt, a wooden spoon resting on the side with a drop of yogurt falling, the white yogurt is clearly visible against the warm wooden bowl, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small wooden bowl filled with creamy white yogurt, a wooden spoon resting on the side with a drop of yogurt falling, the white yogurt is clearly visible against the warm wooden bowl"
+    },
+    {
+      "id": "22",
+      "name_ja": "抹茶",
+      "name_en": "matcha green tea",
+      "syrup_hex": "#5F7142",
+      "filename": "22-matcha.png",
+      "prompt": "Soft watercolor and ink wash illustration of a single matcha tea leaf or two leaves arranged elegantly, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a single matcha tea leaf or two leaves arranged elegantly"
+    },
+    {
+      "id": "23",
+      "name_ja": "コーヒー",
+      "name_en": "coffee (espresso brown)",
+      "syrup_hex": "#4A2E1E",
+      "filename": "23-coffee.png",
+      "prompt": "Soft watercolor and ink wash illustration of a single roasted coffee bean with central crease, simplified, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a single roasted coffee bean with central crease, simplified"
+    },
+    {
+      "id": "24",
+      "name_ja": "紅茶",
+      "name_en": "black tea (amber brown)",
+      "syrup_hex": "#894528",
+      "filename": "24-black-tea.png",
+      "prompt": "Soft watercolor and ink wash illustration of a single black tea leaf or pair of tea leaves arranged elegantly, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a single black tea leaf or pair of tea leaves arranged elegantly"
+    },
+    {
+      "id": "25",
+      "name_ja": "ドラキュラ",
+      "name_en": "dracula (almost black with crimson hint)",
+      "syrup_hex": "#2E1F2E",
+      "filename": "25-dracula.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small minimal stylized bat silhouette with spread wings, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small minimal stylized bat silhouette with spread wings"
+    },
+    {
+      "id": "26",
+      "name_ja": "エイリアン",
+      "name_en": "alien (chartreuse neon green muted)",
+      "syrup_hex": "#6FAA52",
+      "filename": "26-alien.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small minimal flying saucer UFO silhouette with subtle glow, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small minimal flying saucer UFO silhouette with subtle glow"
+    },
+    {
+      "id": "27",
+      "name_ja": "プリンセス",
+      "name_en": "princess (rose pink)",
+      "syrup_hex": "#D688AC",
+      "filename": "27-princess.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small elegant tiara or princess crown silhouette with one ruby, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small elegant tiara or princess crown silhouette with one ruby"
+    },
+    {
+      "id": "28",
+      "name_ja": "王子様",
+      "name_en": "prince (royal blue)",
+      "syrup_hex": "#4868A8",
+      "filename": "28-prince.png",
+      "prompt": "Soft watercolor and ink wash illustration of a small elegant prince's crown silhouette with one sapphire, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a small elegant prince's crown silhouette with one sapphire"
+    },
+    {
+      "id": "29",
+      "name_ja": "パワーエナジー",
+      "name_en": "power energy (vivid red)",
+      "syrup_hex": "#B83A3A",
+      "filename": "29-power-energy.png",
+      "prompt": "Soft watercolor and ink wash illustration of a single stylized lightning bolt with glowing edge, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a single stylized lightning bolt with glowing edge"
+    },
+    {
+      "id": "30",
+      "name_ja": "イナズマジンジャー",
+      "name_en": "thunder ginger (golden amber)",
+      "syrup_hex": "#D6A832",
+      "filename": "30-thunder-ginger.png",
+      "prompt": "Soft watercolor and ink wash illustration of a knobby fresh ginger root with a small lightning accent emerging from it, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a knobby fresh ginger root with a small lightning accent emerging from it"
+    },
+    {
+      "id": "31",
+      "name_ja": "紅いも",
+      "name_en": "beni-imo purple sweet potato",
+      "syrup_hex": "#5C2D5E",
+      "filename": "31-beni-imo.png",
+      "prompt": "Soft watercolor and ink wash illustration of a whole oval purple sweet potato (beni-imo) with subtle skin texture, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
+      "ingredient_en": "a whole oval purple sweet potato (beni-imo) with subtle skin texture"
+    }
+  ],
+  "style_description": "原料/素材を画面右1/3に配置した優しい水彩・墨彩風挿絵。完成したかき氷ではなく、素材そのものを描く。和菓子パッケージや日本画の文法。"
+}

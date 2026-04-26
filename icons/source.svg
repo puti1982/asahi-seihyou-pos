@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  朝日製氷ロゴマーク (P0-01)
+  - 朝陽: 直径 480px の薄い朱（外殻）+ 直径 200px の濃い朱（中央コア） = 「朝日」
+  - 氷: 中央を貫く極細の水平線 3本（上中下） = 「製氷の氷柱」の暗示
+  - 屋号: ヒラギノ明朝 (システム標準)
+  - 背景: 生成り (#FAF5E9)
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+
+  <!-- 朝陽 外殻 (薄い朱) -->
+  <circle cx="512" cy="460" r="240" fill="#B43A2A" opacity="0.10"/>
+  <!-- 朝陽 内殻 -->
+  <circle cx="512" cy="460" r="180" fill="#B43A2A" opacity="0.22"/>
+  <!-- 朝陽 中央コア (濃い朱) -->
+  <circle cx="512" cy="460" r="100" fill="#8E2C1F"/>
+
+  <!-- 氷を暗示する極細水平線 3本 (墨) -->
+  <line x1="232" y1="448" x2="792" y2="448" stroke="#1C1813" stroke-width="2" opacity="0.85"/>
+  <line x1="272" y1="464" x2="752" y2="464" stroke="#1C1813" stroke-width="1.5" opacity="0.55"/>
+  <line x1="312" y1="478" x2="712" y2="478" stroke="#1C1813" stroke-width="1" opacity="0.35"/>
+
+  <!-- 屋号 -->
+  <text x="512" y="800" font-family="Hiragino Mincho ProN, YuMincho, serif" font-size="108" font-weight="600" letter-spacing="6" text-anchor="middle" fill="#1C1813">朝日製氷</text>
+</svg>

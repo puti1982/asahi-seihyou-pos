@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <!-- saucer shadow -->
+    <ellipse cx="722" cy="550" rx="125" ry="22" fill="#6FAA52" opacity="0.28" filter="url(#softer)"/>
+    <!-- saucer disk -->
+    <ellipse cx="720" cy="545" rx="118" ry="20" fill="#6FAA52" opacity="0.78"/>
+    <!-- bottom darker rim -->
+    <ellipse cx="720" cy="552" rx="108" ry="13" fill="#1C1813" opacity="0.5"/>
+    <!-- top dome -->
+    <path d="M 660 540 Q 660 480 720 478 Q 780 480 780 540 Z" fill="#6FAA52" opacity="0.55"/>
+    <path d="M 670 538 Q 670 488 720 486 Q 770 488 770 538 Z" fill="#FFFFFF" opacity="0.4"/>
+    <!-- alien head silhouette inside dome -->
+    <ellipse cx="720" cy="510" rx="16" ry="20" fill="#5F7142" opacity="0.55"/>
+    <ellipse cx="713" cy="506" rx="3" ry="5" fill="#1C1813" opacity="0.85"/>
+    <ellipse cx="727" cy="506" rx="3" ry="5" fill="#1C1813" opacity="0.85"/>
+    <!-- lights on saucer -->
+    <circle cx="678" cy="552" r="4" fill="#E8C440" opacity="0.95"/>
+    <circle cx="700" cy="556" r="4" fill="#E8C440" opacity="0.95"/>
+    <circle cx="720" cy="558" r="4" fill="#E8C440" opacity="0.95"/>
+    <circle cx="740" cy="556" r="4" fill="#E8C440" opacity="0.95"/>
+    <circle cx="762" cy="552" r="4" fill="#E8C440" opacity="0.95"/>
+    <!-- abduction beam -->
+    <path d="M 685 565 L 660 625 L 780 625 L 755 565 Z" fill="#6FAA52" opacity="0.18"/>
+    <path d="M 695 567 L 680 615 L 760 615 L 745 567 Z" fill="#6FAA52" opacity="0.12"/>
+    <!-- stars -->
+    <g fill="#FFFFFF" opacity="0.85">
+      <path d="M 640 425 L 642 432 L 649 432 L 643 437 L 645 444 L 640 440 L 635 444 L 637 437 L 631 432 L 638 432 Z"/>
+      <circle cx="800" cy="440" r="2"/>
+      <circle cx="660" cy="478" r="1.5"/>
+      <circle cx="780" cy="465" r="1.5"/>
+    </g>
+  </g>
+</svg>

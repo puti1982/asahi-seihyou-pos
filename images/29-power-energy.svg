@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <path d="M 760 410 L 692 510 L 738 510 L 678 615 L 718 520 L 685 520 Z" fill="#B83A3A" opacity="0.32" filter="url(#softer)" transform="translate(3 4)"/>
+    <path d="M 760 410 L 692 510 L 738 510 L 678 615 L 718 520 L 685 520 Z" fill="#B83A3A" opacity="0.85"/>
+    <path d="M 760 410 L 692 510 L 738 510 L 678 615 L 718 520 L 685 520 Z" fill="#B83A3A" opacity="0.55"/>
+    <path d="M 760 410 L 692 510 L 738 510 L 678 615 L 718 520 L 685 520 Z" stroke="#1C1813" stroke-width="1.5" fill="none" opacity="0.45" stroke-linejoin="round"/>
+    <!-- inner highlight on bolt -->
+    <path d="M 754 416 L 710 510" stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.55" stroke-linecap="round"/>
+    <path d="M 728 525 L 692 590" stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.5" stroke-linecap="round"/>
+    <!-- spark dots -->
+    <circle cx="690" cy="380" r="3" fill="#B83A3A" opacity="0.7"/>
+    <circle cx="800" cy="450" r="4" fill="#B83A3A" opacity="0.7"/>
+    <circle cx="660" cy="540" r="3" fill="#B83A3A" opacity="0.7"/>
+  </g>
+</svg>

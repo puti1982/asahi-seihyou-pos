@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <!-- crown leaves (spiky) -->
+    <g fill="#7B9560" opacity="0.88">
+      <path d="M 720 420 L 700 360 L 712 415 Z"/>
+      <path d="M 720 420 L 685 350 L 705 412 Z"/>
+      <path d="M 720 420 L 720 340 L 728 418 Z"/>
+      <path d="M 720 420 L 740 350 L 728 415 Z"/>
+      <path d="M 720 420 L 755 360 L 738 412 Z"/>
+      <path d="M 720 420 L 668 380 L 695 415 Z"/>
+      <path d="M 720 420 L 772 380 L 748 415 Z"/>
+    </g>
+    <g fill="#5F7142" opacity="0.7">
+      <path d="M 720 420 L 712 365 L 720 410 Z"/>
+      <path d="M 720 420 L 728 365 L 720 410 Z"/>
+    </g>
+    <!-- body -->
+    <ellipse cx="722" cy="535" rx="80" ry="105" fill="#4E9A85" opacity="0.25" filter="url(#softer)"/>
+    <ellipse cx="720" cy="532" rx="74" ry="100" fill="#4E9A85" opacity="0.62"/>
+    <ellipse cx="717" cy="529" rx="62" ry="88" fill="#4E9A85" opacity="0.4"/>
+    <!-- diamond pattern grid -->
+    <g stroke="#5F7142" stroke-width="1.4" fill="none" opacity="0.55">
+      <path d="M 660 460 L 720 480 L 780 460"/>
+      <path d="M 660 495 L 720 515 L 780 495"/>
+      <path d="M 660 530 L 720 550 L 780 530"/>
+      <path d="M 660 565 L 720 585 L 780 565"/>
+      <path d="M 660 600 L 720 620 L 780 600"/>
+    </g>
+    <g stroke="#5F7142" stroke-width="1" fill="none" opacity="0.45">
+      <path d="M 660 460 L 720 440 L 780 460"/>
+      <path d="M 660 495 L 720 478 L 780 495"/>
+      <path d="M 660 530 L 720 513 L 780 530"/>
+      <path d="M 660 565 L 720 548 L 780 565"/>
+      <path d="M 660 600 L 720 583 L 780 600"/>
+    </g>
+    <ellipse cx="682" cy="510" rx="14" ry="30" fill="#FFFFFF" opacity="0.4" transform="rotate(-15 682 510)"/>
+  </g>
+</svg>

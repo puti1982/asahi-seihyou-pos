@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <path d="M 720 608 C 678 600 654 555 654 490 C 654 438 676 408 702 405 C 712 404 718 412 720 422 C 722 412 728 404 738 405 C 764 408 786 438 786 490 C 786 555 762 600 720 608 Z" fill="#D67285" opacity="0.25" filter="url(#softer)" transform="translate(2 3)"/>
+<path d="M 720 608 C 678 600 654 555 654 490 C 654 438 676 408 702 405 C 712 404 718 412 720 422 C 722 412 728 404 738 405 C 764 408 786 438 786 490 C 786 555 762 600 720 608 Z" fill="#D67285" opacity="0.62"/>
+<path d="M 720 608 C 678 600 654 555 654 490 C 654 438 676 408 702 405 C 712 404 718 412 720 422 C 722 412 728 404 738 405 C 764 408 786 438 786 490 C 786 555 762 600 720 608 Z" fill="#D67285" opacity="0.4"/>
+    <!-- seeds -->
+    <g fill="#6B2820" opacity="0.7">
+      <ellipse cx="688" cy="450" rx="2.2" ry="4" transform="rotate(-25 688 450)"/>
+      <ellipse cx="710" cy="442" rx="2.2" ry="4" transform="rotate(-10 710 442)"/>
+      <ellipse cx="734" cy="445" rx="2.2" ry="4" transform="rotate(8 734 445)"/>
+      <ellipse cx="754" cy="455" rx="2.2" ry="4" transform="rotate(20 754 455)"/>
+      <ellipse cx="678" cy="488" rx="2.2" ry="4" transform="rotate(-25 678 488)"/>
+      <ellipse cx="703" cy="478" rx="2.2" ry="4" transform="rotate(-8 703 478)"/>
+      <ellipse cx="730" cy="478" rx="2.2" ry="4" transform="rotate(8 730 478)"/>
+      <ellipse cx="756" cy="490" rx="2.2" ry="4" transform="rotate(22 756 490)"/>
+      <ellipse cx="685" cy="525" rx="2.2" ry="4" transform="rotate(-15 685 525)"/>
+      <ellipse cx="715" cy="518" rx="2.2" ry="4"/>
+      <ellipse cx="745" cy="525" rx="2.2" ry="4" transform="rotate(15 745 525)"/>
+      <ellipse cx="700" cy="558" rx="2.2" ry="4" transform="rotate(-10 700 558)"/>
+      <ellipse cx="730" cy="558" rx="2.2" ry="4" transform="rotate(10 730 558)"/>
+    </g>
+    <!-- 5 sepals (calyx) radiating from top center (720,410) -->
+    <g fill="#7B9560" opacity="0.92">
+      <path d="M 718 416 L 678 396 L 716 408 Z"/>
+      <path d="M 712 414 L 695 372 L 720 410 Z"/>
+      <path d="M 716 410 L 720 358 L 724 410 Z"/>
+      <path d="M 728 414 L 745 372 L 720 410 Z"/>
+      <path d="M 722 416 L 762 396 L 724 408 Z"/>
+    </g>
+    <g fill="#5F7142" opacity="0.6">
+      <path d="M 716 410 L 720 365 L 722 410 Z"/>
+    </g>
+    <!-- stem -->
+    <path d="M 720 360 L 720 342" stroke="#7A4F2E" stroke-width="3" stroke-linecap="round"/>
+    <!-- highlights -->
+    <ellipse cx="685" cy="470" rx="11" ry="22" fill="#FFFFFF" opacity="0.45" transform="rotate(-15 685 470)"/>
+    <ellipse cx="680" cy="458" rx="5" ry="10" fill="#FFFFFF" opacity="0.8" transform="rotate(-15 680 458)"/>
+  </g>
+</svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.035 0"/>
+    </filter>
+    <radialGradient id="light" cx="35%" cy="32%" r="85%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FAF5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#FAF5E9"/>
+  <rect width="1024" height="1024" filter="url(#grain)" opacity="0.55"/>
+  <rect width="1024" height="1024" fill="url(#light)"/>
+
+  <g>
+    <!-- 接地影 -->
+    <ellipse cx="722" cy="610" rx="108" ry="14" fill="#1C1813" opacity="0.18" filter="url(#softer)"/>
+
+    <!-- 木の器 外側ボディ -->
+    <path d="M 622 515 Q 612 595 720 605 Q 828 595 818 515 Z" fill="#8B5E32" opacity="0.95"/>
+    <!-- 木目テクスチャ -->
+    <g stroke="#5C3A20" stroke-width="0.9" fill="none" opacity="0.5">
+      <path d="M 638 540 Q 720 558 802 540"/>
+      <path d="M 640 568 Q 720 583 800 568"/>
+      <path d="M 650 593 Q 720 602 790 593"/>
+    </g>
+    <!-- 器の左側ハイライト(立体感) -->
+    <path d="M 632 525 Q 624 590 700 600" stroke="#A87D52" stroke-width="6" fill="none" opacity="0.7" stroke-linecap="round"/>
+    <!-- 器の輪郭線(濃い茶) -->
+    <path d="M 622 515 Q 612 595 720 605 Q 828 595 818 515" stroke="#3A2515" stroke-width="2.6" fill="none" opacity="0.78"/>
+
+    <!-- 器の内側(縁を超えて見える奥の影) -->
+    <path d="M 638 525 Q 632 588 720 598 Q 808 588 802 525 Z" fill="#3A2515" opacity="0.55"/>
+
+    <!-- 器の上縁(ウッドリム) -->
+    <ellipse cx="720" cy="515" rx="100" ry="15" fill="#A87D52" opacity="0.95"/>
+    <ellipse cx="720" cy="515" rx="100" ry="15" fill="none" stroke="#3A2515" stroke-width="2.4" opacity="0.78"/>
+    <ellipse cx="720" cy="513" rx="93" ry="11" fill="none" stroke="#5C3A20" stroke-width="1.2" opacity="0.55"/>
+
+    <!-- ヨーグルト表面(白く広く見える) -->
+    <ellipse cx="720" cy="515" rx="88" ry="11.5" fill="#FFFFFF" opacity="0.98"/>
+
+    <!-- ヨーグルト本体(器内の白) -->
+    <path d="M 642 525 Q 638 580 720 590 Q 802 580 798 525 Z" fill="#FAF7EE" opacity="0.85"/>
+
+    <!-- ヨーグルト表面の微妙な層感 -->
+    <ellipse cx="720" cy="515" rx="74" ry="9" fill="#F5F0DC" opacity="0.55"/>
+    <ellipse cx="715" cy="513" rx="48" ry="5" fill="#FFFFFF" opacity="0.95"/>
+    <ellipse cx="710" cy="511" rx="28" ry="2.5" fill="#FFFFFF" opacity="1"/>
+
+    <!-- 中央のへこみ(輪) -->
+    <ellipse cx="720" cy="514" rx="55" ry="6" fill="none" stroke="#E5DAC0" stroke-width="0.7" opacity="0.55"/>
+
+    <!-- 木のスプーン(左に飛び出す) -->
+    <g transform="translate(625 478) rotate(-32)">
+      <rect x="-3.5" y="0" width="7" height="70" fill="#A87D52" opacity="0.95" rx="2"/>
+      <line x1="-2" y1="3" x2="-2" y2="67" stroke="#7A4F2E" stroke-width="1" opacity="0.65"/>
+      <ellipse cx="0" cy="-15" rx="16" ry="23" fill="#A87D52" opacity="0.95"/>
+      <ellipse cx="0" cy="-15" rx="16" ry="23" fill="none" stroke="#3A2515" stroke-width="1.4" opacity="0.78"/>
+      <!-- スプーン上の白いヨーグルト -->
+      <ellipse cx="0" cy="-13" rx="11.5" ry="18" fill="#FFFFFF" opacity="0.98"/>
+      <ellipse cx="-3" cy="-18" rx="3" ry="7" fill="#FFFFFF" opacity="0.85"/>
+    </g>
+
+    <!-- スプーンから垂れる滴 -->
+    <path d="M 612 522 Q 614 535 618 545" stroke="#FFFFFF" stroke-width="3.5" fill="none" opacity="0.95" stroke-linecap="round"/>
+    <ellipse cx="618" cy="548" rx="4" ry="5.5" fill="#FFFFFF" opacity="0.95"/>
+
+    <!-- 器の下部に追加の影で重みを出す -->
+    <path d="M 660 595 Q 720 605 780 595" stroke="#3A2515" stroke-width="2.5" fill="none" opacity="0.55"/>
+  </g>
+</svg>

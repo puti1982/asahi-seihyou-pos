@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1366, initial-scale=1.0">
+<title>朝日製氷 — POS</title>
+<style>
+  :root {
+    --bg:        #FAF5E9;
+    --bg-2:      #F4EDDB;
+    --paper:     #FFFFFF;
+    --ink:       #1C1813;
+    --ink-2:     #4A4239;
+    --ink-3:     #8A8175;
+    --line:      #E5DAC0;
+    --line-2:    #CFC1A2;
+    --shu:       #B43A2A;
+    --shu-2:     #8E2C1F;
+    --ai:        #1F3A5F;
+    --matcha:    #5F7142;
+
+    --serif: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+    --sans:  "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+    --num:   "Hiragino Mincho ProN", Georgia, "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--bg);
+    background-image: radial-gradient(circle at 1px 1px, rgba(28,24,19,0.025) 1px, transparent 0);
+    background-size: 3px 3px;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    display: grid;
+    grid-template-rows: 76px 1fr;
+    height: 100vh;
+    max-width: 1440px;
+    margin: 0 auto;
+    background: var(--paper);
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+
+  /* ========== Header ========== */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 28px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .sun-mark {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--shu);
+    box-shadow: 0 0 0 4px rgba(180,58,42,0.08);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1; }
+  .brand-name {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .brand-en {
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    color: var(--ink-3);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+  .header-meta { display: flex; align-items: center; gap: 28px; }
+  .clock {
+    font-family: var(--num);
+    font-size: 13px;
+    color: var(--ink-2);
+    letter-spacing: 0.1em;
+  }
+  .clock .sep { opacity: 0.4; margin: 0 6px; }
+  .header-buttons { display: flex; gap: 22px; }
+  .ledger-link {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    padding: 8px 0;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--ink);
+    transition: color 0.2s;
+  }
+  .ledger-link:hover { color: var(--shu); border-bottom-color: var(--shu); }
+
+  /* ========== Views ========== */
+  .view { display: none; min-height: 0; }
+  .view.active { display: grid; }
+  .view-pos { grid-template-columns: 480px 1fr; }
+  .view-ledger, .view-settings { grid-template-columns: 1fr; }
+
+  /* ========== LEFT: Cart Panel ========== */
+  .cart-panel {
+    display: flex; flex-direction: column;
+    background: var(--bg);
+    border-right: 1px solid var(--line);
+    min-height: 0;
+  }
+  .cart-header { padding: 22px 26px 16px; border-bottom: 1px solid var(--line); }
+  .section-label {
+    font-family: var(--serif);
+    font-size: 16px;
+    letter-spacing: 0.18em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 18px; height: 1px;
+    background: var(--ink);
+  }
+  .section-en {
+    font-size: 9px; color: var(--ink-3);
+    letter-spacing: 0.3em;
+    margin-top: 4px;
+    margin-left: 28px;
+    text-transform: uppercase;
+  }
+  .cart-list { flex: 1; overflow-y: auto; padding: 14px 18px; }
+  .cart-list::-webkit-scrollbar { width: 4px; }
+  .cart-list::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 2px; }
+  .empty-cart {
+    text-align: center;
+    color: var(--ink-3);
+    padding: 80px 20px;
+    font-family: var(--serif);
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    line-height: 2;
+  }
+  .empty-cart .glyph {
+    display: block;
+    font-size: 36px;
+    color: var(--line-2);
+    margin-bottom: 14px;
+    font-family: var(--serif);
+  }
+  .cart-item {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    margin-bottom: 8px;
+    padding: 14px 16px 12px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .cart-item:hover { border-color: var(--line-2); }
+  .cart-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--flavor-color, var(--ink));
+  }
+  .item-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .item-name {
+    font-family: var(--serif);
+    font-size: 18px; font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  .item-price {
+    font-family: var(--num);
+    font-size: 18px; font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .item-price .yen { font-size: 13px; opacity: 0.65; margin-right: 1px; }
+  .toppings { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .topping-chip {
+    flex: 1 1 calc(33.333% - 4px);
+    min-width: 0;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 7px 4px;
+    font-size: 11px;
+    color: var(--ink-2);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  .topping-chip:hover { border-color: var(--ink-3); }
+  .topping-chip.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .topping-chip .topping-add {
+    display: block;
+    font-family: var(--num);
+    font-size: 10px;
+    margin-top: 2px;
+    opacity: 0.65;
+  }
+  .topping-chip.active .topping-add { opacity: 0.7; }
+  .item-foot { display: flex; justify-content: flex-end; margin-top: 8px; }
+  .delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--ink-3);
+    cursor: pointer;
+    font-family: var(--serif);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    border-bottom: 1px solid transparent;
+  }
+  .delete-btn:hover { color: var(--shu); border-bottom-color: var(--shu); }
+
+  /* ========== Checkout ========== */
+  .checkout {
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    padding: 18px 22px 22px;
+  }
+  .totalbar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 8px 0 14px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 16px;
+  }
+  .totalbar .lbl { font-family: var(--serif); font-size: 15px; letter-spacing: 0.18em; }
+  .totalbar .val { font-family: var(--num); font-size: 32px; font-weight: 600; }
+  .totalbar .val .yen { font-size: 18px; opacity: 0.6; margin-right: 2px; }
+  .receive-block { margin-bottom: 12px; }
+  .receive-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .receive-row .lbl {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--ink-2);
+    letter-spacing: 0.14em;
+  }
+  .receive-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 11px 14px;
+    font-family: var(--num);
+    font-size: 22px; font-weight: 600;
+    text-align: right;
+    transition: all 0.2s;
+  }
+  .receive-input::placeholder { color: var(--ink-3); font-weight: 400; opacity: 0.7; }
+  .receive-input:focus {
+    outline: none;
+    border-color: var(--ink);
+    background: var(--paper);
+  }
+  .quick-amounts {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .quick-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 9px 0;
+    font-family: var(--num);
+    font-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: all 0.15s;
+    font-feature-settings: "tnum";
+  }
+  .quick-btn:hover { background: var(--bg); border-color: var(--ink); }
+  .quick-btn.clear {
+    color: var(--ink-3);
+    font-family: var(--serif);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+  }
+  .change-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 0 16px;
+  }
+  .change-row .lbl { font-family: var(--serif); font-size: 14px; color: var(--ink-2); letter-spacing: 0.18em; }
+  .change-row .val {
+    font-family: var(--num);
+    font-size: 24px; font-weight: 600;
+    color: var(--shu);
+  }
+  .change-row .val .yen { font-size: 14px; opacity: 0.7; margin-right: 2px; }
+  .cta {
+    width: 100%;
+    background: var(--ink);
+    color: var(--bg);
+    border: 1px solid var(--ink);
+    padding: 16px;
+    font-family: var(--serif);
+    font-size: 17px; font-weight: 600;
+    letter-spacing: 0.6em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-indent: 0.6em;
+  }
+  .cta:hover { background: var(--shu); border-color: var(--shu); }
+  .cta:disabled {
+    background: transparent;
+    color: var(--ink-3);
+    border-color: var(--line);
+    cursor: not-allowed;
+  }
+  .cta:disabled:hover { background: transparent; }
+
+  /* ========== Flavor Grid ========== */
+  .flavor-panel {
+    display: flex; flex-direction: column;
+    min-height: 0;
+    background: var(--paper);
+  }
+  .flavor-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 22px 30px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .flavor-title { display: flex; align-items: baseline; gap: 14px; }
+  .flavor-title .ja {
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: 0.22em;
+    font-weight: 600;
+  }
+  .flavor-title .en {
+    font-size: 9px; color: var(--ink-3);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+  .price-rule {
+    display: flex; align-items: baseline; gap: 10px;
+    border: 1px solid var(--ink);
+    padding: 5px 14px;
+  }
+  .price-rule .word { font-family: var(--serif); font-size: 11px; letter-spacing: 0.32em; }
+  .price-rule .num { font-family: var(--num); font-size: 17px; font-weight: 600; }
+  .price-rule .num .yen { font-size: 11px; opacity: 0.6; margin-right: 1px; }
+  .price-rule.hidden { display: none; }
+  .flavor-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: column;
+    gap: 1px;
+    padding: 0 30px 24px;
+    margin-top: 24px;
+    background: var(--line);
+  }
+  .flavor-cell {
+    background: var(--paper);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex; flex-direction: column;
+    align-items: stretch; justify-content: space-between;
+    text-align: left;
+    transition: background 0.15s;
+    position: relative;
+    overflow: hidden;
+    min-height: 70px;
+  }
+  .flavor-cell::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--flavor-color);
+    opacity: 0.95;
+  }
+  .flavor-cell:hover { background: var(--bg); }
+  .flavor-cell:active::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--shu);
+    opacity: 0.08;
+    animation: pulse 0.3s ease-out;
+  }
+  @keyframes pulse { from { opacity: 0.18; } to { opacity: 0; } }
+  .flavor-num {
+    font-family: var(--num);
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .flavor-name {
+    font-family: var(--serif);
+    font-size: 15px; font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+    margin-top: auto;
+  }
+  .flavor-priceTag {
+    font-family: var(--num);
+    font-size: 11px;
+    color: var(--ink-2);
+    margin-top: 3px;
+  }
+  .flavor-priceTag .yen { font-size: 9px; opacity: 0.6; margin-right: 1px; }
+
+  /* ========== Today modal ========== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(28,24,19,0.55);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    width: 480px;
+    max-width: 92vw;
+    padding: 32px 36px;
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+  .modal-title {
+    font-family: var(--serif);
+    font-size: 19px;
+    letter-spacing: 0.22em;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .modal-title-en {
+    font-size: 9px; color: var(--ink-3);
+    letter-spacing: 0.32em;
+    margin-left: 12px;
+    text-transform: uppercase;
+  }
+  .today-date {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--ink-2);
+    letter-spacing: 0.1em;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+  .breakdown { margin-top: 14px; }
+  .bd-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 12px;
+    align-items: baseline;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--num);
+    font-size: 14px;
+  }
+  .bd-row .name { font-family: var(--serif); font-size: 14px; letter-spacing: 0.08em; }
+  .bd-row .unit { color: var(--ink-3); font-size: 12px; min-width: 50px; text-align: right; }
+  .bd-row .qty { font-weight: 600; min-width: 55px; text-align: right; }
+  .bd-row .qty .x { color: var(--ink-3); font-size: 11px; margin-right: 2px; }
+  .bd-row .sum { font-weight: 600; min-width: 80px; text-align: right; }
+  .bd-row .sum .yen { font-size: 11px; opacity: 0.6; margin-right: 1px; }
+  .bd-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 0 6px;
+    margin-top: 8px;
+    border-top: 2px solid var(--ink);
+  }
+  .bd-total .lbl { font-family: var(--serif); font-size: 14px; letter-spacing: 0.22em; }
+  .bd-total .val { font-family: var(--num); font-size: 26px; font-weight: 600; }
+  .bd-total .val .yen { font-size: 14px; opacity: 0.6; margin-right: 2px; }
+  .bd-meta {
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    text-align: right;
+  }
+  .modal-actions {
+    display: flex; gap: 10px;
+    margin-top: 24px;
+  }
+  .modal-actions button {
+    flex: 1;
+    padding: 13px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    font-family: var(--serif);
+    font-size: 13px;
+    cursor: pointer;
+    letter-spacing: 0.18em;
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+  .modal-actions button:hover { background: var(--bg); }
+  .modal-actions .primary {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .modal-actions .primary:hover { background: var(--shu); border-color: var(--shu); }
+
+  /* ========== Ledger / Settings shared shell ========== */
+  .doc-wrap {
+    overflow-y: auto;
+    padding: 32px 48px 60px;
+    max-width: 1040px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .doc-back {
+    background: transparent;
+    border: none;
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--ink-2);
+    cursor: pointer;
+    padding: 0;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--ink-3);
+  }
+  .doc-back:hover { color: var(--shu); border-bottom-color: var(--shu); }
+  .doc-headline {
+    margin-top: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .doc-headline .ja {
+    font-family: var(--serif);
+    font-size: 28px;
+    letter-spacing: 0.22em;
+    font-weight: 600;
+  }
+  .doc-headline .en {
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    margin-left: 14px;
+  }
+  .doc-section-title {
+    font-family: var(--serif);
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    margin: 36px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .doc-section-title .count {
+    font-family: var(--num);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ========== Ledger ========== */
+  .period-presets {
+    display: flex; gap: 6px;
+    margin-bottom: 18px;
+    margin-top: 24px;
+  }
+  .preset-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 6px 14px;
+    font-family: var(--serif);
+    font-size: 12px;
+    color: var(--ink-2);
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .preset-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .period-block {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 18px;
+  }
+  .period-block .lbl {
+    font-family: var(--serif);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--ink-2);
+    margin-right: 8px;
+  }
+  .date-input {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    padding: 10px 13px;
+    font-family: var(--num);
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .date-input:focus { outline: none; border-color: var(--ink); }
+  .period-tilde { font-family: var(--serif); color: var(--ink-3); }
+  .period-go {
+    margin-left: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    border: 1px solid var(--ink);
+    padding: 9px 22px;
+    font-family: var(--serif);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    cursor: pointer;
+  }
+  .period-go:hover { background: var(--shu); border-color: var(--shu); }
+  .total-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 28px 32px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+  .total-card .lbl {
+    font-family: var(--serif);
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    color: var(--ink-2);
+  }
+  .total-card .val {
+    font-family: var(--num);
+    font-size: 48px;
+    font-weight: 600;
+  }
+  .total-card .val .yen { font-size: 24px; opacity: 0.55; margin-right: 4px; }
+  .total-card .meta {
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.1em;
+    grid-column: 1 / -1;
+    margin-top: 10px;
+  }
+  .breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .breakdown-table th, .breakdown-table td {
+    padding: 11px 8px;
+    text-align: right;
+    font-family: var(--num);
+    font-size: 13px;
+    border-bottom: 1px solid var(--line);
+  }
+  .breakdown-table th {
+    font-family: var(--serif);
+    font-weight: 600;
+    color: var(--ink-2);
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    text-align: right;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .breakdown-table td:first-child, .breakdown-table th:first-child {
+    text-align: left;
+    font-family: var(--serif);
+  }
+  .breakdown-table tr:hover td { background: var(--bg); }
+  .breakdown-table .yen { font-size: 10px; opacity: 0.6; }
+
+  /* ========== Settings ========== */
+  .settings-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .settings-table th, .settings-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .settings-table th {
+    font-family: var(--serif);
+    text-align: left;
+    font-size: 11px;
+    color: var(--ink-2);
+    letter-spacing: 0.12em;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .settings-table td.col-num {
+    font-family: var(--num);
+    font-size: 12px;
+    color: var(--ink-3);
+    width: 32px;
+    text-align: center;
+  }
+  .settings-table td.col-color { width: 44px; }
+  .settings-table td.col-actions { width: 180px; }
+  .settings-table td.col-price { width: 130px; }
+  .settings-table .name-input {
+    border: 1px solid transparent;
+    background: transparent;
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 9px 10px;
+    width: 100%;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .settings-table .price-input {
+    border: 1px solid transparent;
+    background: transparent;
+    font-family: var(--num);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 9px 10px;
+    width: 100%;
+    color: var(--ink);
+    text-align: right;
+  }
+  .settings-table input.name-input:hover,
+  .settings-table input.price-input:hover {
+    background: var(--bg);
+  }
+  .settings-table input.name-input:focus,
+  .settings-table input.price-input:focus {
+    outline: none;
+    border-color: var(--ink);
+    background: var(--paper);
+  }
+  .settings-table input[type="color"] {
+    width: 32px; height: 32px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    padding: 0;
+    background: transparent;
+  }
+  .row-actions {
+    display: flex; gap: 4px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .icon-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 5px 10px;
+    font-family: var(--serif);
+    font-size: 11px;
+    color: var(--ink-2);
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    min-width: 30px;
+  }
+  .icon-btn:hover { background: var(--bg); border-color: var(--ink); color: var(--ink); }
+  .icon-btn.danger:hover { color: var(--shu); border-color: var(--shu); }
+  .icon-btn.arrow {
+    font-family: var(--num);
+    font-size: 13px;
+    padding: 4px 7px;
+    line-height: 1;
+  }
+  .add-row-btn {
+    background: transparent;
+    border: 1px dashed var(--line-2);
+    padding: 14px;
+    width: 100%;
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--ink-2);
+    letter-spacing: 0.18em;
+    cursor: pointer;
+    margin: 12px 0 4px;
+    transition: all 0.15s;
+  }
+  .add-row-btn:hover {
+    background: var(--bg);
+    border-color: var(--ink);
+    color: var(--ink);
+    border-style: solid;
+  }
+  .data-actions {
+    display: flex; gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .data-actions button {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 12px 20px;
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    letter-spacing: 0.16em;
+    transition: all 0.15s;
+  }
+  .data-actions button:hover { background: var(--bg); border-color: var(--ink); }
+  .data-actions button.danger:hover { color: var(--shu); border-color: var(--shu); }
+  .saved-flash {
+    animation: flashSaved 0.6s ease-out;
+  }
+  @keyframes flashSaved {
+    0% { background: rgba(95,113,66,0.18); }
+    100% { background: transparent; }
+  }
+  .info-note {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.05em;
+    margin-top: 10px;
+    line-height: 1.7;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; top: 28px; left: 50%;
+    transform: translateX(-50%) translateY(-120px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 14px 28px;
+    font-family: var(--serif);
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    border: 1px solid var(--ink);
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    z-index: 200;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <div class="sun-mark"></div>
+      <div class="brand-text">
+        <div class="brand-name">朝日製氷</div>
+        <div class="brand-en">Asahi&nbsp;&nbsp;Seihyō</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="clock" id="clock"></div>
+      <div class="header-buttons" id="header-buttons">
+        <button class="ledger-link" onclick="openToday()">売上帳</button>
+        <button class="ledger-link" onclick="goSettings()">設定</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- View: POS -->
+  <div class="view view-pos active" id="view-pos">
+    <aside class="cart-panel">
+      <div class="cart-header">
+        <div class="section-label">御注文</div>
+        <div class="section-en">Order</div>
+      </div>
+      <div class="cart-list" id="cart-list"></div>
+      <div class="checkout">
+        <div class="totalbar">
+          <div class="lbl">御会計</div>
+          <div class="val"><span class="yen">¥</span><span id="subtotal">0</span></div>
+        </div>
+        <div class="receive-block">
+          <div class="receive-row">
+            <div class="lbl">お預かり</div>
+          </div>
+          <input type="number" inputmode="numeric" class="receive-input" id="received" placeholder="0">
+          <div class="quick-amounts">
+            <button class="quick-btn" data-add="500">+500</button>
+            <button class="quick-btn" data-add="1000">+1,000</button>
+            <button class="quick-btn" data-add="5000">+5,000</button>
+            <button class="quick-btn" data-add="10000">+10,000</button>
+            <button class="quick-btn clear" data-clear>消去</button>
+          </div>
+        </div>
+        <div class="change-row">
+          <div class="lbl">御釣銭</div>
+          <div class="val"><span class="yen">¥</span><span id="change">0</span></div>
+        </div>
+        <button class="cta" id="checkout" disabled>御 会 計</button>
+      </div>
+    </aside>
+
+    <main class="flavor-panel">
+      <div class="flavor-header">
+        <div class="flavor-title">
+          <span class="ja">品書</span>
+          <span class="en">Shinagaki</span>
+        </div>
+        <div class="price-rule" id="price-rule">
+          <span class="word">全 品</span>
+          <span class="num"><span class="yen">¥</span><span id="rule-price">250</span></span>
+        </div>
+      </div>
+      <div class="flavor-grid" id="flavor-grid"></div>
+    </main>
+  </div>
+
+  <!-- View: Ledger detail -->
+  <div class="view view-ledger" id="view-ledger">
+    <div class="doc-wrap">
+      <button class="doc-back" onclick="goPos()">← レジに戻る</button>
+      <div class="doc-headline">
+        <div>
+          <span class="ja">売上詳細</span>
+          <span class="en">Sales Ledger</span>
+        </div>
+      </div>
+      <div class="period-presets">
+        <button class="preset-btn" onclick="setPreset(7)">直近7日</button>
+        <button class="preset-btn" onclick="setPreset(30)">直近30日</button>
+        <button class="preset-btn" onclick="setPreset(90)">直近90日</button>
+        <button class="preset-btn" onclick="setPreset('month')">今月</button>
+        <button class="preset-btn" onclick="setPreset('all')">全期間</button>
+      </div>
+      <div class="period-block">
+        <span class="lbl">期間</span>
+        <input type="date" class="date-input" id="ledger-from">
+        <span class="period-tilde">〜</span>
+        <input type="date" class="date-input" id="ledger-to">
+        <button class="period-go" onclick="renderLedger()">集計</button>
+      </div>
+      <div class="total-card">
+        <div class="lbl">期 間 合 計</div>
+        <div class="val"><span class="yen">¥</span><span id="ledger-total">0</span></div>
+        <div class="meta" id="ledger-meta">取引 0 件 / 平均 ¥0</div>
+      </div>
+      <div class="doc-section-title">項目別 内訳</div>
+      <table class="breakdown-table">
+        <thead>
+          <tr><th>項目</th><th>単価</th><th>個数</th><th>小計</th></tr>
+        </thead>
+        <tbody id="breakdown-body"></tbody>
+      </table>
+      <div class="doc-section-title">日別 売上</div>
+      <table class="breakdown-table">
+        <thead id="daily-thead"></thead>
+        <tbody id="daily-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- View: Settings -->
+  <div class="view view-settings" id="view-settings">
+    <div class="doc-wrap">
+      <button class="doc-back" onclick="goPos()">← レジに戻る</button>
+      <div class="doc-headline">
+        <div>
+          <span class="ja">設定</span>
+          <span class="en">Settings</span>
+        </div>
+      </div>
+
+      <!-- 品書き -->
+      <div class="doc-section-title">
+        <span>品書き</span>
+        <span class="count" id="flavor-count"></span>
+      </div>
+      <table class="settings-table">
+        <thead>
+          <tr>
+            <th style="width:32px;">順</th>
+            <th style="width:48px;">色</th>
+            <th>品名</th>
+            <th style="text-align:right; width:120px;">価格 (円)</th>
+            <th style="width:200px;"></th>
+          </tr>
+        </thead>
+        <tbody id="settings-flavors"></tbody>
+      </table>
+      <button class="add-row-btn" onclick="addFlavor()">＋ 新しい品を追加</button>
+
+      <!-- トッピング -->
+      <div class="doc-section-title">
+        <span>トッピング</span>
+        <span class="count" id="topping-count"></span>
+      </div>
+      <table class="settings-table">
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th style="text-align:right; width:160px;">追加金額 (円)</th>
+            <th style="width:120px;"></th>
+          </tr>
+        </thead>
+        <tbody id="settings-toppings"></tbody>
+      </table>
+      <button class="add-row-btn" onclick="addTopping()">＋ 新しいトッピングを追加</button>
+
+      <!-- データ管理 -->
+      <div class="doc-section-title">
+        <span>データ管理</span>
+      </div>
+      <div class="data-actions">
+        <button onclick="exportJSON()">JSONバックアップを書き出し</button>
+        <button onclick="importJSON()">JSONバックアップから復元</button>
+        <button class="danger" onclick="resetSampleData()">サンプル取引履歴を削除</button>
+        <button class="danger" onclick="clearAllSales()">全ての販売履歴を消去</button>
+        <button class="danger" onclick="resetSettings()">品書き・トッピングを初期値に戻す</button>
+      </div>
+      <div class="info-note">
+        変更は入力欄から離れた瞬間に自動保存されます。販売履歴は会計完了の度にiPad内に書き込まれ、電源を切っても保持されます。<br>
+        JSONバックアップは自宅Wi-Fi復帰時にiCloud Drive等へ保存することで、iPad故障時の備えになります。
+      </div>
+      <input type="file" id="import-file" accept="application/json" style="display:none">
+    </div>
+  </div>
+
+</div>
+
+<!-- Today's sales modal -->
+<div class="modal-overlay" id="today-modal">
+  <div class="modal">
+    <div class="modal-title">本日の売上<span class="modal-title-en">Today</span></div>
+    <div class="today-date" id="today-date"></div>
+    <div class="breakdown" id="today-breakdown"></div>
+    <div class="bd-total">
+      <div class="lbl">合 計</div>
+      <div class="val"><span class="yen">¥</span><span id="today-total">0</span></div>
+    </div>
+    <div class="bd-meta" id="today-meta"></div>
+    <div class="modal-actions">
+      <button onclick="closeToday()">閉じる</button>
+      <button class="primary" onclick="goLedger()">詳細を見る →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">御会計 完了</div>
+
+<script>
+'use strict';
+
+/* ===== Defaults ===== */
+const DEFAULT_FLAVORS = [
+  { name:'いちご', color:'#D67285', price:250 },
+  { name:'メロン', color:'#9DBE7A', price:250 },
+  { name:'レモン', color:'#E5C44A', price:250 },
+  { name:'ブルーハワイ', color:'#5DA9C8', price:250 },
+  { name:'ピーチ', color:'#E8A993', price:250 },
+  { name:'グレープ', color:'#7B5A95', price:250 },
+  { name:'マンゴー', color:'#E2A148', price:250 },
+  { name:'コーラ', color:'#5C3A20', price:250 },
+  { name:'ラムネ', color:'#A8D5E8', price:250 },
+  { name:'みぞれ', color:'#D9D0BD', price:250 },
+  { name:'青リンゴ', color:'#A6C25C', price:250 },
+  { name:'真っ赤なリンゴ', color:'#B83A3A', price:250 },
+  { name:'スイカ', color:'#C84545', price:250 },
+  { name:'オレンジ', color:'#D88B47', price:250 },
+  { name:'マスカット', color:'#92AC4A', price:250 },
+  { name:'ダブルベリー', color:'#7A325E', price:250 },
+  { name:'日向夏', color:'#E5BE48', price:250 },
+  { name:'ソルティーライチ', color:'#D6BCC8', price:250 },
+  { name:'エメラルドパイン', color:'#4E9A85', price:250 },
+  { name:'カシスオレンジ', color:'#9A3D5C', price:250 },
+  { name:'ヨーグルト', color:'#E8E0CC', price:250 },
+  { name:'抹茶', color:'#5F7142', price:250 },
+  { name:'コーヒー', color:'#4A2E1E', price:250 },
+  { name:'紅茶', color:'#894528', price:250 },
+  { name:'ドラキュラ', color:'#2E1F2E', price:250 },
+  { name:'エイリアン', color:'#6FAA52', price:250 },
+  { name:'プリンセス', color:'#D688AC', price:250 },
+  { name:'王子様', color:'#4868A8', price:250 },
+  { name:'パワーエナジー', color:'#B83A3A', price:250 },
+  { name:'イナズマジンジャー', color:'#D6A832', price:250 },
+  { name:'紅いも', color:'#5C2D5E', price:250 },
+];
+const DEFAULT_TOPPINGS = [
+  { id:'milk',  name:'ミルク',     price:50  },
+  { id:'spoon', name:'スプーン',   price:10  },
+  { id:'cup',   name:'特製カップ', price:200 },
+];
+
+/* ===== Persistence keys ===== */
+const SALES_KEY    = 'asahi_seihyou_sales_v1';
+const FLAVORS_KEY  = 'asahi_seihyou_flavors_v1';
+const TOPPINGS_KEY = 'asahi_seihyou_toppings_v1';
+const SEEDED_KEY   = 'asahi_seihyou_seeded_v1';
+
+/* ===== State (loaded from localStorage) ===== */
+let FLAVORS  = loadJSON(FLAVORS_KEY, DEFAULT_FLAVORS.slice());
+let TOPPINGS = loadJSON(TOPPINGS_KEY, DEFAULT_TOPPINGS.slice());
+
+function loadJSON(key, fallback) {
+  try {
+    const v = localStorage.getItem(key);
+    return v ? JSON.parse(v) : fallback;
+  } catch { return fallback; }
+}
+function saveJSON(key, val) {
+  localStorage.setItem(key, JSON.stringify(val));
+}
+function loadSales() {
+  try { return JSON.parse(localStorage.getItem(SALES_KEY) || '[]'); }
+  catch { return []; }
+}
+function saveSale(record) {
+  const all = loadSales();
+  all.push(record);
+  localStorage.setItem(SALES_KEY, JSON.stringify(all));
+}
+
+function persistFlavors()  { saveJSON(FLAVORS_KEY, FLAVORS); refreshAfterChange(); }
+function persistToppings() { saveJSON(TOPPINGS_KEY, TOPPINGS); refreshAfterChange(); }
+
+function refreshAfterChange() {
+  renderFlavors();
+  renderCart();
+  updatePriceRule();
+}
+
+/* ===== Sample data (first run only) ===== */
+function seedIfEmpty() {
+  if (localStorage.getItem(SEEDED_KEY)) return;
+  const out = [];
+  const now = Date.now();
+  for (let day = 0; day < 30; day++) {
+    const dayBase = now - day * 86400000;
+    const tx = 6 + Math.floor(Math.random() * 14);
+    for (let t = 0; t < tx; t++) {
+      const items = [];
+      const ic = 1 + Math.floor(Math.random() * 4);
+      for (let i = 0; i < ic; i++) {
+        const f = DEFAULT_FLAVORS[Math.floor(Math.random() * DEFAULT_FLAVORS.length)];
+        const tops = [];
+        if (Math.random() < 0.45) tops.push('milk');
+        if (Math.random() < 0.18) tops.push('spoon');
+        if (Math.random() < 0.10) tops.push('cup');
+        let price = f.price;
+        DEFAULT_TOPPINGS.forEach(tp => { if (tops.includes(tp.id)) price += tp.price; });
+        items.push({ flavor:f.name, basePrice:f.price, toppings:tops, price });
+      }
+      const total = items.reduce((s, it) => s + it.price, 0);
+      const ts = dayBase - Math.floor(Math.random() * 86400000);
+      out.push({ id:`sample-${day}-${t}`, ts, items, total });
+    }
+  }
+  out.sort((a, b) => a.ts - b.ts);
+  localStorage.setItem(SALES_KEY, JSON.stringify(out));
+  localStorage.setItem(SEEDED_KEY, '1');
+}
+
+/* ===== Utility ===== */
+function pad(n) { return String(n).padStart(2, '0'); }
+function fmtNum(n) { return Number(n||0).toLocaleString(); }
+function fmtDateJP(ts) { const d = new Date(ts); return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`; }
+function dateKey(ts) { const d = new Date(ts); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function tickClock() {
+  const d = new Date();
+  document.getElementById('clock').innerHTML =
+    `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}<span class="sep">|</span>${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+tickClock(); setInterval(tickClock, 30000);
+
+/* ===== Cart state ===== */
+let cart = [];
+let nextId = 1;
+
+function renderFlavors() {
+  const grid = document.getElementById('flavor-grid');
+  grid.innerHTML = '';
+  const allSamePrice = new Set(FLAVORS.map(f => f.price)).size === 1;
+  const cellCount = FLAVORS.length;
+  const cols = 4;
+  const rows = Math.max(8, Math.ceil(cellCount / cols));
+  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+  FLAVORS.forEach((f, i) => {
+    const cell = document.createElement('button');
+    cell.className = 'flavor-cell';
+    cell.style.setProperty('--flavor-color', f.color);
+    cell.innerHTML = `
+      <span class="flavor-num">${pad(i+1)}</span>
+      <span class="flavor-name">${escapeHtml(f.name)}</span>
+      ${allSamePrice ? '' : `<span class="flavor-priceTag"><span class="yen">¥</span>${fmtNum(f.price)}</span>`}`;
+    cell.onclick = () => addToCart(f);
+    grid.appendChild(cell);
+  });
+  // Fill empty cells to maintain grid
+  const total = cols * rows;
+  for (let i = cellCount; i < total; i++) {
+    const empty = document.createElement('button');
+    empty.className = 'flavor-cell empty';
+    empty.style.setProperty('--flavor-color', 'transparent');
+    empty.disabled = true;
+    grid.appendChild(empty);
+  }
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function updatePriceRule() {
+  const prices = [...new Set(FLAVORS.map(f => f.price))];
+  const rule = document.getElementById('price-rule');
+  if (prices.length === 1) {
+    document.getElementById('rule-price').textContent = fmtNum(prices[0]);
+    rule.classList.remove('hidden');
+  } else {
+    rule.classList.add('hidden');
+  }
+}
+
+function addToCart(f) {
+  cart.push({
+    id: nextId++,
+    flavor: f.name,
+    color: f.color,
+    basePrice: f.price,
+    toppings: TOPPINGS.reduce((acc, t) => {
+      acc[t.id] = { name:t.name, price:t.price, active:false };
+      return acc;
+    }, {}),
+  });
+  renderCart();
+  const list = document.getElementById('cart-list');
+  setTimeout(() => list.scrollTop = list.scrollHeight, 30);
+}
+function calcItem(it) {
+  let p = it.basePrice;
+  Object.values(it.toppings).forEach(t => { if (t.active) p += t.price; });
+  return p;
+}
+function calcSubtotal() { return cart.reduce((s, it) => s + calcItem(it), 0); }
+
+function renderCart() {
+  const list = document.getElementById('cart-list');
+  if (cart.length === 0) {
+    list.innerHTML = `
+      <div class="empty-cart">
+        <span class="glyph">氷</span>
+        御品書きより<br>お選びくださいませ
+      </div>`;
+  } else {
+    list.innerHTML = cart.map(it => `
+      <div class="cart-item" style="--flavor-color:${it.color}">
+        <div class="item-row">
+          <div class="item-name">${escapeHtml(it.flavor)}</div>
+          <div class="item-price"><span class="yen">¥</span>${fmtNum(calcItem(it))}</div>
+        </div>
+        <div class="toppings">
+          ${Object.entries(it.toppings).map(([tid, t]) => `
+            <button class="topping-chip ${t.active ? 'active' : ''}"
+                    onclick="toggle(${it.id},'${tid}')">
+              ${escapeHtml(t.name)}
+              <span class="topping-add">+¥${fmtNum(t.price)}</span>
+            </button>`).join('')}
+        </div>
+        <div class="item-foot">
+          <button class="delete-btn" onclick="removeItem(${it.id})">削 除</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('subtotal').textContent = fmtNum(calcSubtotal());
+  updateChange();
+}
+
+window.toggle = (id, tid) => {
+  const it = cart.find(x => x.id === id);
+  if (it && it.toppings[tid]) it.toppings[tid].active = !it.toppings[tid].active;
+  renderCart();
+};
+window.removeItem = (id) => {
+  cart = cart.filter(x => x.id !== id);
+  renderCart();
+};
+
+function updateChange() {
+  const r = parseInt(document.getElementById('received').value) || 0;
+  const s = calcSubtotal();
+  const c = r - s;
+  document.getElementById('change').textContent = fmtNum(c >= 0 ? c : 0);
+  document.getElementById('checkout').disabled = (s === 0 || r < s);
+}
+document.getElementById('received').addEventListener('input', updateChange);
+document.querySelectorAll('.quick-btn').forEach(btn => {
+  btn.onclick = () => {
+    const inp = document.getElementById('received');
+    if (btn.dataset.clear !== undefined) inp.value = '';
+    else inp.value = (parseInt(inp.value) || 0) + parseInt(btn.dataset.add);
+    updateChange();
+  };
+});
+
+document.getElementById('checkout').onclick = () => {
+  const total = calcSubtotal();
+  const items = cart.map(it => ({
+    flavor: it.flavor,
+    basePrice: it.basePrice,
+    toppings: Object.entries(it.toppings).filter(([_,t]) => t.active).map(([tid,t]) => ({ id:tid, name:t.name, price:t.price })),
+    price: calcItem(it),
+  }));
+  saveSale({
+    id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`,
+    ts: Date.now(),
+    items,
+    total,
+  });
+  showToast(`御会計 完了  ¥${fmtNum(total)}`);
+  cart = [];
+  document.getElementById('received').value = '';
+  renderCart();
+};
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ===== View routing ===== */
+function setView(name) {
+  ['pos','ledger','settings'].forEach(n => {
+    document.getElementById('view-'+n).classList.toggle('active', n === name);
+  });
+  document.getElementById('header-buttons').style.display = name === 'pos' ? '' : 'none';
+}
+window.goPos      = () => setView('pos');
+window.goLedger   = () => { closeToday(); setView('ledger'); setPreset(30); };
+window.goSettings = () => { setView('settings'); renderSettings(); };
+
+/* ===== Today modal ===== */
+function aggregateRange(fromTs, toTs) {
+  const all = loadSales().filter(s => s.ts >= fromTs && s.ts <= toTs);
+  let kakigori = 0, kakigoriRevenue = 0, total = 0;
+  const toppingCounts = {};
+  const byDate = {};
+  all.forEach(s => {
+    const k = dateKey(s.ts);
+    if (!byDate[k]) byDate[k] = { kakigori:0, kakigoriRevenue:0, toppings:{}, total:0, tx:0 };
+    byDate[k].tx++;
+    byDate[k].total += s.total;
+    s.items.forEach(it => {
+      kakigori++; byDate[k].kakigori++;
+      const bp = it.basePrice || 250;
+      kakigoriRevenue += bp;
+      byDate[k].kakigoriRevenue += bp;
+      (it.toppings||[]).forEach(t => {
+        const tid = typeof t === 'string' ? t : t.id;
+        toppingCounts[tid] = (toppingCounts[tid] || 0) + 1;
+        byDate[k].toppings[tid] = (byDate[k].toppings[tid] || 0) + 1;
+      });
+    });
+    total += s.total;
+  });
+  return { kakigori, kakigoriRevenue, toppingCounts, total, transactions: all.length, byDate };
+}
+
+function getDayOfWeek(ts) { return '日月火水木金土'[new Date(ts).getDay()]; }
+
+function openToday() {
+  const d = new Date();
+  const start = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  const end = start + 86400000 - 1;
+  const a = aggregateRange(start, end);
+  document.getElementById('today-date').textContent = `本日 ${fmtDateJP(start)}（${getDayOfWeek(start)}）`;
+  const lines = [
+    { name:'かき氷', unit:null, qty:a.kakigori, revenue:a.kakigoriRevenue },
+    ...TOPPINGS.map(t => ({
+      name: t.name, unit: t.price,
+      qty: a.toppingCounts[t.id] || 0,
+      revenue: (a.toppingCounts[t.id] || 0) * t.price,
+    })),
+  ];
+  document.getElementById('today-breakdown').innerHTML = lines.map(l => `
+    <div class="bd-row">
+      <div class="name">${escapeHtml(l.name)}</div>
+      <div class="unit">${l.unit !== null ? `¥${fmtNum(l.unit)}` : '−'}</div>
+      <div class="qty"><span class="x">×</span>${l.qty}</div>
+      <div class="sum"><span class="yen">¥</span>${fmtNum(l.revenue)}</div>
+    </div>`).join('');
+  document.getElementById('today-total').textContent = fmtNum(a.total);
+  document.getElementById('today-meta').textContent =
+    `取引 ${a.transactions} 件 / 平均 ¥${a.transactions ? fmtNum(Math.round(a.total/a.transactions)) : 0}`;
+  document.getElementById('today-modal').classList.add('show');
+}
+window.openToday  = openToday;
+window.closeToday = () => document.getElementById('today-modal').classList.remove('show');
+
+/* ===== Ledger view ===== */
+window.setPreset = (kind) => {
+  const today = new Date();
+  let from;
+  if (kind === 7 || kind === 30 || kind === 90) {
+    from = new Date(today.getTime() - (kind-1) * 86400000);
+  } else if (kind === 'month') {
+    from = new Date(today.getFullYear(), today.getMonth(), 1);
+  } else if (kind === 'all') {
+    const all = loadSales();
+    from = all.length ? new Date(all[0].ts) : today;
+  }
+  document.getElementById('ledger-from').value = dateKey(from.getTime());
+  document.getElementById('ledger-to').value   = dateKey(today.getTime());
+  renderLedger();
+};
+
+window.renderLedger = () => {
+  const fromVal = document.getElementById('ledger-from').value;
+  const toVal   = document.getElementById('ledger-to').value;
+  if (!fromVal || !toVal) return;
+  const fromTs = new Date(fromVal + 'T00:00:00').getTime();
+  const toTs   = new Date(toVal   + 'T23:59:59').getTime();
+  const a = aggregateRange(fromTs, toTs);
+
+  document.getElementById('ledger-total').textContent = fmtNum(a.total);
+  document.getElementById('ledger-meta').textContent =
+    `取引 ${a.transactions} 件 / 平均 ¥${a.transactions ? fmtNum(Math.round(a.total/a.transactions)) : 0}`;
+
+  const lines = [
+    { name:'かき氷', unit:null, qty:a.kakigori, revenue:a.kakigoriRevenue },
+    ...TOPPINGS.map(t => ({
+      name:t.name, unit:t.price,
+      qty:a.toppingCounts[t.id] || 0,
+      revenue:(a.toppingCounts[t.id] || 0) * t.price,
+    })),
+  ];
+  document.getElementById('breakdown-body').innerHTML = lines.map(l => `
+    <tr>
+      <td>${escapeHtml(l.name)}</td>
+      <td>${l.unit !== null ? `<span class="yen">¥</span>${fmtNum(l.unit)}` : '−'}</td>
+      <td>${fmtNum(l.qty)}</td>
+      <td><span class="yen">¥</span>${fmtNum(l.revenue)}</td>
+    </tr>`).join('');
+
+  // Daily table — dynamic columns based on current toppings
+  const headers = ['日付', 'かき氷', ...TOPPINGS.map(t => t.name), '取引', '売上'];
+  document.getElementById('daily-thead').innerHTML = `<tr>${headers.map(h => `<th>${escapeHtml(h)}</th>`).join('')}</tr>`;
+
+  const dates = Object.keys(a.byDate).sort((x, y) => y.localeCompare(x));
+  if (dates.length === 0) {
+    document.getElementById('daily-body').innerHTML = `<tr><td colspan="${headers.length}" style="text-align:center; color:var(--ink-3); padding:24px;">該当期間にデータがありません</td></tr>`;
+  } else {
+    document.getElementById('daily-body').innerHTML = dates.map(k => {
+      const r = a.byDate[k];
+      const [y,m,d] = k.split('-');
+      const cells = [
+        `${y}.${m}.${d}`,
+        r.kakigori,
+        ...TOPPINGS.map(t => r.toppings[t.id] || 0),
+        r.tx,
+        `<span class="yen">¥</span>${fmtNum(r.total)}`,
+      ];
+      return `<tr>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
+    }).join('');
+  }
+};
+
+/* ===== Settings view ===== */
+function renderSettings() {
+  document.getElementById('flavor-count').textContent = `${FLAVORS.length} 品`;
+  document.getElementById('topping-count').textContent = `${TOPPINGS.length} 種`;
+
+  const fbody = document.getElementById('settings-flavors');
+  fbody.innerHTML = FLAVORS.map((f, i) => `
+    <tr data-flavor-idx="${i}">
+      <td class="col-num">${pad(i+1)}</td>
+      <td class="col-color"><input type="color" value="${f.color}" onchange="updateFlavor(${i},'color',this.value)"></td>
+      <td><input type="text" class="name-input" value="${escapeAttr(f.name)}" onchange="updateFlavor(${i},'name',this.value)"></td>
+      <td class="col-price"><input type="number" class="price-input" value="${f.price}" onchange="updateFlavor(${i},'price',parseInt(this.value)||0)"></td>
+      <td class="col-actions">
+        <div class="row-actions">
+          <button class="icon-btn arrow" onclick="moveFlavor(${i},-1)" ${i===0?'disabled':''}>▲</button>
+          <button class="icon-btn arrow" onclick="moveFlavor(${i},1)" ${i===FLAVORS.length-1?'disabled':''}>▼</button>
+          <button class="icon-btn danger" onclick="deleteFlavor(${i})">削除</button>
+        </div>
+      </td>
+    </tr>`).join('');
+
+  const tbody = document.getElementById('settings-toppings');
+  tbody.innerHTML = TOPPINGS.map((t, i) => `
+    <tr data-topping-idx="${i}">
+      <td><input type="text" class="name-input" value="${escapeAttr(t.name)}" onchange="updateTopping(${i},'name',this.value)"></td>
+      <td class="col-price"><input type="number" class="price-input" value="${t.price}" onchange="updateTopping(${i},'price',parseInt(this.value)||0)"></td>
+      <td class="col-actions">
+        <div class="row-actions">
+          <button class="icon-btn arrow" onclick="moveTopping(${i},-1)" ${i===0?'disabled':''}>▲</button>
+          <button class="icon-btn arrow" onclick="moveTopping(${i},1)" ${i===TOPPINGS.length-1?'disabled':''}>▼</button>
+          <button class="icon-btn danger" onclick="deleteTopping(${i})">削除</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+function escapeAttr(s) { return String(s).replace(/"/g, '&quot;'); }
+function flashRow(selector) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  el.classList.remove('saved-flash'); void el.offsetWidth;
+  el.classList.add('saved-flash');
+}
+
+window.updateFlavor = (idx, field, value) => {
+  if (!FLAVORS[idx]) return;
+  FLAVORS[idx][field] = value;
+  persistFlavors();
+  flashRow(`tr[data-flavor-idx="${idx}"]`);
+};
+window.moveFlavor = (idx, dir) => {
+  const j = idx + dir;
+  if (j < 0 || j >= FLAVORS.length) return;
+  [FLAVORS[idx], FLAVORS[j]] = [FLAVORS[j], FLAVORS[idx]];
+  persistFlavors();
+  renderSettings();
+};
+window.deleteFlavor = (idx) => {
+  if (!confirm(`「${FLAVORS[idx].name}」を品書きから削除します。よろしいですか？`)) return;
+  FLAVORS.splice(idx, 1);
+  persistFlavors();
+  renderSettings();
+};
+window.addFlavor = () => {
+  FLAVORS.push({ name:'新しい品', color:'#999999', price: FLAVORS[0]?.price || 250 });
+  persistFlavors();
+  renderSettings();
+  setTimeout(() => {
+    const last = document.querySelector(`tr[data-flavor-idx="${FLAVORS.length-1}"] .name-input`);
+    last && last.focus(); last && last.select();
+  }, 50);
+};
+
+window.updateTopping = (idx, field, value) => {
+  if (!TOPPINGS[idx]) return;
+  TOPPINGS[idx][field] = value;
+  persistToppings();
+  flashRow(`tr[data-topping-idx="${idx}"]`);
+};
+window.moveTopping = (idx, dir) => {
+  const j = idx + dir;
+  if (j < 0 || j >= TOPPINGS.length) return;
+  [TOPPINGS[idx], TOPPINGS[j]] = [TOPPINGS[j], TOPPINGS[idx]];
+  persistToppings();
+  renderSettings();
+};
+window.deleteTopping = (idx) => {
+  if (!confirm(`「${TOPPINGS[idx].name}」をトッピングから削除します。よろしいですか？`)) return;
+  TOPPINGS.splice(idx, 1);
+  persistToppings();
+  renderSettings();
+};
+window.addTopping = () => {
+  let n = 1;
+  while (TOPPINGS.find(t => t.id === `t_${n}`)) n++;
+  TOPPINGS.push({ id:`t_${n}`, name:'新しいトッピング', price: 50 });
+  persistToppings();
+  renderSettings();
+  setTimeout(() => {
+    const last = document.querySelector(`tr[data-topping-idx="${TOPPINGS.length-1}"] .name-input`);
+    last && last.focus(); last && last.select();
+  }, 50);
+};
+
+/* ===== Data management ===== */
+window.exportJSON = () => {
+  const data = {
+    brand: '朝日製氷',
+    exportedAt: new Date().toISOString(),
+    flavors: FLAVORS,
+    toppings: TOPPINGS,
+    sales: loadSales(),
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `asahi-seihyou-backup-${dateKey(Date.now())}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('バックアップを書き出しました');
+};
+window.importJSON = () => {
+  const input = document.getElementById('import-file');
+  input.value = '';
+  input.onchange = () => {
+    const file = input.files[0];
+    if (!file) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const data = JSON.parse(r.result);
+        if (!confirm('現在のデータを上書きします。よろしいですか？')) return;
+        if (data.flavors)  { FLAVORS = data.flavors;   saveJSON(FLAVORS_KEY, FLAVORS); }
+        if (data.toppings) { TOPPINGS = data.toppings; saveJSON(TOPPINGS_KEY, TOPPINGS); }
+        if (data.sales)    { localStorage.setItem(SALES_KEY, JSON.stringify(data.sales)); }
+        renderSettings(); refreshAfterChange();
+        showToast('復元しました');
+      } catch(e) { alert('読み込みに失敗しました: ' + e.message); }
+    };
+    r.readAsText(file);
+  };
+  input.click();
+};
+window.resetSampleData = () => {
+  if (!confirm('サンプル取引履歴のみを削除します（実際の販売記録は保持）。よろしいですか？')) return;
+  const real = loadSales().filter(s => !String(s.id).startsWith('sample-'));
+  localStorage.setItem(SALES_KEY, JSON.stringify(real));
+  showToast('サンプルを削除しました');
+};
+window.clearAllSales = () => {
+  if (!confirm('全ての販売履歴を消去します。この操作は元に戻せません。')) return;
+  if (!confirm('本当によろしいですか？すべての売上データが消えます。')) return;
+  localStorage.setItem(SALES_KEY, '[]');
+  showToast('販売履歴を全消去しました');
+};
+window.resetSettings = () => {
+  if (!confirm('品書き・トッピングを初期値に戻します（販売履歴は保持されます）。よろしいですか？')) return;
+  FLAVORS = DEFAULT_FLAVORS.slice();
+  TOPPINGS = DEFAULT_TOPPINGS.slice();
+  saveJSON(FLAVORS_KEY, FLAVORS);
+  saveJSON(TOPPINGS_KEY, TOPPINGS);
+  renderSettings(); refreshAfterChange();
+  showToast('初期値に戻しました');
+};
+
+/* ===== Init ===== */
+seedIfEmpty();
+renderFlavors();
+renderCart();
+updatePriceRule();
+setView('pos');
+
+// Pre-populate cart for visual demo
+addToCart(FLAVORS[0]);
+cart[cart.length-1].toppings.milk && (cart[cart.length-1].toppings.milk.active = true);
+addToCart(FLAVORS[16] || FLAVORS[0]);
+addToCart(FLAVORS[21] || FLAVORS[0]);
+if (cart[cart.length-1].toppings.milk) cart[cart.length-1].toppings.milk.active = true;
+if (cart[cart.length-1].toppings.spoon) cart[cart.length-1].toppings.spoon.active = true;
+renderCart();
+</script>
+</body>
+</html>
