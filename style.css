@@ -643,7 +643,6 @@ body {
   pointer-events: none;
   z-index: 0;
 }
-.flavor-cell.has-image .flavor-num,
 .flavor-cell.has-image .flavor-name,
 .flavor-cell.has-image .flavor-priceTag {
   position: relative;
