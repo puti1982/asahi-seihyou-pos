@@ -401,20 +401,20 @@ body {
 .quick-amounts {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
-  margin-top: 6px;
+  gap: 3px;
+  margin-top: 4px;
 }
 .quick-btn {
   background: transparent;
   border: 1px solid var(--line);
-  padding: 10px 0;             /* 12 → 10 */
+  padding: 7px 0;
   font-family: var(--num);
-  font-size: 13px;             /* 14 → 13 */
+  font-size: 12px;
   color: var(--ink);
   cursor: pointer;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   transition: border-color 0.15s, background 0.15s;
-  min-height: 44px;            /* タッチ44pt保証 */
+  min-height: 36px;            /* 44→36 圧縮優先、タッチ確保はindexで維持 */
 }
 /* P0-07: hover 朱廃止 → 墨で表現 */
 .quick-btn:hover { background: var(--bg); border-color: var(--ink); }
