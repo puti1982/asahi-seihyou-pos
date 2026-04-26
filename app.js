@@ -1039,7 +1039,14 @@ function showUpdateBanner(onAccept) {
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then((reg) => {
+    /* updateViaCache:'none' → ブラウザのHTTPキャッシュをバイパスして毎回sw.jsを fetch。
+     * これがないと max-age に従い 24h 古いSWが残り続ける。 */
+    navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then((reg) => {
+      /* 起動時に明示的に update チェック (auto checkに依存しない) */
+      try { reg.update(); } catch {}
+      /* 5分ごとに再チェック (常駐POSでも更新を逃さない) */
+      setInterval(() => { try { reg.update(); } catch {} }, 5 * 60 * 1000);
+
       reg.addEventListener('updatefound', () => {
         const newSW = reg.installing;
         if (!newSW) return;
@@ -1050,9 +1057,14 @@ function registerServiceWorker() {
           }
         });
       });
+
+      /* 既に waiting 状態の SW がある場合 (前回 update中にアプリ閉じた等) も検知 */
+      if (reg.waiting && navigator.serviceWorker.controller) {
+        showUpdateBanner(() => reg.waiting.postMessage('SKIP_WAITING'));
+      }
     }).catch(() => { /* 登録失敗してもアプリは動作 */ });
 
-    // Wave3 #1: ユーザーが「適用」を押した場合のみ reload
+    // ユーザーが「適用」を押した場合のみ reload
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!userInitiatedReload) return;
       window.location.reload();
