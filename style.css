@@ -352,14 +352,14 @@ body {
   font-weight: 500;
 }
 
-.receive-block { margin-bottom: 16px; }
+.receive-block { margin-bottom: 8px; }
 .receive-row {
   display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 .receive-row .lbl {
   font-family: var(--serif);
-  font-size: 13px;
+  font-size: 12px;
   color: var(--ink-2);
   letter-spacing: 0.14em;
 }
@@ -367,12 +367,12 @@ body {
   width: 100%;
   background: var(--bg);
   border: 1px solid var(--line);
-  padding: 12px 14px;
+  padding: 9px 12px;             /* 12/14 → 9/12 */
   font-family: var(--num);
-  font-size: 22px; font-weight: 600;
+  font-size: 19px; font-weight: 600;       /* 22 → 19 */
   text-align: right;
   transition: border-color 0.2s, background 0.2s;
-  min-height: 48px;
+  min-height: 44px;
   color: var(--ink);
   border-radius: 0;
 }
