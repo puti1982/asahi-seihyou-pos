@@ -55,20 +55,20 @@
           <div class="receive-display" id="received-display" role="status" aria-live="polite" aria-label="お預かり金額（下のテンキーで入力）">
             <span class="rec-yen">¥</span><span class="rec-val" id="received-val">0</span>
           </div>
-          <!-- アプリ内テンキー (3列×4行) -->
+          <!-- アプリ内テンキー (4列×3行 = 圧縮レイアウトでcart-list中央以上到達) -->
           <div class="numpad" id="numpad">
             <button class="np-btn" type="button" data-action="np-num" data-num="7">7</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="8">8</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="9">9</button>
+            <button class="np-btn np-fn" type="button" data-action="np-del" aria-label="一文字削除">⌫</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="4">4</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="5">5</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="6">6</button>
+            <button class="np-btn np-fn" type="button" data-action="np-clear" aria-label="消去">消</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="1">1</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="2">2</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="3">3</button>
-            <button class="np-btn np-fn" type="button" data-action="np-clear" aria-label="消去">消</button>
             <button class="np-btn" type="button" data-action="np-num" data-num="0">0</button>
-            <button class="np-btn np-fn" type="button" data-action="np-del" aria-label="一文字削除">⌫</button>
           </div>
         </div>
         <div class="change-row">
