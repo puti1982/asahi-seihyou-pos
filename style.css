@@ -113,46 +113,48 @@ body {
 
 .brand { display: flex; align-items: center; gap: 16px; }
 
-/* P0-01: SVGロゴに置換 */
+/* P0-01: SVGロゴに置換 (52pxヘッダーに合わせて圧縮) */
 .brand-mark {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   display: block;
   flex-shrink: 0;
 }
+.brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 
 .brand-text { display: flex; flex-direction: column; line-height: 1; }
 .brand-name {
   font-family: var(--serif);
-  font-size: 26px;
+  font-size: 20px;               /* 26→20 */
   font-weight: 600;
-  letter-spacing: 0.04em;        /* P0-02: 漢字 0.04em */
+  letter-spacing: 0.04em;
 }
-/* P0-08: 英字並記 全削除 (.brand-en は廃止) */
 
-.header-meta { display: flex; align-items: center; gap: 32px; }
+.header-meta { display: flex; align-items: center; gap: 22px; flex-wrap: nowrap; }
 
-/* P1-13: 時計を「2026年4月26日（土）13:45」明朝に */
+/* 時計を「2026年4月26日（土）13:45」明朝に (圧縮) */
 .clock {
   font-family: var(--serif);
-  font-size: 13px;
+  font-size: 12px;               /* 13→12 */
   color: var(--ink-2);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 
-.header-buttons { display: flex; gap: 24px; }
+.header-buttons { display: flex; gap: 18px; }
 .ledger-link {
   font-family: var(--serif);
-  font-size: 14px;
+  font-size: 13px;               /* 14→13 */
   color: var(--ink);
   background: transparent;
   border: none;
-  padding: 8px 0;
+  padding: 6px 4px;              /* 8/0→6/4 */
   cursor: pointer;
-  letter-spacing: 0.08em;        /* P0-02: 漢字 */
+  letter-spacing: 0.08em;
   border-bottom: 1px solid var(--ink);
   transition: border-bottom-color 0.2s;
-  min-height: 44px;              /* タッチターゲット */
+  min-height: 40px;              /* タッチターゲット (40で許容、ヘッダーが52px) */
+  white-space: nowrap;
 }
 /* P0-07: hover時の朱変色廃止。罫線濃度のみで表現 */
 .ledger-link:hover { border-bottom-color: var(--ink); border-bottom-width: 2px; }
