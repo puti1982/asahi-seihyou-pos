@@ -250,15 +250,20 @@
 <div class="modal-overlay" id="today-modal">
   <div class="modal">
     <div class="modal-title">本日の売上</div>
-    <!-- P0-08: modal-title-en 廃止 -->
     <div class="today-date" id="today-date"></div>
     <div class="breakdown" id="today-breakdown"></div>
     <div class="bd-total">
       <div class="lbl">合 計</div>
-      <!-- P1-11: 大金額「円」suffix -->
       <div class="val"><span id="today-total">0</span><span class="yen-suffix">円</span></div>
     </div>
     <div class="bd-meta" id="today-meta"></div>
+
+    <!-- 取引一覧 (会計後の修正用) -->
+    <div class="tx-section">
+      <div class="tx-section-title">本日の取引（誤りは削除可）</div>
+      <div class="tx-list" id="today-transactions"></div>
+    </div>
+
     <div class="modal-actions">
       <button data-action="close-today">閉じる</button>
       <button class="primary" data-action="go-ledger">詳細を見る →</button>
