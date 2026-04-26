@@ -316,28 +316,27 @@ body {
 /* P0-07: hover時の朱変色廃止 */
 .delete-btn:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
-/* ========== Checkout ========== */
+/* ========== Checkout (圧縮: 左パネル内に必ず収まるように) ========== */
 .checkout {
   background: var(--paper);
   border-top: 1px solid var(--line);
-  padding: 28px 24px 24px;       /* P0-03: 上に呼吸 */
+  padding: 12px 18px 14px;       /* 28/24/24 → 12/18/14 */
+  flex-shrink: 0;                /* checkout は縮まない、cart-list が縮む */
 }
-/* P0-04: 両端余白入り罫線 */
 .totalbar {
   display: flex; justify-content: space-between; align-items: baseline;
-  padding: 8px 8px 16px;
+  padding: 4px 6px 10px;
   border-bottom: 1px solid var(--ink);
-  margin: 0 0 16px;
+  margin: 0 0 10px;
 }
 .totalbar .lbl {
   font-family: var(--serif);
-  font-size: 15px;
-  letter-spacing: 0.18em;
+  font-size: 14px;
+  letter-spacing: 0.16em;
 }
-/* P0-07: 朱の3箇所のうち1つ = 御会計の数字 */
 .totalbar .val {
   font-family: var(--num);
-  font-size: 32px; font-weight: 600;
+  font-size: 26px; font-weight: 600;       /* 32 → 26 */
   color: var(--shu-2);
 }
 /* P1-11: 大金額は ¥ → 「円」suffix */
