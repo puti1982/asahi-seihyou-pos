@@ -505,18 +505,18 @@ body {
 /* P0-08: .flavor-title .en 廃止 */
 
 .price-rule {
-  display: flex; align-items: baseline; gap: 10px;
+  display: flex; align-items: baseline; gap: 8px;
   border: 1px solid var(--ink);
-  padding: 6px 14px;
+  padding: 4px 10px;             /* 6/14 → 4/10 */
 }
 .price-rule .word {
   font-family: var(--serif);
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-size: 10px;
+  letter-spacing: 0.16em;
 }
 .price-rule .num {
   font-family: var(--num);
-  font-size: 17px;
+  font-size: 14px;               /* 17→14 */
   font-weight: 600;
 }
 .price-rule .num .yen { font-size: 11px; opacity: 0.55; margin-right: 1px; }
