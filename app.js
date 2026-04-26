@@ -372,8 +372,36 @@ function removeItem(id) {
   renderCart();
 }
 
+/* お預かり状態 (アプリ内テンキーで操作。input未使用 → ネイティブ数字キーボード非表示) */
+let receivedRaw = 0;
+const RECEIVED_MAX = 9999999;       /* 7桁 (¥9,999,999 想定) */
+
+function updateReceivedDisplay() {
+  const el = document.getElementById('received-val');
+  if (el) el.textContent = fmtNum(receivedRaw);
+  updateChange();
+}
+function npAppendDigit(d) {
+  const next = receivedRaw * 10 + d;
+  if (next > RECEIVED_MAX) return;
+  receivedRaw = next;
+  updateReceivedDisplay();
+}
+function npDeleteLast() {
+  receivedRaw = Math.floor(receivedRaw / 10);
+  updateReceivedDisplay();
+}
+function npClear() {
+  receivedRaw = 0;
+  updateReceivedDisplay();
+}
+function npAddQuick(n) {
+  receivedRaw = Math.min(receivedRaw + n, RECEIVED_MAX);
+  updateReceivedDisplay();
+}
+
 function updateChange() {
-  const r = parseInt(document.getElementById('received').value) || 0;
+  const r = receivedRaw;
   const s = calcSubtotal();
   const c = r - s;
   document.getElementById('change').textContent = fmtNum(c >= 0 ? c : 0);
