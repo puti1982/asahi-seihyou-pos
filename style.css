@@ -522,22 +522,23 @@ body {
 .price-rule .num .yen { font-size: 11px; opacity: 0.55; margin-right: 1px; }
 .price-rule.hidden { display: none; }
 
-/* P0-05: 品書グリッド - 横スクロール禁止・縦スクロール
- * Absol P0: 31味背景の grain 喪失を1枚のSVGノイズで復活 (31→1で perfも維持) */
+/* 品書グリッド: ユーザー要求「3列固定、下に長くなる」
+ * 列順: 1,2,3 / 4,5,6 / 7,8,9 ...
+ * grid-auto-flow: row (default) で row-fill = 「いちごの下が4番のブルーハワイ」を実現 */
 .flavor-grid {
   flex: 1 1 0;
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: 100px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));   /* 4列→3列固定 */
+  grid-auto-rows: 110px;                              /* 100→110 行を少し高く */
   gap: 1px;
-  padding: 0 24px 24px;
-  margin-top: 16px;
+  padding: 0 16px 16px;                               /* 24→16 圧縮 */
+  margin-top: 10px;                                   /* 16→10 */
   background-color: var(--line);
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.075 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
   background-size: 200px 200px;
   background-repeat: repeat;
-  background-blend-mode: multiply;     /* Absol P0: 紙地に染み込む */
+  background-blend-mode: multiply;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   overflow-y: auto;
