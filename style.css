@@ -367,14 +367,14 @@ body {
   font-weight: 500;
 }
 
-.receive-block { margin-bottom: 8px; }
+.receive-block { margin-bottom: 6px; }
 .receive-row {
   display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 .receive-row .lbl {
   font-family: var(--serif);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--ink-2);
   letter-spacing: 0.14em;
 }
@@ -382,12 +382,12 @@ body {
   width: 100%;
   background: var(--bg);
   border: 1px solid var(--line);
-  padding: 9px 12px;             /* 12/14 → 9/12 */
+  padding: 7px 10px;             /* 9/12 → 7/10 */
   font-family: var(--num);
-  font-size: 19px; font-weight: 600;       /* 22 → 19 */
+  font-size: 17px; font-weight: 600;       /* 19 → 17 */
   text-align: right;
   transition: border-color 0.2s, background 0.2s;
-  min-height: 44px;
+  min-height: 40px;              /* 44→40 (タッチは親要素のmin-heightで十分) */
   color: var(--ink);
   border-radius: 0;
 }
