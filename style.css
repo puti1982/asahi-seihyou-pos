@@ -79,13 +79,15 @@ body {
 
 .app {
   display: grid;
-  grid-template-rows: 76px 1fr 24px;       /* P2-23: 最下端フッター帯 */
-  height: 100vh;
+  grid-template-rows: 60px 1fr 20px;       /* ヘッダーとフッターを圧縮、bodyに高さを譲る */
+  height: 100vh;                            /* fallback */
+  height: 100dvh;                           /* Android Chromeのバー込み実効高さ */
   max-width: 1440px;
   margin: 0 auto;
   background: var(--paper);
   border-left: 1px solid var(--line);
   border-right: 1px solid var(--line);
+  overflow: hidden;                         /* ページ全体スクロール禁止 */
 }
 
 /* ========== Header ========== */
