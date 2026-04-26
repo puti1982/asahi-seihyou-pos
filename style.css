@@ -120,7 +120,6 @@ body {
   display: block;
   flex-shrink: 0;
 }
-.brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 
 .brand-text { display: flex; flex-direction: column; line-height: 1; }
 .brand-name {
