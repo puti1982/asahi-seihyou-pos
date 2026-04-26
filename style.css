@@ -404,11 +404,11 @@ body {
   opacity: 0.6;
 }
 
-/* テンキー (アプリ内 3×4 グリッド) */
+/* テンキー (アプリ内 4×3 グリッド = cart-list が画面中央以上に達するため圧縮) */
 .numpad {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
   margin-top: 6px;
 }
 .np-btn {
@@ -416,11 +416,11 @@ body {
   border: 1px solid var(--line);
   padding: 0;
   font-family: var(--num);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
   color: var(--ink);
   cursor: pointer;
-  min-height: 44px;                /* WCAG 2.5.5 タッチターゲット 44pt */
+  min-height: 42px;                /* タッチ確保しつつ縦圧縮 (44→42、4×3 で計126px) */
   letter-spacing: 0;
   transition: background 0.08s, border-color 0.12s, color 0.08s;
   touch-action: manipulation;
