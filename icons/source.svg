@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  朝日製氷ロゴマーク (P0-01)
-  - 朝陽: 直径 480px の薄い朱（外殻）+ 直径 200px の濃い朱（中央コア） = 「朝日」
-  - 氷: 中央を貫く極細の水平線 3本（上中下） = 「製氷の氷柱」の暗示
-  - 屋号: ヒラギノ明朝 (システム標準)
-  - 背景: 生成り (#FAF5E9)
+  朝日製氷ロゴマーク v2 (暖簾デザイン)
+  - 紺地に白の円相 (enso) と「氷」の毛筆書き
+  - 伝統的なかき氷店の暖簾を踏襲、純氷の証
 -->
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-  <rect width="1024" height="1024" fill="#FAF5E9"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="deepNavy" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#1A3266" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#142852" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- 紺地 (暖簾の藍/紺) -->
+  <rect width="1024" height="1024" fill="#142852"/>
+  <!-- 内側の極薄い紺グラデで深み -->
+  <rect width="1024" height="1024" fill="url(#deepNavy)"/>
 
-  <!-- 朝陽 外殻 (薄い朱) -->
-  <circle cx="512" cy="460" r="240" fill="#B43A2A" opacity="0.10"/>
-  <!-- 朝陽 内殻 -->
-  <circle cx="512" cy="460" r="180" fill="#B43A2A" opacity="0.22"/>
-  <!-- 朝陽 中央コア (濃い朱) -->
-  <circle cx="512" cy="460" r="100" fill="#8E2C1F"/>
+  <!-- 円相 (enso) - 不完全な円のブラシストローク -->
+  <g transform="translate(512 504)" stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <path d="M -250 30
+             C -260 -150, -130 -290, 50 -290
+             C 230 -290, 360 -150, 360 30
+             C 360 200, 240 320, 50 320
+             C -130 320, -250 220, -270 70"
+          stroke-width="22" opacity="0.95"/>
+    <!-- 入り(始点)の太い点 -->
+    <ellipse cx="-270" cy="70" rx="14" ry="22" fill="#FFFFFF" opacity="0.95"/>
+  </g>
 
-  <!-- 氷を暗示する極細水平線 3本 (墨) -->
-  <line x1="232" y1="448" x2="792" y2="448" stroke="#1C1813" stroke-width="2" opacity="0.85"/>
-  <line x1="272" y1="464" x2="752" y2="464" stroke="#1C1813" stroke-width="1.5" opacity="0.55"/>
-  <line x1="312" y1="478" x2="712" y2="478" stroke="#1C1813" stroke-width="1" opacity="0.35"/>
+  <!-- 氷 character (毛筆風 大) -->
+  <text x="512" y="565"
+        font-family="'Hiragino Mincho ProN W6', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', serif"
+        font-weight="900"
+        font-size="500"
+        fill="#FFFFFF"
+        text-anchor="middle"
+        dominant-baseline="central"
+        letter-spacing="0">氷</text>
 
-  <!-- 屋号 -->
-  <text x="512" y="800" font-family="Hiragino Mincho ProN, YuMincho, serif" font-size="108" font-weight="600" letter-spacing="6" text-anchor="middle" fill="#1C1813">朝日製氷</text>
+  <!-- 純氷 (右下小さく) -->
+  <text x="870" y="940"
+        font-family="'Hiragino Mincho ProN W6', 'Hiragino Mincho ProN', serif"
+        font-weight="600"
+        font-size="56"
+        fill="#FFFFFF"
+        text-anchor="middle"
+        opacity="0.85">純氷</text>
 </svg>
