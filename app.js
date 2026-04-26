@@ -992,16 +992,20 @@ document.addEventListener('visibilitychange', () => {
 let userInitiatedReload = false;
 function showUpdateBanner(onAccept) {
   const t = document.getElementById('toast');
-  t.innerHTML = `<span class="toast-msg">更新があります</span><button data-action="apply-update">適用</button>`;
+  t.innerHTML = `<span class="toast-msg">更新があります</span><button data-action="apply-update" type="button">適用</button>`;
   t.classList.add('show');
   // 自動 hide キャンセル
   clearTimeout(t._hideTimer);
   const btn = t.querySelector('[data-action="apply-update"]');
   if (btn) btn.addEventListener('click', () => {
     userInitiatedReload = true;
-    onAccept();
-    // SKIP_WAITING → activate → reload は短い間に起こる
-    // controllerchange ハンドラでフラグを見てから reload
+    btn.disabled = true;
+    btn.textContent = '更新中…';
+    try { onAccept(); } catch (_) {}
+    /* フェイルセーフ: controllerchangeが来なくても 1.5秒後に必ず reload
+     * (新SWが既にactive状態 / postMessage失敗 / SW未登録環境 などの救済)
+     * controllerchange側でも reload するが、location.reload は idempotent */
+    setTimeout(() => { window.location.reload(); }, 1500);
   }, { once: true });
 }
 
