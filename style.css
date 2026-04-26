@@ -177,7 +177,8 @@ body {
 /* ========== Views ========== */
 .view { display: none; min-height: 0; }
 .view.active { display: grid; }
-.view-pos { grid-template-columns: 420px 1fr; }   /* 480→420 で品書き側に幅を譲る */
+/* 実画面幅に追従。最小340px (チェックアウトが収まる最小)、最大420px、画面の34%目安 */
+.view-pos { grid-template-columns: minmax(0, clamp(340px, 34vw, 420px)) minmax(0, 1fr); }
 .view-ledger, .view-settings { grid-template-columns: 1fr; }
 
 /* ========== LEFT: Cart Panel ========== */
