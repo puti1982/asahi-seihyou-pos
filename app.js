@@ -1195,13 +1195,7 @@ function bindEvents() {
     else if (action === 'np-clear') npClear();
   });
 
-  // quick amounts (state変数 receivedRaw に直接加算)
-  document.querySelectorAll('.quick-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const add = parseInt(btn.dataset.add, 10);
-      if (Number.isFinite(add)) npAddQuick(add);
-    });
-  });
+  /* クイック金額ボタンはユーザー要求により削除済 */
 
   // cart list (delegation)
   document.getElementById('cart-list').addEventListener('click', (e) => {
