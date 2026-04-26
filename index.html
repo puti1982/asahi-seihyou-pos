@@ -88,10 +88,32 @@
     </aside>
 
     <main class="flavor-panel">
+      <!-- 朝日製氷ブランドバー (品書きの上、画面右半分のみ) -->
+      <header class="header">
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="朝日製氷">
+            <circle cx="32" cy="30" r="15" fill="#B43A2A" opacity="0.10"/>
+            <circle cx="32" cy="30" r="11" fill="#B43A2A" opacity="0.22"/>
+            <circle cx="32" cy="30" r="6" fill="#8E2C1F"/>
+            <line x1="14" y1="29" x2="50" y2="29" stroke="#1C1813" stroke-width="0.7" opacity="0.85"/>
+            <line x1="17" y1="31" x2="47" y2="31" stroke="#1C1813" stroke-width="0.5" opacity="0.55"/>
+            <line x1="20" y1="33" x2="44" y2="33" stroke="#1C1813" stroke-width="0.4" opacity="0.35"/>
+          </svg>
+          <div class="brand-text">
+            <div class="brand-name">朝日製氷</div>
+          </div>
+        </div>
+        <div class="header-meta">
+          <div class="clock" id="clock"></div>
+          <div class="header-buttons" id="header-buttons">
+            <button class="ledger-link" data-action="open-today">売上帳</button>
+            <button class="ledger-link" data-action="go-settings">設定</button>
+          </div>
+        </div>
+      </header>
       <div class="flavor-header">
         <div class="flavor-title">
           <span class="ja">品書</span>
-          <!-- P0-08: 英字並記 廃止 -->
         </div>
         <div class="price-rule" id="price-rule">
           <span class="word">全 品</span>
