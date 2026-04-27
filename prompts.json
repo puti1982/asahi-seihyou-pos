@@ -287,6 +287,24 @@
       "filename": "31-beni-imo.png",
       "prompt": "Soft watercolor and ink wash illustration of a whole oval purple sweet potato (beni-imo) with subtle skin texture, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space",
       "ingredient_en": "a whole oval purple sweet potato (beni-imo) with subtle skin texture"
+    },
+    {
+      "id": "32",
+      "name_ja": "塩みかん",
+      "name_en": "salted mandarin orange (mikan)",
+      "syrup_hex": "#E68A3D",
+      "filename": "32-shio-mikan.png",
+      "ingredient_en": "a fresh mandarin orange (mikan) with a subtle dusting of salt crystals on its skin, glistening, fresh and elegant",
+      "prompt": "Soft watercolor and ink wash illustration of a fresh mandarin orange (mikan) with a subtle dusting of salt crystals on its skin, glistening, fresh and elegant, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space"
+    },
+    {
+      "id": "33",
+      "name_ja": "巨峰＆ベリー",
+      "name_en": "kyoho grape and berry mix",
+      "syrup_hex": "#5C2C5C",
+      "filename": "33-kyoho-berry.png",
+      "ingredient_en": "a small cluster of large kyoho purple grapes with mixed berries (raspberries and blackberries) scattered nearby, deep purple",
+      "prompt": "Soft watercolor and ink wash illustration of a small cluster of large kyoho purple grapes with mixed berries (raspberries and blackberries) scattered nearby, deep purple, in gentle Japanese yamato-e and traditional wagashi packaging design style, single subject placed in the right one-third of the frame, kinari off-white #FAF5E9 background with subtle washi paper texture, soft organic brush strokes with hand-drawn imperfection, low saturation 60 percent maximum, the natural color of the ingredient is the only chromatic element, no text, no logo, no patterns, no decorations, no plates or vessels, no finished dessert, museum-grade botanical illustration aesthetic, ultra clean composition, 1:1 square aspect ratio, the left two-thirds of the frame is empty kinari space"
     }
   ],
   "style_description": "原料/素材を画面右1/3に配置した優しい水彩・墨彩風挿絵。完成したかき氷ではなく、素材そのものを描く。和菓子パッケージや日本画の文法。"

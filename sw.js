@@ -49,6 +49,8 @@ const PRECACHE_URLS = [
   './images/29-power-energy.svg',
   './images/30-thunder-ginger.svg',
   './images/31-beni-imo.svg',
+  './images/32-shio-mikan.svg',
+  './images/33-kyoho-berry.svg',
 ];
 
 self.addEventListener('install', (event) => {
