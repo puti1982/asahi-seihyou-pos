@@ -966,6 +966,81 @@ def ufo_motif(color):
   </g>'''
 
 
+def shio_mikan(color):
+    """塩みかん: 蜜柑+葉+塩のキラキラ結晶"""
+    body = "M 720 605 C 660 605 622 560 622 505 C 622 450 662 412 720 412 C 778 412 818 450 818 505 C 818 560 780 605 720 605 Z"
+    return f'''
+  <g>
+    {watercolor(body, color)}
+    <!-- citrus dimples 蜜柑の凹み -->
+    <g fill="{INK}" opacity="0.12">
+      <circle cx="660" cy="478" r="1.5"/>
+      <circle cx="690" cy="510" r="1.5"/>
+      <circle cx="725" cy="450" r="1.5"/>
+      <circle cx="755" cy="490" r="1.5"/>
+      <circle cx="700" cy="540" r="1.5"/>
+      <circle cx="755" cy="555" r="1.5"/>
+      <circle cx="775" cy="475" r="1.3"/>
+      <circle cx="678" cy="555" r="1.3"/>
+    </g>
+    <!-- 塩のキラキラ結晶 (4方向の星型 + 円) -->
+    <g fill="#FFFFFF" opacity="0.95">
+      <path d="M 685 458 L 685 448 L 690 458 L 695 458 L 690 462 L 692 470 L 685 466 L 678 470 L 680 462 L 675 458 Z"/>
+      <circle cx="745" cy="473" r="2.5"/>
+      <ellipse cx="700" cy="495" rx="2" ry="3" transform="rotate(-30 700 495)"/>
+      <path d="M 770 525 L 770 518 L 774 525 L 778 525 L 774 528 L 776 534 L 770 531 L 764 534 L 766 528 L 762 525 Z"/>
+      <circle cx="690" cy="555" r="2"/>
+      <circle cx="730" cy="535" r="1.5"/>
+      <circle cx="755" cy="448" r="1.5"/>
+      <circle cx="685" cy="500" r="1"/>
+    </g>
+    <!-- top stem -->
+    <path d="M 720 420 Q 720 410 718 400" stroke="{STEM}" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.78"/>
+    <!-- leaf -->
+    <path d="M 720 415 Q 745 400 770 410 Q 760 425 740 425 Q 728 425 720 420 Z" fill="{LEAF}" opacity="0.88"/>
+    <path d="M 730 418 Q 745 416 760 418" stroke="{LEAF_DARK}" stroke-width="0.7" fill="none" opacity="0.55"/>
+    <!-- highlight -->
+    {hl(680, 475, 14, 22, 0.5, -10)}
+    {hl(672, 465, 5, 10, 0.85, -10)}
+  </g>'''
+
+
+def kyoho_berry(color):
+    """巨峰&ベリー: 大粒の巨峰房 + 散らばる小さなベリー"""
+    # 大粒の巨峰 9個 (三角房)
+    grapes = [
+        (720, 425),
+        (700, 460), (740, 460),
+        (685, 495), (720, 495), (755, 495),
+        (700, 530), (740, 530),
+        (720, 565),
+    ]
+    # 小ベリー (右下/左下に分散)
+    berries = [(648, 525), (652, 555), (672, 575),
+               (790, 550), (792, 580)]
+    out = '\n  <g>'
+    # 蔓・葉
+    out += f'\n    <path d="M 720 410 Q 716 392 720 372" stroke="{STEM_GREEN}" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85"/>'
+    out += f'\n    <path d="M 720 380 Q 752 368 770 388 Q 758 400 740 396 Q 725 392 720 385 Z" fill="{LEAF}" opacity="0.88"/>'
+    out += f'\n    <path d="M 730 386 Q 750 386 762 390" stroke="{LEAF_DARK}" stroke-width="0.7" fill="none" opacity="0.55"/>'
+    # 大粒巨峰
+    for i, (cx, cy) in enumerate(grapes):
+        a_main = 0.85 if i % 2 == 0 else 0.72
+        out += f'\n    <circle cx="{cx+1}" cy="{cy+2}" r="26" fill="{color}" opacity="0.22" filter="url(#softer)"/>'
+        out += f'\n    <circle cx="{cx}" cy="{cy}" r="24" fill="{color}" opacity="{a_main}"/>'
+        out += f'\n    <circle cx="{cx-3}" cy="{cy-3}" r="20" fill="{color}" opacity="0.5"/>'
+        out += f'\n    <circle cx="{cx-7}" cy="{cy-8}" r="6" fill="#FFFFFF" opacity="0.45"/>'
+        out += f'\n    <circle cx="{cx-7}" cy="{cy-9}" r="2.5" fill="#FFFFFF" opacity="0.85"/>'
+    # 小ベリー (赤紫系・巨峰より小)
+    for cx, cy in berries:
+        out += f'\n    <circle cx="{cx}" cy="{cy}" r="11" fill="#A33A5C" opacity="0.85"/>'
+        out += f'\n    <circle cx="{cx-2}" cy="{cy-3}" r="3" fill="#FFFFFF" opacity="0.6"/>'
+    # ベリーの葉小
+    out += f'\n    <path d="M 658 510 Q 670 502 678 510 Q 670 515 658 510 Z" fill="{LEAF_DARK}" opacity="0.6"/>'
+    out += '\n  </g>'
+    return out
+
+
 # ============ MAPPING ============
 
 def render_for(slug, hex_color):
