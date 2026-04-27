@@ -1158,41 +1158,12 @@ function bindEvents() {
     else if (action === 'go-settings') { setView('settings'); renderSettings(); }
   });
 
-  /* お預かり display タップでモーダル展開 */
-  const recDisplay = document.getElementById('received-display');
-  if (recDisplay) recDisplay.addEventListener('click', openReceivedModal);
-  /* モーダル「確定」「×」 + 背景タップ閉じる */
-  const recModal = document.getElementById('received-modal');
-  if (recModal) {
-    recModal.addEventListener('click', (e) => {
-      if (e.target === recModal) closeReceivedModal();
-      const btn = e.target.closest('button[data-action="close-received-modal"]');
-      if (btn) closeReceivedModal();
-    });
-  }
-  /* Esc キーでお預かりモーダル閉じる (a11y / WCAG 2.1 2.1.2) */
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    const m = document.getElementById('received-modal');
-    if (m && m.classList.contains('show')) closeReceivedModal();
-  });
-
   // back buttons
   document.querySelectorAll('button[data-action="go-pos"]').forEach(b =>
     b.addEventListener('click', () => setView('pos'))
   );
 
-  /* アプリ内テンキー (delegation) — iPadネイティブ数字キーボード非表示の代替 */
-  document.getElementById('numpad').addEventListener('click', (e) => {
-    const btn = e.target.closest('button.np-btn');
-    if (!btn) return;
-    const action = btn.dataset.action;
-    if (action === 'np-num') npAppendDigit(parseInt(btn.dataset.num, 10));
-    else if (action === 'np-del') npDeleteLast();
-    else if (action === 'np-clear') npClear();
-  });
-
-  /* クイック金額ボタンはユーザー要求により削除済 */
+  /* お預かり/お釣り/テンキー UI 全廃止のため、関連 listener 削除済 */
 
   // cart list (delegation)
   document.getElementById('cart-list').addEventListener('click', (e) => {
