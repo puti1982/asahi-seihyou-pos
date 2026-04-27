@@ -242,8 +242,8 @@ body {
 .cart-item {
   background: var(--paper);
   border: 1px solid var(--line);
-  margin-bottom: 5px;            /* 8→5 5item収容のため */
-  padding: 8px 12px 6px;         /* 14/16/12 → 8/12/6 */
+  margin-bottom: 3px;            /* 5→3 で5item確実視認 */
+  padding: 6px 10px 5px;         /* 8/12/6 → 6/10/5 さらに圧縮 */
   position: relative;
   transition: border-color 0.2s;
 }
