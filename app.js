@@ -1209,7 +1209,7 @@ function bindEvents() {
   /* お預かり display タップでモーダル展開 */
   const recDisplay = document.getElementById('received-display');
   if (recDisplay) recDisplay.addEventListener('click', openReceivedModal);
-  /* モーダル「確定」 + 背景タップ閉じる */
+  /* モーダル「確定」「×」 + 背景タップ閉じる */
   const recModal = document.getElementById('received-modal');
   if (recModal) {
     recModal.addEventListener('click', (e) => {
@@ -1218,6 +1218,12 @@ function bindEvents() {
       if (btn) closeReceivedModal();
     });
   }
+  /* Esc キーでお預かりモーダル閉じる (a11y / WCAG 2.1 2.1.2) */
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const m = document.getElementById('received-modal');
+    if (m && m.classList.contains('show')) closeReceivedModal();
+  });
 
   // back buttons
   document.querySelectorAll('button[data-action="go-pos"]').forEach(b =>
