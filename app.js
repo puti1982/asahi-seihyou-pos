@@ -40,7 +40,7 @@ const DEFAULT_FLAVORS = [
   { name:'パワーエナジー', color:'#B83A3A', price:250, image:'29-power-energy' },
   { name:'イナズマジンジャー', color:'#D6A832', price:250, image:'30-thunder-ginger' },
   { name:'紅いも', color:'#5C2D5E', price:250, image:'31-beni-imo' },
-  { name:'塩みかん', color:'#E68A3D', price:300, image:'32-shio-mikan' },
+  { name:'塩みかん', color:'#F2A23A', price:300, image:'32-shio-mikan' },
   { name:'巨峰＆ベリー', color:'#5C2C5C', price:300, image:'33-kyoho-berry' },
 ];
 const DEFAULT_TOPPINGS = [
