@@ -177,6 +177,8 @@ body {
   background: var(--bg);
   border-right: 1px solid var(--line);
   min-height: 0;
+  height: 100%;                        /* グリッド行内で確実にストレッチ */
+  overflow: hidden;                    /* 内部スクロールはcart-listに委譲 */
 }
 
 /* 余白リズム圧縮版: ユーザー要求「カート部分も上下に動かさず全表示」優先 */
