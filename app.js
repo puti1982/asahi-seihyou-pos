@@ -420,8 +420,6 @@ function doCheckout() {
   // P2-21: 完了トーストに角印 SVG 同梱
   showToast(`御会計 完了  ¥${fmtNum(total)}`, { withSeal: true });
   cart = [];
-  receivedRaw = 0;
-  updateReceivedDisplay();
   clearCartDraft();
   renderCart();
 }
