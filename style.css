@@ -378,30 +378,73 @@ body {
   color: var(--ink-2);
   letter-spacing: 0.14em;
 }
-/* お預かり: input を排除し div display 化 (iPadネイティブ数字キーボード呼び出し防止) */
+/* お預かり: タップでモーダル展開 (cart-list を最大化、入力時のみテンキー表示) */
 .receive-display {
   width: 100%;
   background: var(--bg);
-  border: 1px solid var(--ink);                 /* 入力先として目立つよう墨枠 */
-  padding: 7px 12px;
+  border: 1px solid var(--ink);
+  padding: 8px 12px;
   font-family: var(--num);
   font-size: 19px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-align: right;
-  min-height: 40px;
+  min-height: 44px;
   color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 10px;
   user-select: none;
   -webkit-user-select: none;
   font-feature-settings: "tnum" 1, "lnum" 1;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 0.15s, border-color 0.15s;
 }
+.receive-display:hover { background: var(--paper); border-color: var(--ink); }
+.receive-display:active { background: var(--ink); color: var(--bg); }
+.receive-display:active .rec-hint { color: var(--bg); opacity: 0.85; }
 .receive-display .rec-yen {
   font-size: 12px;
   margin-right: 3px;
   opacity: 0.6;
+}
+.receive-display .rec-hint {
+  font-family: var(--serif);
+  font-size: 10px;
+  color: var(--ink-3);
+  letter-spacing: 0.12em;
+  margin-left: auto;
+  font-weight: 400;
+  flex-shrink: 0;
+}
+.receive-display .rec-yen, .receive-display .rec-val {
+  flex-shrink: 0;
+}
+
+/* お預かりモーダル (テンキー大画面表示) */
+.modal-numpad {
+  width: 360px;
+  max-width: 92vw;
+  padding: 24px 28px;
+}
+.received-display-large {
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  padding: 14px 18px;
+  margin: 14px 0 16px;
+  font-family: var(--num);
+  font-size: 32px;
+  font-weight: 600;
+  text-align: right;
+  letter-spacing: 0.04em;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+.received-display-large .rec-yen {
+  font-size: 18px;
+  opacity: 0.6;
+  margin-right: 4px;
 }
 
 /* テンキー (4×3 圧縮で CTA 視認確保) */
