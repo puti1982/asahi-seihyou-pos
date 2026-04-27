@@ -446,10 +446,11 @@ deploy.sh は以下を自動実行:
 
 | 項目 | 影響 | 対応予定 |
 |---|---|---|
-| `.quick-amounts` / `.quick-btn` CSS残置 | 実害なし、約0.5KB死コード | 次回大型修正時に掃除 |
-| `npAddQuick()` 関数残置 | 実害なし、未使用 | 同上 |
+| `.quick-amounts` / `.quick-btn` / `.numpad` / `.receive-row` / `.change-row` CSS残置 | 実害なし、約2KB死コード（v15のお預かり廃止で発生） | 次回大型修正時に掃除 |
+| `npAddQuick()` / お預かり関連JS関数群残置 | 実害なし、未使用 | 同上 |
 | localStorage 5MB上限 | 来シーズン超過の可能性 | 2027シーズンv2でIndexedDB昇格 |
 | aggregateRange 線形スキャン | 5000取引超で集計遅延の可能性 | 必要時にキャッシュ機構追加 |
+| `LAST_BACKUP_KEY` 残置（v15で実バックアップフロー簡素化後も日時表示が残る） | 実害なし、表示のみ | データ管理UIの整理時に対応 |
 
 ---
 
