@@ -564,7 +564,7 @@ body {
 }
 .change-row .val .yen { font-size: 11px; opacity: 0.55; margin-right: 2px; }
 
-/* CTA: 確実視認のため最圧縮 */
+/* CTA: お預かり廃止後の主役。合計直下で確実に視認 + 大きく押せる */
 .cta {
   width: 100%;
   background: var(--ink);
@@ -572,16 +572,16 @@ body {
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
   border-left: none; border-right: none;
-  padding: 10px;                 /* 12→10 */
+  padding: 16px;
   font-family: var(--serif);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
-  letter-spacing: 0.32em;
-  text-indent: 0.32em;
+  letter-spacing: 0.36em;
+  text-indent: 0.36em;
   cursor: pointer;
   transition: background 0.2s;
   position: relative;
-  min-height: 44px;              /* 52→44 */
+  min-height: 56px;              /* 主役級 + WCAG 44pt超え */
 }
 .cta::after {
   content: '';
