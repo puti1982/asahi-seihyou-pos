@@ -1196,6 +1196,19 @@ function bindEvents() {
     else if (action === 'go-settings') { setView('settings'); renderSettings(); }
   });
 
+  /* お預かり display タップでモーダル展開 */
+  const recDisplay = document.getElementById('received-display');
+  if (recDisplay) recDisplay.addEventListener('click', openReceivedModal);
+  /* モーダル「確定」 + 背景タップ閉じる */
+  const recModal = document.getElementById('received-modal');
+  if (recModal) {
+    recModal.addEventListener('click', (e) => {
+      if (e.target === recModal) closeReceivedModal();
+      const btn = e.target.closest('button[data-action="close-received-modal"]');
+      if (btn) closeReceivedModal();
+    });
+  }
+
   // back buttons
   document.querySelectorAll('button[data-action="go-pos"]').forEach(b =>
     b.addEventListener('click', () => setView('pos'))
