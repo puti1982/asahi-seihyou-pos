@@ -382,56 +382,12 @@ function removeItem(id) {
   renderCart();
 }
 
-/* お預かり状態 (アプリ内テンキーで操作。input未使用 → ネイティブ数字キーボード非表示) */
-let receivedRaw = 0;
-const RECEIVED_MAX = 9999999;       /* 7桁 (¥9,999,999 想定) */
-
-function updateReceivedDisplay() {
-  const v = fmtNum(receivedRaw);
-  const el = document.getElementById('received-val');
-  if (el) el.textContent = v;
-  /* お預かりモーダル内の表示も同期 */
-  const elModal = document.getElementById('received-val-modal');
-  if (elModal) elModal.textContent = v;
-  updateChange();
-}
-
-/* お預かりモーダル開閉 (アプリ内テンキー専用ポップアップ) */
-function openReceivedModal() {
-  const m = document.getElementById('received-modal');
-  if (!m) return;
-  updateReceivedDisplay();
-  m.classList.add('show');
-}
-function closeReceivedModal() {
-  const m = document.getElementById('received-modal');
-  if (m) m.classList.remove('show');
-}
-function npAppendDigit(d) {
-  const next = receivedRaw * 10 + d;
-  if (next > RECEIVED_MAX) return;
-  receivedRaw = next;
-  updateReceivedDisplay();
-}
-function npDeleteLast() {
-  receivedRaw = Math.floor(receivedRaw / 10);
-  updateReceivedDisplay();
-}
-function npClear() {
-  receivedRaw = 0;
-  updateReceivedDisplay();
-}
-function npAddQuick(n) {
-  receivedRaw = Math.min(receivedRaw + n, RECEIVED_MAX);
-  updateReceivedDisplay();
-}
-
+/* お預かり/お釣り 機能廃止 (クライアント要望)。
+ * → receivedRaw 関連の関数群削除。updateChange は CTA有効化判定のみ */
 function updateChange() {
-  const r = receivedRaw;
   const s = calcSubtotal();
-  const c = r - s;
-  document.getElementById('change').textContent = fmtNum(c >= 0 ? c : 0);
-  document.getElementById('checkout').disabled = (s === 0 || r < s);
+  const cta = document.getElementById('checkout');
+  if (cta) cta.disabled = (s === 0);
 }
 
 /* ===== Checkout ===== */
