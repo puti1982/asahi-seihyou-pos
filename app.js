@@ -64,7 +64,7 @@ let TOPPINGS = loadJSON(TOPPINGS_KEY, DEFAULT_TOPPINGS.slice());
 let cart = [];
 let nextId = 1;
 
-/* Migration: 既存FLAVORSに image フィールドが無い / 旧色のままの場合、DEFAULTから補完 */
+/* Migration: 既存FLAVORSの image補完 / 旧色更新 / 新商品追加 */
 (function migrateFlavors() {
   let changed = false;
   // image フィールド補完
@@ -78,6 +78,14 @@ let nextId = 1;
   FLAVORS.forEach(f => {
     if (f.name === 'ブルーハワイ' && f.color === '#5DA9C8') {
       f.color = '#0288D1';
+      changed = true;
+    }
+  });
+  /* DEFAULTに新規追加された味を既存ユーザーのFLAVORSにも追加
+     (32:塩みかん, 33:巨峰＆ベリー など) */
+  DEFAULT_FLAVORS.forEach(def => {
+    if (!FLAVORS.find(f => f.name === def.name)) {
+      FLAVORS.push({ ...def });
       changed = true;
     }
   });
