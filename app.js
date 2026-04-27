@@ -971,8 +971,6 @@ function resetSettings() {
       cart = [];
       nextId = 1;
       clearCartDraft();
-      receivedRaw = 0;
-      updateReceivedDisplay();
       renderSettings();
       refreshAfterChange();
       showToast('初期値に戻しました');
