@@ -377,9 +377,25 @@ let receivedRaw = 0;
 const RECEIVED_MAX = 9999999;       /* 7桁 (¥9,999,999 想定) */
 
 function updateReceivedDisplay() {
+  const v = fmtNum(receivedRaw);
   const el = document.getElementById('received-val');
-  if (el) el.textContent = fmtNum(receivedRaw);
+  if (el) el.textContent = v;
+  /* お預かりモーダル内の表示も同期 */
+  const elModal = document.getElementById('received-val-modal');
+  if (elModal) elModal.textContent = v;
   updateChange();
+}
+
+/* お預かりモーダル開閉 (アプリ内テンキー専用ポップアップ) */
+function openReceivedModal() {
+  const m = document.getElementById('received-modal');
+  if (!m) return;
+  updateReceivedDisplay();
+  m.classList.add('show');
+}
+function closeReceivedModal() {
+  const m = document.getElementById('received-modal');
+  if (m) m.classList.remove('show');
 }
 function npAppendDigit(d) {
   const next = receivedRaw * 10 + d;
