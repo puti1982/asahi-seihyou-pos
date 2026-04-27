@@ -560,8 +560,7 @@ body {
 }
 .change-row .val .yen { font-size: 11px; opacity: 0.55; margin-right: 2px; }
 
-/* CTA: 合計直下・確実視認。タッチ44pt+保ちつつ最圧縮 */
-/* 会計確定ボタン: バー内インライン配置 (auto幅) */
+/* 会計確定ボタン: checkout-bar 内インライン配置 (auto幅, WCAG 44pt+ 維持) */
 .cta {
   flex-shrink: 0;
   background: var(--ink);
