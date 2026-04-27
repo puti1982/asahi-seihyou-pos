@@ -1076,6 +1076,8 @@ def render_for(slug, hex_color):
         '29-power-energy':     lambda: lightning_bolt(hex_color),
         '30-thunder-ginger':   lambda: ginger_root(hex_color),
         '31-beni-imo':         lambda: beni_imo(hex_color),
+        '32-shio-mikan':       lambda: shio_mikan(hex_color),
+        '33-kyoho-berry':      lambda: kyoho_berry(hex_color),
     }
     fn = fn_map.get(slug)
     return fn() if fn else round_apple(hex_color)
