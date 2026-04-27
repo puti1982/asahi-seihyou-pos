@@ -47,23 +47,7 @@
           <!-- P1-11: 大金額は「円」suffix -->
           <div class="val"><span id="subtotal">0</span><span class="yen-suffix">円</span></div>
         </div>
-        <div class="receive-block">
-          <div class="receive-row">
-            <div class="lbl">お預かり</div>
-          </div>
-          <!-- お預かり: タップでモーダル展開。インラインのテンキー削除でカート領域拡大 -->
-          <button class="receive-display" id="received-display" type="button"
-                  data-action="open-received-modal"
-                  aria-label="お預かり金額を入力">
-            <span class="rec-yen">¥</span><span class="rec-val" id="received-val">0</span>
-            <span class="rec-hint">タップして入力</span>
-          </button>
-        </div>
-        <div class="change-row">
-          <div class="lbl">御釣銭</div>
-          <!-- P0-07: 釣銭は墨に戻し、¥ prefix維持 (小金額側) -->
-          <div class="val"><span class="yen">¥</span><span id="change">0</span></div>
-        </div>
+        <!-- お預かり/お釣り 機能廃止 (クライアント要望)。合計直下に直接 御会計 ボタン -->
         <button class="cta" id="checkout" disabled>御 会 計</button>
       </div>
     </aside>
