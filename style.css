@@ -332,27 +332,27 @@ body {
 /* P0-07: hover時の朱変色廃止 */
 .delete-btn:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
-/* ========== Checkout (お預かり/お釣り廃止 → 合計+CTA のみ) ========== */
+/* ========== Checkout (CTA絶対視認 — 合計+CTA最圧縮) ========== */
 .checkout {
   background: var(--paper);
   border-top: 1px solid var(--line);
-  padding: 12px 16px 14px;
+  padding: 8px 16px 4px;         /* 12/16/14 → 8/16/4 (下padding大幅削減) */
   flex-shrink: 0;
 }
 .totalbar {
   display: flex; justify-content: space-between; align-items: baseline;
-  padding: 4px 6px 12px;
+  padding: 2px 6px 8px;          /* 4/6/12 → 2/6/8 */
   border-bottom: 1px solid var(--ink);
-  margin: 0 0 14px;              /* CTAとの呼吸 */
+  margin: 0 0 8px;               /* 14→8 */
 }
 .totalbar .lbl {
   font-family: var(--serif);
-  font-size: 14px;               /* 12→14 主役なので少し格上げ */
+  font-size: 13px;
   letter-spacing: 0.18em;
 }
 .totalbar .val {
   font-family: var(--num);
-  font-size: 30px; font-weight: 600;       /* 22→30 主役級 */
+  font-size: 26px; font-weight: 600;       /* 30→26 */
   color: var(--shu-2);
   letter-spacing: 0.02em;
 }
