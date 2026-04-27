@@ -560,21 +560,21 @@ body {
 }
 .change-row .val .yen { font-size: 11px; opacity: 0.55; margin-right: 2px; }
 
-/* 会計確定ボタン: checkout-bar 内インライン配置 (auto幅, WCAG 44pt+ 維持) */
+/* 会計確定ボタン: checkout-bar 内インライン配置。Apple HIG 48pt 親指タップ最適化 */
 .cta {
   flex-shrink: 0;
   background: var(--ink);
   color: var(--bg);
   border: 1px solid var(--ink);
-  padding: 10px 16px;
+  padding: 12px 18px;
   font-family: var(--serif);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.2em;
-  text-indent: 0.2em;
+  letter-spacing: 0.16em;
+  text-indent: 0.16em;
   cursor: pointer;
   transition: background 0.2s;
-  min-height: 44px;              /* WCAG 44pt+ 維持 */
+  min-height: 48px;
   white-space: nowrap;
 }
 .cta:hover { background: #0E0A06; }
