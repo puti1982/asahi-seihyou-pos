@@ -410,7 +410,8 @@ deploy.sh は以下を自動実行:
 |---|---|---|
 | 「更新があります」適用しても変わらない | 古いSW固着（過去のauto-skipWaiting bug） | 完全リセット（11.5節） |
 | 横にスクロールが必要 | viewport meta width=固定値（過去のbug） | width=device-width確認、deploy済みver か検証 |
-| 御会計ボタンが見えない | checkout高さ過大 | numpad/font/padding圧縮（履歴あり） |
+| **会計確定ボタンが消える/見えない** ★v18 | `.view.active` に `grid-template-rows` 未指定 → カート品数増加で底部クリップ | `style.css` の `.view.active { display: grid; grid-template-rows: 1fr; min-height: 0 }` を**絶対削除しない** |
+| 御会計バー全体が見えない | .app の grid-template-rows / padding-bottom 異常 | grid-template-rows:1fr / padding-bottom: max(24px, env(safe-area-inset-bottom)) を確認 |
 | 「設定データが失われています」毎回 | healthCheck false-positive（過去bug） | ensureDefaultsInitialized確認、修正済 |
 | ホーム画面アイコンが古い | PWA icon キャッシュ | 完全リセットで反映 |
 
