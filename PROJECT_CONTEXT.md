@@ -434,7 +434,11 @@ deploy.sh は以下を自動実行:
 | v11 | テンキーUI（iPadネイティブKB完全排除） |
 | v12 | モックデータ廃止 + 取引個別削除機能 |
 | v13 | 番号円形バッジ + クイック金額削除 + ヘッダー右側移動 |
-| v14（最新） | CTA確実視認のためcheckout 354→296px + 暖簾デザインロゴ |
+| v14 | checkout 354→296px + 暖簾デザインロゴ（紺地+円相+氷） |
+| **v15** | **お預かり/お釣り/テンキー全廃止**（クライアント要望: 釣銭計算は頭で） |
+| **v16** | **app-footer廃止 + .app の grid-template-rows: 1fr 化 + padding-bottom: max(24px, safe-area)** |
+| **v17** | **横一列バー化 .checkout-bar [御会計][¥金額][会計確定]を1バー統合**。CTA見切れ問題の構造的解消 |
+| **v18（最新）** | **`.view.active { grid-template-rows: 1fr; min-height: 0 }` 追加（会計確定ボタン消失バグの根本修正） + cart-panel/flavor-panel に height:100% / overflow:hidden 多層防御** |
 
 ---
 
