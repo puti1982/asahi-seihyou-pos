@@ -577,42 +577,30 @@ body {
 .change-row .val .yen { font-size: 11px; opacity: 0.55; margin-right: 2px; }
 
 /* CTA: 合計直下・確実視認。タッチ44pt+保ちつつ最圧縮 */
+/* 会計確定ボタン: バー内インライン配置 (auto幅) */
 .cta {
-  width: 100%;
+  flex-shrink: 0;
   background: var(--ink);
   color: var(--bg);
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  border-left: none; border-right: none;
-  padding: 12px;                 /* 16→12 */
+  border: 1px solid var(--ink);
+  padding: 10px 16px;
   font-family: var(--serif);
-  font-size: 17px;               /* 18→17 */
-  font-weight: 400;
-  letter-spacing: 0.36em;
-  text-indent: 0.36em;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
   cursor: pointer;
   transition: background 0.2s;
-  position: relative;
-  min-height: 48px;              /* 56→48 (WCAG 44pt+ 維持) */
+  min-height: 44px;              /* WCAG 44pt+ 維持 */
+  white-space: nowrap;
 }
-.cta::after {
-  content: '';
-  position: absolute;
-  right: 18px; top: 50%;
-  width: 4px; height: 4px;       /* P0-06: 4px朱三角 */
-  background: var(--shu);
-  transform: translateY(-50%) rotate(45deg);
-}
-/* P0-07: hover時の朱反転を更に濃い墨に */
 .cta:hover { background: #0E0A06; }
 .cta:disabled {
   background: transparent;
   color: var(--ink-3);
-  border-top-color: var(--line);
-  border-bottom-color: var(--line);
+  border-color: var(--line);
   cursor: not-allowed;
 }
-.cta:disabled::after { display: none; }
 .cta:disabled:hover { background: transparent; }
 
 /* ========== Flavor Grid ========== */
