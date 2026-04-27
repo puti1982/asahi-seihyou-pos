@@ -163,7 +163,10 @@ body {
 
 /* ========== Views ========== */
 .view { display: none; min-height: 0; }
-.view.active { display: grid; }
+/* ★ grid-template-rows: 1fr を必ず指定。
+   未指定だと grid-auto-rows: auto により内部行がコンテンツ高に依存。
+   結果、カート品数が多いと行がはみ出し、.app overflow:hidden で底部クリップ → 会計確定ボタン消失バグ */
+.view.active { display: grid; grid-template-rows: 1fr; min-height: 0; }
 /* 実画面幅に追従。最小340px (チェックアウトが収まる最小)、最大420px、画面の34%目安 */
 .view-pos { grid-template-columns: minmax(0, clamp(340px, 34vw, 420px)) minmax(0, 1fr); }
 .view-ledger, .view-settings { grid-template-columns: 1fr; }
