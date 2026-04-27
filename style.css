@@ -161,22 +161,6 @@ body {
 /* P0-07: hover時の朱変色廃止。罫線濃度のみで表現 */
 .ledger-link:hover { border-bottom-color: var(--ink); border-bottom-width: 2px; }
 
-/* ========== Footer (P2-23) ========== */
-.app-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 32px;
-  border-top: 1px solid var(--hairline);
-  background: var(--paper);
-}
-.app-footer-mark {
-  font-family: var(--serif);
-  font-size: 9px;
-  color: var(--ink-3);
-  letter-spacing: 0.18em;
-}
-
 /* ========== Views ========== */
 .view { display: none; min-height: 0; }
 .view.active { display: grid; }
