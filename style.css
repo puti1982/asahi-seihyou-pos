@@ -447,23 +447,23 @@ body {
   margin-right: 4px;
 }
 
-/* テンキー (4×3 圧縮で CTA 視認確保) */
+/* テンキー (モーダル内表示・大画面でゆとりあるタップ確保) */
 .numpad {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2px;                        /* 3→2 */
-  margin-top: 4px;
+  gap: 4px;
+  margin: 0;
 }
 .np-btn {
   background: var(--paper);
   border: 1px solid var(--line);
   padding: 0;
   font-family: var(--num);
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 500;
   color: var(--ink);
   cursor: pointer;
-  min-height: 38px;                /* 42→38 圧縮 (3×38=114) */
+  min-height: 54px;
   letter-spacing: 0;
   transition: background 0.08s, border-color 0.12s, color 0.08s;
   touch-action: manipulation;
