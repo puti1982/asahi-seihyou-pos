@@ -70,7 +70,7 @@ body {
 }
 
 /* P1-10: 全数字に tabular + lining */
-.item-price, .totalbar .val, .flavor-priceTag, .bd-row,
+.item-price, .checkout-bar .val, .flavor-priceTag, .bd-row,
 .total-card .val, .receive-input, .change-row .val,
 #ledger-total, #today-total, .quick-btn, .clock,
 .breakdown-table, .price-input, .date-input, .bd-total .val,
