@@ -247,9 +247,10 @@
 </div>
 
 <!-- お預かり金額入力モーダル (アプリ内テンキー) -->
-<div class="modal-overlay" id="received-modal">
+<div class="modal-overlay" id="received-modal" role="dialog" aria-modal="true" aria-labelledby="received-modal-title">
   <div class="modal modal-numpad">
-    <div class="modal-title">お預かり金額</div>
+    <button class="modal-close" type="button" data-action="close-received-modal" aria-label="閉じる">×</button>
+    <div class="modal-title" id="received-modal-title">お預かり金額</div>
     <div class="received-display-large">
       <span class="rec-yen">¥</span><span class="rec-val" id="received-val-modal">0</span>
     </div>
