@@ -87,7 +87,7 @@ body {
 
 .app {
   display: grid;
-  grid-template-rows: 1fr 16px;            /* ヘッダーは flavor-panel 内へ移動。最上段はviewが直接占有 */
+  grid-template-rows: 1fr;                /* footer 廃止 — viewが画面全体を占有 */
   height: 100vh;
   height: 100dvh;
   width: 100%;
@@ -95,6 +95,9 @@ body {
   margin: 0 auto;
   background: var(--paper);
   overflow: hidden;
+  /* Android のナビバー / iPad のホームインジケーター回避 */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-sizing: border-box;
 }
 
 /* ========== Header (flavor-panel 内に配置されるブランドバー) ========== */
