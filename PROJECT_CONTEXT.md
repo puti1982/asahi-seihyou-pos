@@ -186,43 +186,44 @@ cd ..
 
 ---
 
-## 7. レイアウト構造（最終形）
+## 7. レイアウト構造（最終形・v18）
 
 ```
 ┌────────────────────────┬────────────────────────────────┐
 │                        │ ロゴ朝日製氷 / clock / 売上帳 / 設定 │ 52px ヘッダー
-│                        ├────────────────────────────────┤
-│  御注文                │ 品書 / 全品 ¥250                │ flavor-header
+│ ─ 御注文                ├────────────────────────────────┤
+│                        │ 品書 / 全品 ¥250                │ flavor-header
 │                        ├────────────────────────────────┤
 │ ┌────────────────────┐ │ ┌─────┬─────┬─────┐         │
 │ │  カートリスト       │ │ │① いちご│② メロン│③ レモン │         │
-│ │  (画面中央以上)     │ │ │④ ブルー │⑤ ピーチ│⑥ グレープ│         │
+│ │  (上端~bottom-bar) │ │ │④ ブルー │⑤ ピーチ│⑥ グレープ│         │
 │ │                    │ │ │  ハワイ│       │         │         │
-│ │                    │ │ │ ...   │       │         │         │
-│ │                    │ │ │㉛ 紅いも│       │         │         │
-│ ├────────────────────┤ │ └─────┴─────┴─────┘         │
-│ │ 御会計   ¥XXX      │ │                                │
-│ │ お預かり ¥XXX      │ │                                │
-│ │ [7][8][9][⌫]       │ │                                │
-│ │ [4][5][6][消]      │ │                                │
-│ │ [1][2][3][0]       │ │                                │
-│ │ 御釣銭   ¥XXX      │ │                                │
-│ │ [御 会 計]          │ │                                │
+│ │                    │ │ │ ...                       │         │
+│ │                    │ │ │㉝ 巨峰&ベリー              │         │
+│ │                    │ │ └─────┴─────┴─────┘         │
+│ ├────────────────────┤ │                                │
+│ │御会計 ¥1,250 [会計確定]│ │  ← 横一列バー (v17)           │
 │ └────────────────────┘ │                                │
 └────────────────────────┴────────────────────────────────┘
-                       Footer 16px
+   ↑ padding-bottom: max(24px, safe-area-inset-bottom) ↑
+   (Hitab Android ナビバー回避)
 ```
 
 ### 7.1 主要寸法
 
 | 要素 | 寸法 |
 |---|---|
-| .app | grid-template-rows: 1fr 16px (no top header row) |
-| view-pos | grid-template-columns: clamp(340px, 34vw, 420px) 1fr |
+| .app | grid-template-rows: **1fr** / height: 100dvh / padding-bottom: max(24px, env(safe-area-inset-bottom)) |
+| **.view.active** | **display: grid; grid-template-rows: 1fr; min-height: 0** ★v18でバグ修正必須化 |
+| view-pos | grid-template-columns: clamp(340px, 34vw, 420px) minmax(0, 1fr) |
+| cart-panel | flex column / **height: 100% / overflow: hidden** ★v18 |
+| flavor-panel | flex column / **height: 100% / overflow: hidden** ★v18 |
 | 商品グリッド | repeat(3, minmax(0, 1fr)) + grid-auto-rows: 110px |
 | 番号バッジ | 24×24 円形 (border-radius:50%) |
-| numpad | 4×3 grid (1-9 + 消 + 0 + ⌫) |
-| numpad ボタン | min-height: 38px, font-size: 16px |
+| .checkout-bar (v17) | flex / gap:10px / padding:10px 12px / min-height:64px / border-top:1px ink |
+| .checkout-bar .lbl | 12px serif / 0.22em letter-spacing |
+| .checkout-bar .val | 28px num / 0.02em / 朱赤(#8E2C1F) / text-align:center / flex:1 |
+| .cta（会計確定） | 黒地白字 / 15px serif / padding:12px 18px / **min-height:48px** (Apple HIG) |
 
 ---
 
