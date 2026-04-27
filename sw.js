@@ -1,6 +1,6 @@
 // 朝日製氷 POS - Service Worker
 // 戦略: cache-first + バージョン固定precache (店舗にWi-Fi無し前提)
-const VERSION = 'v20260428001319';
+const VERSION = 'v20260428002257';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [
