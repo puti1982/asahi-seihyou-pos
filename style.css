@@ -95,8 +95,8 @@ body {
   margin: 0 auto;
   background: var(--paper);
   overflow: hidden;
-  /* Hitab Android ナビバー / iPad ホームインジケーター回避 (max で 12px 最低保証) */
-  padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  /* Hitab Android ナビバー / iPad ホームインジケーター回避 (max で 24px 最低保証) */
+  padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
 }
 
