@@ -41,14 +41,12 @@
         <!-- P0-08: section-en 廃止 -->
       </div>
       <div class="cart-list" id="cart-list"></div>
-      <div class="checkout">
-        <div class="totalbar">
-          <div class="lbl">御会計</div>
-          <!-- P1-11: 大金額は「円」suffix -->
-          <div class="val"><span id="subtotal">0</span><span class="yen-suffix">円</span></div>
-        </div>
-        <!-- お預かり/お釣り 機能廃止 (クライアント要望)。合計直下に直接 御会計 ボタン -->
-        <button class="cta" id="checkout" disabled>御 会 計</button>
+      <!-- 横一列統合バー: [御会計 label] [金額 中央] [会計確定 黒ボタン]
+           CTA見切れの構造的解消 — 縦積み廃止 -->
+      <div class="checkout-bar">
+        <span class="lbl">御会計</span>
+        <span class="val"><span id="subtotal">0</span><span class="yen-suffix">円</span></span>
+        <button class="cta" id="checkout" disabled>会計確定</button>
       </div>
     </aside>
 
