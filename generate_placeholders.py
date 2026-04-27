@@ -1006,37 +1006,53 @@ def shio_mikan(color):
 
 
 def kyoho_berry(color):
-    """巨峰&ベリー: 大粒の巨峰房 + 散らばる小さなベリー"""
-    # 大粒の巨峰 9個 (三角房)
+    """巨峰&ベリー: 上半分=巨峰4個・下半分=ベリー4個 (対等構図、差別化)"""
+    # 上半分: 巨峰の小房 (4-5個)
     grapes = [
-        (720, 425),
-        (700, 460), (740, 460),
-        (685, 495), (720, 495), (755, 495),
-        (700, 530), (740, 530),
-        (720, 565),
+        (705, 420), (740, 420),
+        (688, 458), (722, 458), (758, 458),
+        (705, 495), (740, 495),
     ]
-    # 小ベリー (右下/左下に分散)
-    berries = [(648, 525), (652, 555), (672, 575),
-               (790, 550), (792, 580)]
+    # 下半分: 様々なサイズの混合ベリー
+    berries = [
+        # 大ラズベリー
+        ('#A33A5C', 14, 690, 545),
+        # ブラックベリー (粒構造)
+        ('#3A1F3A', 12, 730, 540),
+        # 中赤ベリー
+        ('#C44A6E', 13, 760, 555),
+        # 小ベリー散らばり
+        ('#A33A5C', 10, 700, 580),
+        ('#5C2C5C', 11, 740, 588),
+        ('#7C2A4C', 9, 770, 580),
+    ]
     out = '\n  <g>'
     # 蔓・葉
-    out += f'\n    <path d="M 720 410 Q 716 392 720 372" stroke="{STEM_GREEN}" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85"/>'
-    out += f'\n    <path d="M 720 380 Q 752 368 770 388 Q 758 400 740 396 Q 725 392 720 385 Z" fill="{LEAF}" opacity="0.88"/>'
-    out += f'\n    <path d="M 730 386 Q 750 386 762 390" stroke="{LEAF_DARK}" stroke-width="0.7" fill="none" opacity="0.55"/>'
-    # 大粒巨峰
+    out += f'\n    <path d="M 720 408 Q 716 388 722 368" stroke="{STEM_GREEN}" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85"/>'
+    out += f'\n    <path d="M 722 376 Q 752 364 768 384 Q 756 396 740 392 Q 725 388 722 382 Z" fill="{LEAF}" opacity="0.88"/>'
+    # 巨峰 (上半分)
     for i, (cx, cy) in enumerate(grapes):
-        a_main = 0.85 if i % 2 == 0 else 0.72
-        out += f'\n    <circle cx="{cx+1}" cy="{cy+2}" r="26" fill="{color}" opacity="0.22" filter="url(#softer)"/>'
-        out += f'\n    <circle cx="{cx}" cy="{cy}" r="24" fill="{color}" opacity="{a_main}"/>'
-        out += f'\n    <circle cx="{cx-3}" cy="{cy-3}" r="20" fill="{color}" opacity="0.5"/>'
-        out += f'\n    <circle cx="{cx-7}" cy="{cy-8}" r="6" fill="#FFFFFF" opacity="0.45"/>'
-        out += f'\n    <circle cx="{cx-7}" cy="{cy-9}" r="2.5" fill="#FFFFFF" opacity="0.85"/>'
-    # 小ベリー (赤紫系・巨峰より小)
-    for cx, cy in berries:
-        out += f'\n    <circle cx="{cx}" cy="{cy}" r="11" fill="#A33A5C" opacity="0.85"/>'
-        out += f'\n    <circle cx="{cx-2}" cy="{cy-3}" r="3" fill="#FFFFFF" opacity="0.6"/>'
-    # ベリーの葉小
-    out += f'\n    <path d="M 658 510 Q 670 502 678 510 Q 670 515 658 510 Z" fill="{LEAF_DARK}" opacity="0.6"/>'
+        a_main = 0.88 if i % 2 == 0 else 0.74
+        out += f'\n    <circle cx="{cx+1}" cy="{cy+2}" r="24" fill="{color}" opacity="0.22" filter="url(#softer)"/>'
+        out += f'\n    <circle cx="{cx}" cy="{cy}" r="22" fill="{color}" opacity="{a_main}"/>'
+        out += f'\n    <circle cx="{cx-3}" cy="{cy-3}" r="18" fill="{color}" opacity="0.52"/>'
+        out += f'\n    <circle cx="{cx-6}" cy="{cy-7}" r="5" fill="#FFFFFF" opacity="0.5"/>'
+        out += f'\n    <circle cx="{cx-6}" cy="{cy-8}" r="2" fill="#FFFFFF" opacity="0.85"/>'
+    # 区切りライン (薄く)
+    out += f'\n    <path d="M 660 525 Q 720 522 800 525" stroke="{LEAF_DARK}" stroke-width="0.4" fill="none" opacity="0.25"/>'
+    # ベリー (下半分・サイズ違い・色違い)
+    for col, r, cx, cy in berries:
+        out += f'\n    <circle cx="{cx+1}" cy="{cy+1}" r="{r+2}" fill="{col}" opacity="0.22" filter="url(#softer)"/>'
+        out += f'\n    <circle cx="{cx}" cy="{cy}" r="{r}" fill="{col}" opacity="0.92"/>'
+        out += f'\n    <circle cx="{cx-r//3}" cy="{cy-r//2}" r="{max(2,r//3)}" fill="#FFFFFF" opacity="0.55"/>'
+    # ブラックベリーの粒粒テクスチャ
+    out += '\n    <g fill="#1F0F1F" opacity="0.55">'
+    out += '\n      <circle cx="724" cy="535" r="2.5"/>'
+    out += '\n      <circle cx="734" cy="538" r="2.5"/>'
+    out += '\n      <circle cx="729" cy="545" r="2.5"/>'
+    out += '\n    </g>'
+    # 葉 (下) 小
+    out += f'\n    <path d="M 654 540 Q 668 530 680 540 Q 668 548 654 540 Z" fill="{LEAF_DARK}" opacity="0.55"/>'
     out += '\n  </g>'
     return out
 
