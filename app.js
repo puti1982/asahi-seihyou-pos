@@ -1254,7 +1254,6 @@ function init() {
   restoreCartDraft();
   renderFlavors();
   renderCart();
-  updateReceivedDisplay();       /* お預かり displayを 0 で初期描画 */
   updatePriceRule();
   setView('pos');
   tickClock();
