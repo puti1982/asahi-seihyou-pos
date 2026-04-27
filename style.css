@@ -333,31 +333,40 @@ body {
 .delete-btn:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
 /* ========== Checkout (CTA絶対視認 — 合計+CTA最圧縮) ========== */
-.checkout {
+/* 横一列バー: 御会計ラベル + 金額(中央) + 会計確定黒ボタン
+   縦積み廃止により CTA 見切れを構造的に解消 */
+.checkout-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--ink);
   background: var(--paper);
-  border-top: 1px solid var(--line);
-  padding: 8px 16px 4px;         /* 12/16/14 → 8/16/4 (下padding大幅削減) */
   flex-shrink: 0;
+  min-height: 60px;
 }
-.totalbar {
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 2px 6px 8px;          /* 4/6/12 → 2/6/8 */
-  border-bottom: 1px solid var(--ink);
-  margin: 0 0 8px;               /* 14→8 */
-}
-.totalbar .lbl {
+.checkout-bar .lbl {
   font-family: var(--serif);
   font-size: 13px;
   letter-spacing: 0.18em;
+  color: var(--ink);
+  flex-shrink: 0;
 }
-.totalbar .val {
+.checkout-bar .val {
   font-family: var(--num);
-  font-size: 26px; font-weight: 600;       /* 30→26 */
-  color: var(--shu-2);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--shu-2);                     /* 朱赤の金額 */
   letter-spacing: 0.02em;
+  flex: 1 1 auto;
+  text-align: center;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* P1-11: 大金額は ¥ → 「円」suffix */
-.totalbar .val .yen-suffix,
+.checkout-bar .val .yen-suffix,
 .total-card .val .yen-suffix,
 .bd-total .val .yen-suffix,
 #today-total + .yen-suffix {
