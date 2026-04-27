@@ -595,6 +595,8 @@ body {
 .flavor-panel {
   display: flex; flex-direction: column;
   min-height: 0;
+  height: 100%;                        /* グリッド行内で確実にストレッチ */
+  overflow: hidden;
   background: var(--paper);
 }
 /* flavor-header: ヘッダーをスリムに (ユーザー要求: レモンの上に全要素が収まる) */
