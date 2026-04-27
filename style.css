@@ -313,19 +313,18 @@ body {
 }
 .topping-chip.active .topping-add { opacity: 0.7; }
 
-.item-foot { display: flex; justify-content: flex-end; margin-top: 8px; }
+.item-foot { display: flex; justify-content: flex-end; margin-top: 4px; }
 .delete-btn {
   background: transparent;
   border: none;
   color: var(--ink-3);
   cursor: pointer;
   font-family: var(--serif);
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-size: 10px;
+  letter-spacing: 0.16em;
   border-bottom: 1px solid transparent;
-  /* Wave3 #10: リンク扱い許容で 36px (削除はカートアイテム内テキストリンク) */
-  padding: 8px 14px;
-  min-height: 36px;
+  padding: 4px 10px;
+  min-height: 28px;
 }
 /* P0-07: hover時の朱変色廃止 */
 .delete-btn:hover { color: var(--ink); border-bottom-color: var(--ink); }
