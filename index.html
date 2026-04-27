@@ -246,6 +246,33 @@
 
 </div>
 
+<!-- お預かり金額入力モーダル (アプリ内テンキー) -->
+<div class="modal-overlay" id="received-modal">
+  <div class="modal modal-numpad">
+    <div class="modal-title">お預かり金額</div>
+    <div class="received-display-large">
+      <span class="rec-yen">¥</span><span class="rec-val" id="received-val-modal">0</span>
+    </div>
+    <div class="numpad" id="numpad">
+      <button class="np-btn" type="button" data-action="np-num" data-num="7">7</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="8">8</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="9">9</button>
+      <button class="np-btn np-fn" type="button" data-action="np-del" aria-label="一文字削除">⌫</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="4">4</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="5">5</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="6">6</button>
+      <button class="np-btn np-fn" type="button" data-action="np-clear" aria-label="消去">消</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="1">1</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="2">2</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="3">3</button>
+      <button class="np-btn" type="button" data-action="np-num" data-num="0">0</button>
+    </div>
+    <div class="modal-actions">
+      <button class="primary" type="button" data-action="close-received-modal">確定</button>
+    </div>
+  </div>
+</div>
+
 <!-- Today's sales modal -->
 <div class="modal-overlay" id="today-modal">
   <div class="modal">
