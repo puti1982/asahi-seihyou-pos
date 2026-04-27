@@ -256,7 +256,7 @@ cd ..
 
 ### 8.3 売上記録
 
-- **保存時**: `御 会 計`タップで `localStorage.asahi_seihyou_sales_v1` に同期書き込み
+- **保存時**: 「会計確定」タップで `localStorage.asahi_seihyou_sales_v1` に同期書き込み
 - **保存内容**:
   - id (タイムスタンプ + ランダム)
   - ts (Unix時刻)
