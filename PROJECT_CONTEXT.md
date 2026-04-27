@@ -110,7 +110,7 @@ projects/kajigoria-pos/
 
 ### 5.2 朱色の使用場所（3箇所限定原則）
 
-1. **合計金額** (.totalbar .val) — 朱色 #8E2C1F
+1. **合計金額** (.checkout-bar .val) — 朱色 #8E2C1F
 2. **ロゴ中央コア** (icons/source.svg の 円相内側に部分的に)
 3. **会計完了トースト** (showToast withSeal=true 時の角印 SVG)
 
