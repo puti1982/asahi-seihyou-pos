@@ -480,13 +480,19 @@ function setView(name) {
 function aggregateRange(fromTs, toTs) {
   const all = loadSales().filter(s => s.ts >= fromTs && s.ts <= toTs);
   let kakigori = 0, kakigoriRevenue = 0, total = 0;
+  /* ★v19: かき氷を basePrice 別に分けて集計 (¥250 / ¥300 が同時並存) */
+  const kakigoriByPrice = {}; // { '250': qty, '300': qty }
   const toppingCounts = {};
   const toppingRevenue = {};
-  const toppingMeta = {}; // tid -> { name, price } from sale snapshots
+  const toppingMeta = {};
   const byDate = {};
   all.forEach(s => {
     const k = dateKey(s.ts);
-    if (!byDate[k]) byDate[k] = { kakigori: 0, kakigoriRevenue: 0, toppings: {}, total: 0, tx: 0 };
+    if (!byDate[k]) byDate[k] = {
+      kakigori: 0, kakigoriRevenue: 0,
+      kakigoriByPrice: {},
+      toppings: {}, total: 0, tx: 0
+    };
     byDate[k].tx++;
     byDate[k].total += s.total;
     s.items.forEach(it => {
@@ -494,16 +500,17 @@ function aggregateRange(fromTs, toTs) {
       const bp = it.basePrice || 250;
       kakigoriRevenue += bp;
       byDate[k].kakigoriRevenue += bp;
+      const bpKey = String(bp);
+      kakigoriByPrice[bpKey] = (kakigoriByPrice[bpKey] || 0) + 1;
+      byDate[k].kakigoriByPrice[bpKey] = (byDate[k].kakigoriByPrice[bpKey] || 0) + 1;
       (it.toppings || []).forEach(tp => {
         const tid = typeof tp === 'string' ? tp : tp.id;
         toppingCounts[tid] = (toppingCounts[tid] || 0) + 1;
         byDate[k].toppings[tid] = (byDate[k].toppings[tid] || 0) + 1;
-        // 売上時のスナップショット (名前/単価) を覚える — 削除済み表示用
         if (typeof tp === 'object' && tp !== null) {
           toppingMeta[tid] = { name: tp.name || tid, price: typeof tp.price === 'number' ? tp.price : 0 };
           toppingRevenue[tid] = (toppingRevenue[tid] || 0) + (typeof tp.price === 'number' ? tp.price : 0);
         } else {
-          // 古い形式 (string id のみ) — 既存DEFAULT定義から逆引き
           if (!toppingMeta[tid]) {
             const def = DEFAULT_TOPPINGS.find(t => t.id === tid);
             if (def) toppingMeta[tid] = { name: def.name, price: def.price };
@@ -516,7 +523,6 @@ function aggregateRange(fromTs, toTs) {
     });
     total += s.total;
   });
-  // 現在の TOPPINGS に無い tid = 削除済み
   const liveIds = new Set(TOPPINGS.map(t => t.id));
   const deletedToppings = Object.keys(toppingCounts)
     .filter(tid => !liveIds.has(tid))
@@ -527,7 +533,19 @@ function aggregateRange(fromTs, toTs) {
       qty: toppingCounts[tid] || 0,
       revenue: toppingRevenue[tid] || 0,
     }));
-  return { kakigori, kakigoriRevenue, toppingCounts, toppingRevenue, toppingMeta, deletedToppings, total, transactions: all.length, byDate };
+  return {
+    kakigori, kakigoriRevenue, kakigoriByPrice,
+    toppingCounts, toppingRevenue, toppingMeta, deletedToppings,
+    total, transactions: all.length, byDate
+  };
+}
+
+/* 価格キー昇順で並んだ [price, qty] の配列を返すヘルパー */
+function sortedKakigoriPrices(kakigoriByPrice) {
+  return Object.entries(kakigoriByPrice || {})
+    .map(([p, q]) => [parseInt(p, 10), q])
+    .filter(([p, q]) => q > 0)
+    .sort((a, b) => a[0] - b[0]);
 }
 
 function openToday() {
