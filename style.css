@@ -186,12 +186,39 @@ body {
   padding: 12px 18px 8px;        /* 22/22/14 → 12/18/8 */
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 .section-label {
   font-family: var(--serif);
   font-size: 14px;               /* 16→14 圧縮 */
   letter-spacing: 0.18em;
   display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+/* ★v19: 直前注文プレビュートグル */
+.cart-mode-btn {
+  font-family: var(--serif);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 32px;
+}
+.cart-mode-btn:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+.cart-mode-btn:active {
+  background: var(--bg);
 }
 .section-label::before {
   content: '';
