@@ -1080,6 +1080,8 @@ function clearAllSales() {
       try { localStorage.setItem(SALES_KEY, '[]'); }
       catch (e) { alert('保存に失敗しました: ' + e.message); return; }
       showToast('販売履歴を全消去しました');
+      /* ★v19: プレビュー中に消去した場合の同期再描画 */
+      if (viewMode === 'previous') renderCart();
     }
   );
 }
