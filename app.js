@@ -585,6 +585,10 @@ function aggregateRange(fromTs, toTs) {
           if (!toppingMeta[tid]) {
             const def = DEFAULT_TOPPINGS.find(t => t.id === tid);
             if (def) toppingMeta[tid] = { name: def.name, price: def.price };
+            /* ★v19: 廃番tid (例: 'cup') はLEGACYで救済 */
+            else if (LEGACY_TOPPING_NAMES[tid]) {
+              toppingMeta[tid] = { ...LEGACY_TOPPING_NAMES[tid] };
+            }
           }
           if (toppingMeta[tid]) {
             toppingRevenue[tid] = (toppingRevenue[tid] || 0) + toppingMeta[tid].price;
