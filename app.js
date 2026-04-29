@@ -201,6 +201,23 @@ function restoreCartDraft() {
       return;
     }
     if (Array.isArray(d.cart)) cart = d.cart;
+    /* ★v19: 既存カート下書きに新トッピング(ジョージ/トムジェリ)を追加。
+       逆に廃番(cup)は残してもUIは現状TOPPINGSのみ描画されるため放置可だが、
+       cup→georgeに置換して表示一貫性確保 */
+    cart.forEach(it => {
+      if (!it.toppings || typeof it.toppings !== 'object') it.toppings = {};
+      // 旧 cup を george に rename (active状態を引継)
+      if (it.toppings.cup && !it.toppings.george) {
+        it.toppings.george = { ...it.toppings.cup, name: 'ジョージ', price: 200 };
+        delete it.toppings.cup;
+      }
+      // 現行 TOPPINGS で未登録の id を補完 (active=false)
+      TOPPINGS.forEach(t => {
+        if (!it.toppings[t.id]) {
+          it.toppings[t.id] = { name: t.name, price: t.price, active: false };
+        }
+      });
+    });
     // Wave3 #12: nextId は cart 内 id の最大値+1 と保存値の最大を採用 (衝突防止)
     const cartMaxIdPlus1 = cart.length ? Math.max(...cart.map(c => (typeof c.id === 'number' ? c.id : 0))) + 1 : 1;
     const storedNextId = (typeof d.nextId === 'number' && isFinite(d.nextId)) ? d.nextId : 1;
