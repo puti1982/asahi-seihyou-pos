@@ -1290,6 +1290,11 @@ function bindEvents() {
     b.addEventListener('click', () => setView('pos'))
   );
 
+  /* ★v19: 直前注文プレビュートグル (cart-header 右の小ボタン) */
+  document.querySelectorAll('button[data-action="toggle-cart-mode"]').forEach(b =>
+    b.addEventListener('click', toggleViewMode)
+  );
+
   /* お預かり/お釣り/テンキー UI 全廃止のため、関連 listener 削除済 */
 
   // cart list (delegation)
