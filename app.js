@@ -342,6 +342,8 @@ function updatePriceRule() {
 
 /* ===== Cart logic ===== */
 function addToCart(f) {
+  /* ★v19: プレビューモード中に味タップ → 自動的に現在モードに復帰してカート追加 */
+  if (viewMode === 'previous') viewMode = 'current';
   cart.push({
     id: nextId++,
     flavor: f.name,
