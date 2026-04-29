@@ -542,6 +542,12 @@ function setView(name) {
     document.getElementById('view-' + n).classList.toggle('active', n === name);
   });
   document.getElementById('header-buttons').style.display = name === 'pos' ? '' : 'none';
+  /* ★v19: 画面遷移時はpreviewモードを解除して現注文に戻す
+     (settings/ledgerから戻ってきた時に「前回」表示のままだと混乱) */
+  if (name === 'pos' && viewMode === 'previous') {
+    viewMode = 'current';
+    renderCart();
+  }
 }
 
 /* ===== Today modal ===== */
