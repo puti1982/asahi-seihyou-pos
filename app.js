@@ -690,6 +690,8 @@ function deleteTransaction(id) {
     localStorage.setItem(SALES_KEY, JSON.stringify(sales));
     showToast('取引を削除しました');
     openToday();   /* 再描画 */
+    /* ★v19: 直前注文プレビュー中だった場合も同期再描画 */
+    if (viewMode === 'previous') renderCart();
   } catch (e) {
     alert('削除に失敗しました: ' + (e && e.message));
   }
