@@ -1123,6 +1123,8 @@ function resetSettings() {
       cart = [];
       nextId = 1;
       clearCartDraft();
+      /* ★v19: 設定リセット直後に previous モードを残すと混乱→ current 強制 */
+      viewMode = 'current';
       renderSettings();
       refreshAfterChange();
       showToast('初期値に戻しました');
