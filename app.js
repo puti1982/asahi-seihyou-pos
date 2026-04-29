@@ -64,6 +64,8 @@ let FLAVORS  = loadJSON(FLAVORS_KEY, DEFAULT_FLAVORS.slice());
 let TOPPINGS = loadJSON(TOPPINGS_KEY, DEFAULT_TOPPINGS.slice());
 let cart = [];
 let nextId = 1;
+/* ★v19: カート表示モード - 'current'(現注文) / 'previous'(直前注文プレビュー) */
+let viewMode = 'current';
 
 /* Migration: 既存FLAVORSの image補完 / 旧色更新 / 新商品追加 */
 (function migrateFlavors() {
