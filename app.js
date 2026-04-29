@@ -691,8 +691,17 @@ function renderLedger() {
       <td><span class="yen">¥</span>${fmtNum(l.revenue)}</td>
     </tr>`).join('');
 
-  // Daily table
-  const headers = ['日付', 'かき氷', ...TOPPINGS.map(t => t.name), '取引', '売上'];
+  /* ★v19: 日別表のかき氷列を価格別に動的展開 */
+  const priceSet = new Set();
+  Object.values(a.byDate).forEach(d => {
+    Object.keys(d.kakigoriByPrice || {}).forEach(p => priceSet.add(parseInt(p, 10)));
+  });
+  const prices = [...priceSet].sort((x, y) => x - y);
+  const kakigoriHeaders = prices.length
+    ? prices.map(p => `かき氷 ¥${fmtNum(p)}`)
+    : ['かき氷'];
+
+  const headers = ['日付', ...kakigoriHeaders, ...TOPPINGS.map(t => t.name), '取引', '売上'];
   document.getElementById('daily-thead').innerHTML =
     `<tr>${headers.map(h => `<th>${escapeHtml(h)}</th>`).join('')}</tr>`;
 
@@ -706,7 +715,9 @@ function renderLedger() {
       const [y, m, d] = k.split('-');
       const cells = [
         `${y}.${m}.${d}`,
-        r.kakigori,
+        ...(prices.length
+          ? prices.map(p => r.kakigoriByPrice[String(p)] || 0)
+          : [r.kakigori]),
         ...TOPPINGS.map(t => r.toppings[t.id] || 0),
         r.tx,
         `<span class="yen">¥</span>${fmtNum(r.total)}`,
