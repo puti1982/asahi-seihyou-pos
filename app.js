@@ -95,6 +95,29 @@ let nextId = 1;
   }
 })();
 
+/* Migration: 既存TOPPINGSの旧'cup'(特製カップ)を'george'(ジョージ)へrename。
+   tomjerry を未追加なら追加。価格は据え置き。
+   2026-04-29 クライアント要望: トッピング3→4個化 */
+(function migrateToppings() {
+  let changed = false;
+  TOPPINGS.forEach(t => {
+    if (t.id === 'cup' || t.name === '特製カップ') {
+      t.id = 'george';
+      t.name = 'ジョージ';
+      if (typeof t.price !== 'number') t.price = 200;
+      changed = true;
+    }
+  });
+  // tomjerry が無ければ追加
+  if (!TOPPINGS.find(t => t.id === 'tomjerry')) {
+    TOPPINGS.push({ id:'tomjerry', name:'トムジェリ', price:200 });
+    changed = true;
+  }
+  if (changed) {
+    try { localStorage.setItem(TOPPINGS_KEY, JSON.stringify(TOPPINGS)); } catch {}
+  }
+})();
+
 /* ===== Persistence helpers ===== */
 function loadJSON(key, fallback) {
   try {
