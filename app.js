@@ -363,8 +363,62 @@ function calcItem(it) {
 }
 function calcSubtotal() { return cart.reduce((s, it) => s + calcItem(it), 0); }
 
+/* ★v19: 直前注文プレビュー対応。viewMode='previous'時はread-only表示 */
+function getLastSale() {
+  const sales = loadSales();
+  if (!sales.length) return null;
+  return sales.slice().sort((a, b) => b.ts - a.ts)[0];
+}
+
 function renderCart() {
   const list = document.getElementById('cart-list');
+  const headerLabel = document.querySelector('.cart-header .section-label');
+  const modeBtn = document.querySelector('.cart-header .cart-mode-btn');
+  const cta = document.getElementById('checkout');
+
+  /* ★ プレビューモード: 直前注文をread-only表示 */
+  if (viewMode === 'previous') {
+    const last = getLastSale();
+    if (headerLabel) headerLabel.textContent = '前回の注文';
+    if (modeBtn) modeBtn.innerHTML = '◀ 現在に戻る';
+    if (!last) {
+      list.innerHTML = `
+        <div class="empty-cart">
+          <div class="empty-mark"></div>
+          前回の注文は<br>まだございません
+        </div>`;
+      document.getElementById('subtotal').textContent = '0';
+      if (cta) { cta.disabled = true; cta.textContent = '会計確定'; }
+      return;
+    }
+    const dt = new Date(last.ts);
+    const time = `${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+    if (headerLabel) headerLabel.textContent = `前回 ${time}`;
+    list.innerHTML = (last.items || []).map(it => {
+      const toppings = (it.toppings || []).map(t =>
+        typeof t === 'string'
+          ? (TOPPINGS.find(x => x.id === t)?.name || t)
+          : (t && (t.name || t.id) || '')
+      ).filter(Boolean);
+      return `
+        <div class="cart-item cart-item-readonly">
+          <div class="item-row">
+            <div class="item-name">${escapeHtml(it.flavor || '')}</div>
+            <div class="item-price"><span class="yen">¥</span>${fmtNum(it.price || 0)}</div>
+          </div>
+          ${toppings.length ? `<div class="readonly-tops">+ ${toppings.map(escapeHtml).join(' / ')}</div>` : ''}
+        </div>`;
+    }).join('');
+    document.getElementById('subtotal').textContent = fmtNum(last.total || 0);
+    if (cta) { cta.disabled = true; cta.textContent = '確定済'; }
+    return;
+  }
+
+  /* current モード: 既存処理 */
+  if (headerLabel) headerLabel.textContent = '御注文';
+  if (modeBtn) modeBtn.innerHTML = '直前の注文 ▶';
+  if (cta) cta.textContent = '会計確定';
+
   if (cart.length === 0) {
     // P0-09: 「氷」漢字撤廃 → 32px 極細円 + 1×12px 墨線
     list.innerHTML = `
@@ -396,6 +450,12 @@ function renderCart() {
   document.getElementById('subtotal').textContent = fmtNum(calcSubtotal());
   updateChange();
   persistCartDraft();
+}
+
+/* ★v19: 直前注文 / 現在の注文 トグル */
+function toggleViewMode() {
+  viewMode = (viewMode === 'current') ? 'previous' : 'current';
+  renderCart();
 }
 
 function toggleTopping(id, tid) {
