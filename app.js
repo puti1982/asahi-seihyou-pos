@@ -662,9 +662,13 @@ function renderLedger() {
   document.getElementById('ledger-meta').textContent =
     `取引 ${a.transactions} 件 / 平均 ¥${a.transactions ? fmtNum(Math.round(a.total / a.transactions)) : 0}`;
 
+  /* ★v19: かき氷を価格別に分けて行表示 (¥250 / ¥300) */
+  const kakigoriRowsLedger = sortedKakigoriPrices(a.kakigoriByPrice).map(([price, qty]) => ({
+    name: 'かき氷', unit: price, qty, revenue: price * qty, deleted: false,
+  }));
   // Wave3 #14: 削除済みトッピングを「（削除済）」表示で含める
   const lines = [
-    { name: 'かき氷', unit: null, qty: a.kakigori, revenue: a.kakigoriRevenue, deleted: false },
+    ...(kakigoriRowsLedger.length ? kakigoriRowsLedger : [{ name: 'かき氷', unit: null, qty: 0, revenue: 0, deleted: false }]),
     ...TOPPINGS.map(t => ({
       name: t.name, unit: t.price,
       qty: a.toppingCounts[t.id] || 0,
