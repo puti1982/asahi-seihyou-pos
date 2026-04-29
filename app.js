@@ -44,9 +44,10 @@ const DEFAULT_FLAVORS = [
   { name:'巨峰＆ベリー', color:'#5C2C5C', price:300, image:'33-kyoho-berry' },
 ];
 const DEFAULT_TOPPINGS = [
-  { id:'milk',  name:'ミルク',     price:50  },
-  { id:'spoon', name:'スプーン',   price:10  },
-  { id:'cup',   name:'特製カップ', price:200 },
+  { id:'milk',     name:'ミルク',     price:50  },
+  { id:'spoon',    name:'スプーン',   price:10  },
+  { id:'george',   name:'ジョージ',   price:200 },
+  { id:'tomjerry', name:'トムジェリ', price:200 },
 ];
 
 /* ===== Persistence keys ===== */
