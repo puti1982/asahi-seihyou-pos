@@ -49,6 +49,11 @@ const DEFAULT_TOPPINGS = [
   { id:'george',   name:'ジョージ',   price:200 },
   { id:'tomjerry', name:'トムジェリ', price:200 },
 ];
+/* ★v19: 廃番tidのdisplay名フォールバック (旧履歴に残るstring tid救済)
+   履歴 sales[].items[].toppings[i] が string形式('cup') の場合の名前解決に使用 */
+const LEGACY_TOPPING_NAMES = {
+  cup: { name: '特製カップ', price: 200 },
+};
 
 /* ===== Persistence keys ===== */
 const SALES_KEY       = 'asahi_seihyou_sales_v1';
