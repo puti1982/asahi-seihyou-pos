@@ -267,6 +267,25 @@ body {
   transition: border-color 0.2s;
 }
 .cart-item:hover { border-color: var(--line-2); }
+
+/* ★v19: 直前注文プレビューのread-onlyアイテム */
+.cart-item-readonly {
+  background: var(--bg);
+  border-color: var(--line);
+  padding: 8px 10px 7px;
+  cursor: default;
+}
+.cart-item-readonly::before { background: var(--line-2); }
+.cart-item-readonly .item-name { color: var(--ink-2); }
+.cart-item-readonly .item-price { color: var(--ink-2); }
+.readonly-tops {
+  margin-top: 4px;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
 .cart-item::before {
   content: '';
   position: absolute;
