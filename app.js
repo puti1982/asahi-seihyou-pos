@@ -554,8 +554,16 @@ function openToday() {
   const end = start + 86400000 - 1;
   const a = aggregateRange(start, end);
   document.getElementById('today-date').textContent = `本日 ${fmtDateJP(start)}（${getDayOfWeek(start)}）`;
+  /* ★v19: かき氷を価格別に分けて表示 (¥250 / ¥300) */
+  const kakigoriRows = sortedKakigoriPrices(a.kakigoriByPrice).map(([price, qty]) => ({
+    name: 'かき氷',
+    unit: price,
+    qty,
+    revenue: price * qty,
+  }));
+  /* 売上ゼロでも常に「かき氷」一行を残す */
   const lines = [
-    { name: 'かき氷', unit: null, qty: a.kakigori, revenue: a.kakigoriRevenue },
+    ...(kakigoriRows.length ? kakigoriRows : [{ name: 'かき氷', unit: null, qty: 0, revenue: 0 }]),
     ...TOPPINGS.map(t => ({
       name: t.name, unit: t.price,
       qty: a.toppingCounts[t.id] || 0,
