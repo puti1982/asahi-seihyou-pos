@@ -38,7 +38,8 @@
     <aside class="cart-panel">
       <div class="cart-header">
         <div class="section-label">御注文</div>
-        <!-- P0-08: section-en 廃止 -->
+        <!-- v19: 直前注文プレビュートグル。current時=「直前の注文 ▶」/ previous時=「◀ 現在に戻る」 -->
+        <button class="cart-mode-btn" data-action="toggle-cart-mode" type="button">直前の注文 ▶</button>
       </div>
       <div class="cart-list" id="cart-list"></div>
       <!-- 横一列統合バー: [御会計 label] [金額 中央] [会計確定 黒ボタン]
