@@ -404,7 +404,9 @@ function renderCart() {
     list.innerHTML = (last.items || []).map(it => {
       const toppings = (it.toppings || []).map(t =>
         typeof t === 'string'
-          ? (TOPPINGS.find(x => x.id === t)?.name || t)
+          ? (TOPPINGS.find(x => x.id === t)?.name
+             || LEGACY_TOPPING_NAMES[t]?.name
+             || t)
           : (t && (t.name || t.id) || '')
       ).filter(Boolean);
       return `
