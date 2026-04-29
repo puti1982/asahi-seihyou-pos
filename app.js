@@ -674,7 +674,9 @@ function renderTodayTransactions(startTs, endTs) {
     const itemsSummary = (s.items || []).map(it => {
       let part = escapeHtml(it.flavor || '');
       const tops = (it.toppings || []).map(t => typeof t === 'string'
-        ? (TOPPINGS.find(x => x.id === t)?.name || t)
+        ? (TOPPINGS.find(x => x.id === t)?.name
+           || LEGACY_TOPPING_NAMES[t]?.name
+           || t)
         : (t.name || t.id || '')).filter(Boolean);
       if (tops.length) part += '<span class="tx-tops">+' + tops.map(escapeHtml).join('+') + '</span>';
       return part;
