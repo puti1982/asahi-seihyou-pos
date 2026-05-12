@@ -8,14 +8,17 @@
   --bg:        #FAF5E9;       /* 生成り (background) */
   --bg-2:      #F4EDDB;
   --paper:     #FFFFFF;
-  --ink:       #1C1813;       /* 墨 */
-  --ink-2:     #4A4239;
-  --ink-3:     #8A8175;
+  /* v22: 屋外日差し下/年配スタッフ運用を想定し、墨の濃度を全層引き上げ。
+     ink (#1C1813→#0E0905) / ink-2 (#4A4239→#2E2820) / ink-3 (#8A8175→#5A5247)
+     和の風情を壊さない範囲で 30-45% 濃く。 */
+  --ink:       #0E0905;       /* 墨 (主テキスト) */
+  --ink-2:     #2E2820;       /* 副テキスト */
+  --ink-3:     #5A5247;       /* 補助テキスト (旧来比 +40%濃) */
   --hairline:  #E5DAC0;       /* 0.5px 区切り (P0-04) */
   --line:      #D4C8AB;       /* 1px 標準 (P0-04) */
   --line-2:    #CFC1A2;
-  --rule:      #1C1813;       /* 1px 強調 */
-  --rule-thick: #1C1813;      /* 2px 締め */
+  --rule:      #0E0905;       /* 1px 強調 */
+  --rule-thick: #0E0905;      /* 2px 締め */
   --shu:       #B43A2A;       /* 朱 */
   --shu-2:     #8E2C1F;
   --ai:        #1F3A5F;
@@ -60,9 +63,13 @@ body {
   font-family: var(--sans);
   color: var(--ink);
   background: var(--bg);
+  /* v22: 全体のベース太さを Regular(400) → Medium(500) に。
+     和文(Hiragino Sans)は Medium が屋外/低コントラスト時の視認性最良域。 */
+  font-weight: 500;
   user-select: none;
   -webkit-user-select: none;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
   position: fixed;
   inset: 0;
@@ -127,35 +134,38 @@ body {
 .brand-text { display: flex; flex-direction: column; line-height: 1; }
 .brand-name {
   font-family: var(--serif);
-  font-size: 20px;               /* 26→20 */
-  font-weight: 600;
+  font-size: 22px;               /* v22: 20→22 */
+  font-weight: 700;              /* v22: 600→700 */
   letter-spacing: 0.04em;
+  color: var(--ink);
 }
 
 .header-meta { display: flex; align-items: center; gap: 22px; flex-wrap: nowrap; }
 
-/* 時計を「2026年4月26日（土）13:45」明朝に (圧縮) */
+/* 時計を「2026年4月26日（土）13:45」明朝に */
 .clock {
   font-family: var(--serif);
-  font-size: 12px;               /* 13→12 */
-  color: var(--ink-2);
-  letter-spacing: 0.08em;
+  font-size: 14px;               /* v22: 12→14 */
+  font-weight: 600;              /* v22: 強化 */
+  color: var(--ink);             /* v22: ink-2→ink */
+  letter-spacing: 0.06em;
   white-space: nowrap;
 }
 
 .header-buttons { display: flex; gap: 18px; }
 .ledger-link {
   font-family: var(--serif);
-  font-size: 13px;               /* 14→13 */
+  font-size: 15px;               /* v22: 13→15 */
+  font-weight: 600;              /* v22: 強化 */
   color: var(--ink);
   background: transparent;
   border: none;
-  padding: 6px 4px;              /* 8/0→6/4 */
+  padding: 6px 4px;
   cursor: pointer;
-  letter-spacing: 0.08em;
-  border-bottom: 1px solid var(--ink);
+  letter-spacing: 0.06em;
+  border-bottom: 1.5px solid var(--ink);
   transition: border-bottom-color 0.2s;
-  min-height: 40px;              /* タッチターゲット (40で許容、ヘッダーが52px) */
+  min-height: 40px;
   white-space: nowrap;
 }
 /* P0-07: hover時の朱変色廃止。罫線濃度のみで表現 */
@@ -193,25 +203,28 @@ body {
 }
 .section-label {
   font-family: var(--serif);
-  font-size: 14px;               /* 16→14 圧縮 */
-  letter-spacing: 0.18em;
+  font-size: 16px;               /* v22: 14→16 */
+  font-weight: 700;              /* v22: 強化 */
+  color: var(--ink);
+  letter-spacing: 0.14em;
   display: flex; align-items: center; gap: 10px;
   flex-shrink: 0;
 }
 /* ★v19: 直前注文プレビュートグル (Absol指摘でアフォーダンス強化) */
 .cart-mode-btn {
   font-family: var(--serif);
-  font-size: 12px;                /* 11→12 */
-  letter-spacing: 0.08em;
-  color: var(--ink-2);
+  font-size: 13px;                /* v22: 12→13 */
+  font-weight: 600;               /* v22: 強化 */
+  letter-spacing: 0.06em;
+  color: var(--ink);              /* v22: ink-2→ink */
   background: var(--paper);
-  border: 1px solid var(--line-2);
-  padding: 6px 10px;              /* 5/9→6/10 */
+  border: 1px solid var(--ink-3);
+  padding: 6px 10px;
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
   white-space: nowrap;
   flex-shrink: 0;
-  min-height: 36px;               /* 32→36 老舗POS年配スタッフ運用想定 */
+  min-height: 36px;
 }
 .cart-mode-btn:hover {
   border-color: var(--ink);
@@ -237,11 +250,12 @@ body {
 /* P0-09: 「氷」絵文字撤廃 → 32px極細円 + 1×12px墨線 */
 .empty-cart {
   text-align: center;
-  color: var(--ink-3);
+  color: var(--ink-2);                  /* v22: ink-3→ink-2 で視認性 */
   padding: 64px 20px 24px;
   font-family: var(--serif);
-  font-size: 14px;
-  letter-spacing: 0.15em;
+  font-size: 16px;                       /* v22: 14→16 */
+  font-weight: 500;                      /* v22: 強化 */
+  letter-spacing: 0.12em;
   line-height: 2;
 }
 .empty-mark {
@@ -262,29 +276,30 @@ body {
 
 .cart-item {
   background: var(--paper);
-  border: 1px solid var(--line);
-  margin-bottom: 3px;            /* 5→3 で5item確実視認 */
-  padding: 6px 10px 5px;         /* 8/12/6 → 6/10/5 さらに圧縮 */
+  border: 1px solid var(--ink-3);              /* v22: line→ink-3 (輪郭強化) */
+  margin-bottom: 3px;
+  padding: 6px 10px 5px;
   position: relative;
   transition: border-color 0.2s;
 }
-.cart-item:hover { border-color: var(--line-2); }
+.cart-item:hover { border-color: var(--ink); }
 
 /* ★v19: 直前注文プレビューのread-onlyアイテム */
 .cart-item-readonly {
   background: var(--bg);
-  border-color: var(--line);
+  border-color: var(--ink-3);                  /* v22: line→ink-3 */
   padding: 8px 10px 7px;
   cursor: default;
 }
-.cart-item-readonly::before { background: var(--line-2); }
-.cart-item-readonly .item-name { color: var(--ink-2); }
-.cart-item-readonly .item-price { color: var(--ink-2); }
+.cart-item-readonly::before { background: var(--ink-3); }
+.cart-item-readonly .item-name { color: var(--ink); }   /* v22: ink-2→ink */
+.cart-item-readonly .item-price { color: var(--ink); }   /* v22: ink-2→ink */
 .readonly-tops {
   margin-top: 4px;
   font-family: var(--sans);
-  font-size: 11px;
-  color: var(--ink-3);
+  font-size: 13px;                             /* v22: 11→13 */
+  font-weight: 500;                            /* v22: 強化 */
+  color: var(--ink-2);                         /* v22: ink-3→ink-2 */
   letter-spacing: 0.04em;
   line-height: 1.4;
 }
@@ -298,15 +313,17 @@ body {
 .item-row { display: flex; justify-content: space-between; align-items: baseline; }
 .item-name {
   font-family: var(--serif);
-  font-size: 15px; font-weight: 600;       /* 18→15 */
+  font-size: 17px; font-weight: 700;       /* v22: 15→17, 600→700 */
   letter-spacing: 0.02em;
+  color: var(--ink);
 }
 .item-price {
   font-family: var(--num);
-  font-size: 15px; font-weight: 600;       /* 18→15 */
+  font-size: 17px; font-weight: 700;       /* v22: 15→17, 600→700 */
   letter-spacing: 0.04em;
+  color: var(--ink);
 }
-.item-price .yen { font-size: 11px; opacity: 0.65; margin-right: 1px; }
+.item-price .yen { font-size: 12px; opacity: 0.7; margin-right: 1px; font-weight: 600; }
 
 .toppings { display: flex; gap: 3px; margin-top: 6px; flex-wrap: wrap; }
 /* 4個1列レイアウト (v19): basis 25% - 3px (gap比例) */
@@ -314,18 +331,18 @@ body {
   flex: 1 1 calc(25% - 3px);
   min-width: 0;
   background: var(--paper);
-  border: 1px solid var(--line);
-  padding: 5px 3px;              /* 4/2 → 5/3 (年配スタッフ視認性) */
-  font-size: 11px;               /* 10→11 (Absol指摘: タブレット視認性ギリギリ赤信号→改善) */
-  color: var(--ink-2);
+  border: 1px solid var(--ink-3);          /* v22: line→ink-3 で輪郭を強化 */
+  padding: 5px 3px;
+  font-size: 13px;                          /* v22: 11→13 (一番薄かった箇所を大幅強化) */
+  color: var(--ink);                        /* v22: ink-2→ink */
   cursor: pointer;
   text-align: center;
   transition: border-color 0.15s, box-shadow 0.15s;
   letter-spacing: 0.02em;
   line-height: 1.3;
-  font-weight: 500;
+  font-weight: 600;                         /* v22: 500→600 */
   position: relative;
-  min-height: 36px;              /* 30→36 (Apple HIG / 年配親指タップ確実) */
+  min-height: 36px;
   font-family: var(--sans);
 }
 .topping-chip:hover { border-color: var(--ink-3); }
@@ -347,23 +364,25 @@ body {
 .topping-chip .topping-add {
   display: block;
   font-family: var(--num);
-  font-size: 10px;
+  font-size: 12px;                          /* v22: 10→12 */
+  font-weight: 600;                         /* v22: 強化 */
   margin-top: 1px;
-  opacity: 0.6;
+  opacity: 0.85;                            /* v22: 0.6→0.85 */
   font-feature-settings: "tnum" 1, "lnum" 1;
   letter-spacing: 0.01em;
 }
-.topping-chip.active .topping-add { opacity: 0.7; }
+.topping-chip.active .topping-add { opacity: 1; }
 
 .item-foot { display: flex; justify-content: flex-end; margin-top: 4px; }
 .delete-btn {
   background: transparent;
   border: none;
-  color: var(--ink-3);
+  color: var(--ink-2);                      /* v22: ink-3→ink-2 */
   cursor: pointer;
   font-family: var(--serif);
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 12px;                           /* v22: 10→12 */
+  font-weight: 500;                          /* v22: 強化 */
+  letter-spacing: 0.14em;
   border-bottom: 1px solid transparent;
   padding: 4px 10px;
   min-height: 28px;
@@ -386,15 +405,16 @@ body {
 }
 .checkout-bar .lbl {
   font-family: var(--serif);
-  font-size: 12px;                         /* 主役は金額。ラベルは控えめに */
-  letter-spacing: 0.22em;
+  font-size: 14px;                         /* v22: 12→14 */
+  font-weight: 600;                        /* v22: 強化 */
+  letter-spacing: 0.18em;
   color: var(--ink);
   flex-shrink: 0;
 }
 .checkout-bar .val {
   font-family: var(--num);
-  font-size: 28px;                         /* 主役: 朱赤の大金額 */
-  font-weight: 600;
+  font-size: 32px;                         /* v22: 28→32 (主役) */
+  font-weight: 700;                        /* v22: 600→700 */
   color: var(--shu-2);
   letter-spacing: 0.02em;
   flex: 1 1 auto;
@@ -410,11 +430,11 @@ body {
 .bd-total .val .yen-suffix,
 #today-total + .yen-suffix {
   font-family: var(--serif);
-  font-size: 0.55em;
+  font-size: 0.58em;                       /* v22: 0.55→0.58 */
   margin-left: 0.3em;
   letter-spacing: 0.05em;
-  color: var(--ink-2);
-  font-weight: 500;
+  color: var(--ink);                       /* v22: ink-2→ink */
+  font-weight: 600;                        /* v22: 500→600 */
 }
 
 .receive-block { margin-bottom: 4px; }
@@ -432,11 +452,11 @@ body {
 .receive-display {
   width: 100%;
   background: var(--bg);
-  border: 1px solid var(--ink);
+  border: 1.5px solid var(--ink);             /* v22: 1→1.5px */
   padding: 8px 12px;
   font-family: var(--num);
-  font-size: 19px;
-  font-weight: 600;
+  font-size: 21px;                            /* v22: 19→21 */
+  font-weight: 700;                           /* v22: 600→700 */
   letter-spacing: 0.04em;
   text-align: right;
   min-height: 44px;
@@ -504,12 +524,13 @@ body {
 .modal-close:hover { background: var(--bg); color: var(--ink); }
 .received-display-large {
   background: var(--bg);
-  border: 1px solid var(--ink);
+  border: 1.5px solid var(--ink);             /* v22: 1→1.5px */
   padding: 14px 18px;
   margin: 14px 0 16px;
   font-family: var(--num);
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 34px;                            /* v22: 32→34 */
+  font-weight: 700;                           /* v22: 600→700 */
+  color: var(--ink);
   text-align: right;
   letter-spacing: 0.04em;
   font-feature-settings: "tnum" 1, "lnum" 1;
@@ -529,11 +550,11 @@ body {
 }
 .np-btn {
   background: var(--paper);
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink-3);             /* v22: line→ink-3 */
   padding: 0;
   font-family: var(--num);
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 24px;                            /* v22: 22→24 */
+  font-weight: 700;                           /* v22: 500→700 */
   color: var(--ink);
   cursor: pointer;
   min-height: 54px;
@@ -553,8 +574,9 @@ body {
 }
 .np-fn {
   font-family: var(--serif);
-  font-size: 14px;
-  color: var(--ink-2);
+  font-size: 16px;                            /* v22: 14→16 */
+  font-weight: 700;                           /* v22: 強化 */
+  color: var(--ink);                          /* v22: ink-2→ink */
 }
 .np-fn:active {
   background: var(--shu);
@@ -600,20 +622,21 @@ body {
 /* 釣銭は墨 */
 .change-row {
   display: flex; justify-content: space-between; align-items: baseline;
-  padding: 4px 0 6px;            /* 6/0/8→4/0/6 */
+  padding: 4px 0 6px;
 }
 .change-row .lbl {
   font-family: var(--serif);
-  font-size: 11px;
-  color: var(--ink-2);
-  letter-spacing: 0.14em;
+  font-size: 12px;                          /* v22: 11→12 */
+  font-weight: 600;                         /* v22: 強化 */
+  color: var(--ink);                        /* v22: ink-2→ink */
+  letter-spacing: 0.12em;
 }
 .change-row .val {
   font-family: var(--num);
-  font-size: 17px; font-weight: 600;
+  font-size: 19px; font-weight: 700;        /* v22: 17→19, 600→700 */
   color: var(--ink);
 }
-.change-row .val .yen { font-size: 11px; opacity: 0.55; margin-right: 2px; }
+.change-row .val .yen { font-size: 12px; opacity: 0.7; margin-right: 2px; font-weight: 600; }
 
 /* 会計確定ボタン: checkout-bar 内インライン配置。Apple HIG 48pt 親指タップ最適化 */
 .cta {
@@ -623,10 +646,10 @@ body {
   border: 1px solid var(--ink);
   padding: 12px 18px;
   font-family: var(--serif);
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-indent: 0.16em;
+  font-size: 17px;                          /* v22: 15→17 */
+  font-weight: 700;                         /* v22: 500→700 */
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
   cursor: pointer;
   transition: background 0.2s;
   min-height: 48px;
@@ -635,8 +658,8 @@ body {
 .cta:hover { background: #0E0A06; }
 .cta:disabled {
   background: transparent;
-  color: var(--ink-3);
-  border-color: var(--line);
+  color: var(--ink-2);                          /* v22: ink-3→ink-2 (disabled でも判読可能に) */
+  border-color: var(--ink-3);                   /* v22: line→ink-3 */
   cursor: not-allowed;
 }
 .cta:disabled:hover { background: transparent; }
@@ -659,28 +682,32 @@ body {
 .flavor-title { display: flex; align-items: baseline; gap: 12px; }
 .flavor-title .ja {
   font-family: var(--serif);
-  font-size: 16px;               /* 22→16 圧縮 */
-  letter-spacing: 0.18em;
-  font-weight: 600;
+  font-size: 18px;               /* v22: 16→18 */
+  letter-spacing: 0.14em;
+  font-weight: 700;              /* v22: 600→700 */
+  color: var(--ink);
 }
 /* P0-08: .flavor-title .en 廃止 */
 
 .price-rule {
   display: flex; align-items: baseline; gap: 8px;
-  border: 1px solid var(--ink);
-  padding: 4px 10px;             /* 6/14 → 4/10 */
+  border: 1.5px solid var(--ink);  /* v22: 1→1.5px */
+  padding: 4px 10px;
 }
 .price-rule .word {
   font-family: var(--serif);
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 11px;               /* v22: 10→11 */
+  font-weight: 600;              /* v22: 強化 */
+  letter-spacing: 0.14em;
+  color: var(--ink);
 }
 .price-rule .num {
   font-family: var(--num);
-  font-size: 14px;               /* 17→14 */
-  font-weight: 600;
+  font-size: 16px;               /* v22: 14→16 */
+  font-weight: 700;              /* v22: 600→700 */
+  color: var(--ink);
 }
-.price-rule .num .yen { font-size: 11px; opacity: 0.55; margin-right: 1px; }
+.price-rule .num .yen { font-size: 12px; opacity: 0.7; margin-right: 1px; font-weight: 600; }
 .price-rule.hidden { display: none; }
 
 /* 品書グリッド: ユーザー要求「3列固定、下に長くなる」
@@ -787,39 +814,46 @@ body {
   position: absolute;
   top: 6px;
   right: 6px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;                        /* 円形 */
-  background: rgba(250, 245, 233, 0.96);
-  border: 0.5px solid rgba(28,24,19,0.22);
+  width: 26px;                               /* v22: 24→26 (大きく) */
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 252, 245, 0.98);     /* v22: より白く */
+  border: 1px solid rgba(14, 9, 5, 0.55);    /* v22: 0.5px 0.22→1px 0.55 (濃く太く) */
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--num);
-  font-size: 11px;
+  font-size: 13px;                           /* v22: 11→13 */
   color: var(--ink);
   letter-spacing: 0.02em;
-  z-index: 3;                                 /* has-image overlay と同等以上を保証 */
+  z-index: 3;
   line-height: 1;
-  font-weight: 600;
+  font-weight: 700;                          /* v22: 600→700 */
 }
 .flavor-name {
   font-family: var(--serif);
-  font-size: clamp(13px, 1.4vw, 16px);    /* 実画面幅に追従、狭い画面で自動縮小 */
-  font-weight: 500;
-  letter-spacing: 0.02em;                  /* 余白を稼ぐ */
-  line-height: 1.3;
+  /* v22: clamp下限/上限を底上げ。13→15, 1.4vw→1.65vw, 16→19。
+     横グリッド3列固定なのでセル幅は画面幅の約20%。1.65vw=タブレットで約21px相当。
+     味名が最重要要素なので最大限視認性を稼ぐ。 */
+  font-size: clamp(15px, 1.65vw, 19px);
+  font-weight: 700;                          /* v22: 500→700 */
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  line-height: 1.25;                         /* v22: 1.3→1.25 (大文字で行間圧縮) */
   margin-top: auto;
-  word-break: break-all;                   /* 万が一の長い味名でも overflow しない */
+  word-break: break-all;
   overflow-wrap: anywhere;
+  /* 背景画像の上でも読みやすいよう、薄い影で文字を浮かせる */
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.6);
 }
 .flavor-priceTag {
   font-family: var(--num);
-  font-size: 11px;
-  color: var(--ink-2);
+  font-size: 13px;                            /* v22: 11→13 */
+  font-weight: 600;                           /* v22: 強化 */
+  color: var(--ink);                          /* v22: ink-2→ink */
   margin-top: 4px;
 }
-.flavor-priceTag .yen { font-size: 9px; opacity: 0.55; margin-right: 1px; }
+.flavor-priceTag .yen { font-size: 10px; opacity: 0.7; margin-right: 1px; font-weight: 600; }
 
 /* P2-24: 空セルに直径2px墨点 */
 .flavor-cell.empty {
@@ -862,8 +896,10 @@ body {
 }
 .modal-title {
   font-family: var(--serif);
-  font-size: 19px;
-  letter-spacing: 0.18em;
+  font-size: 22px;                           /* v22: 19→22 */
+  font-weight: 700;                          /* v22: 強化 */
+  color: var(--ink);
+  letter-spacing: 0.14em;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--line);
 }
@@ -871,9 +907,10 @@ body {
 
 .today-date {
   font-family: var(--serif);
-  font-size: 13px;
-  color: var(--ink-2);
-  letter-spacing: 0.1em;
+  font-size: 15px;                           /* v22: 13→15 */
+  font-weight: 600;                          /* v22: 強化 */
+  color: var(--ink);                         /* v22: ink-2→ink */
+  letter-spacing: 0.08em;
   margin-top: 16px;
   margin-bottom: 4px;
 }
@@ -886,28 +923,30 @@ body {
   padding: 10px 0;
   border-bottom: 1px solid var(--hairline);
   font-family: var(--num);
-  font-size: 14px;
+  font-size: 15px;                           /* v22: 14→15 */
+  color: var(--ink);
 }
-.bd-row .name { font-family: var(--serif); font-size: 14px; letter-spacing: 0.04em; }
-.bd-row .unit { color: var(--ink-3); font-size: 12px; min-width: 50px; text-align: right; }
-.bd-row .qty { font-weight: 600; min-width: 55px; text-align: right; }
-.bd-row .qty .x { color: var(--ink-3); font-size: 11px; margin-right: 2px; }
-.bd-row .sum { font-weight: 600; min-width: 80px; text-align: right; }
-.bd-row .sum .yen { font-size: 11px; opacity: 0.55; margin-right: 1px; }
+.bd-row .name { font-family: var(--serif); font-size: 15px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink); }
+.bd-row .unit { color: var(--ink-2); font-size: 13px; font-weight: 500; min-width: 50px; text-align: right; }
+.bd-row .qty { font-weight: 700; min-width: 55px; text-align: right; color: var(--ink); }
+.bd-row .qty .x { color: var(--ink-2); font-size: 12px; margin-right: 2px; font-weight: 500; }
+.bd-row .sum { font-weight: 700; min-width: 80px; text-align: right; color: var(--ink); }
+.bd-row .sum .yen { font-size: 12px; opacity: 0.7; margin-right: 1px; font-weight: 600; }
 
 .bd-total {
   display: flex; justify-content: space-between; align-items: baseline;
   padding: 16px 0 8px;
   margin-top: 8px;
-  border-top: 2px solid var(--ink);     /* P0-04: 2px締め */
+  border-top: 2px solid var(--ink);
 }
-.bd-total .lbl { font-family: var(--serif); font-size: 14px; letter-spacing: 0.18em; }
-.bd-total .val { font-family: var(--num); font-size: 26px; font-weight: 600; }
+.bd-total .lbl { font-family: var(--serif); font-size: 16px; font-weight: 700; letter-spacing: 0.14em; color: var(--ink); }
+.bd-total .val { font-family: var(--num); font-size: 30px; font-weight: 700; color: var(--ink); }
 
 .bd-meta {
-  font-size: 11px;
-  color: var(--ink-3);
-  letter-spacing: 0.1em;
+  font-size: 13px;                           /* v22: 11→13 */
+  font-weight: 500;
+  color: var(--ink-2);                       /* v22: ink-3→ink-2 */
+  letter-spacing: 0.08em;
   margin-top: 4px;
   text-align: right;
   font-family: var(--serif);
@@ -921,9 +960,10 @@ body {
 }
 .tx-section-title {
   font-family: var(--serif);
-  font-size: 12px;
-  color: var(--ink-2);
-  letter-spacing: 0.16em;
+  font-size: 14px;                           /* v22: 12→14 */
+  font-weight: 700;                          /* v22: 強化 */
+  color: var(--ink);                         /* v22: ink-2→ink */
+  letter-spacing: 0.12em;
   margin-bottom: 8px;
 }
 .tx-list {
@@ -937,10 +977,11 @@ body {
 .tx-empty {
   padding: 16px 12px;
   text-align: center;
-  color: var(--ink-3);
+  color: var(--ink-2);                       /* v22: ink-3→ink-2 */
   font-family: var(--serif);
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-size: 14px;                           /* v22: 12→14 */
+  font-weight: 500;
+  letter-spacing: 0.08em;
 }
 .tx-row {
   display: grid;
@@ -949,20 +990,22 @@ body {
   align-items: center;
   padding: 8px 10px;
   border-bottom: 1px solid var(--line);
-  font-size: 12px;
+  font-size: 14px;                           /* v22: 12→14 */
   background: var(--paper);
 }
 .tx-row:last-child { border-bottom: none; }
 .tx-time {
   font-family: var(--num);
-  color: var(--ink-2);
-  font-size: 11px;
+  color: var(--ink);                         /* v22: ink-2→ink */
+  font-size: 13px;                           /* v22: 11→13 */
+  font-weight: 600;                          /* v22: 強化 */
   letter-spacing: 0.04em;
 }
 .tx-items {
   font-family: var(--serif);
   color: var(--ink);
-  font-size: 12px;
+  font-size: 14px;                           /* v22: 12→14 */
+  font-weight: 600;                          /* v22: 強化 */
   letter-spacing: 0.02em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -970,26 +1013,28 @@ body {
 }
 .tx-tops {
   color: var(--shu);
-  font-size: 10px;
+  font-size: 12px;                           /* v22: 10→12 */
+  font-weight: 600;
   margin-left: 4px;
   letter-spacing: 0;
 }
 .tx-total {
   font-family: var(--num);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15px;                           /* v22: 13→15 */
+  font-weight: 700;                          /* v22: 600→700 */
   color: var(--ink);
   white-space: nowrap;
 }
 .tx-delete {
   font-family: var(--serif);
-  font-size: 11px;
-  color: var(--ink-3);
+  font-size: 13px;                           /* v22: 11→13 */
+  font-weight: 600;                          /* v22: 強化 */
+  color: var(--ink);                         /* v22: ink-3→ink */
   background: transparent;
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink-3);            /* v22: line→ink-3 */
   padding: 4px 10px;
   cursor: pointer;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   min-height: 32px;
   white-space: nowrap;
 }
@@ -1005,12 +1050,13 @@ body {
 .modal-actions button {
   flex: 1;
   padding: 14px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink-3);            /* v22: line→ink-3 */
   background: var(--paper);
   font-family: var(--serif);
-  font-size: 13px;
+  font-size: 15px;                           /* v22: 13→15 */
+  font-weight: 600;                          /* v22: 強化 */
   cursor: pointer;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   color: var(--ink);
   transition: background 0.2s, border-color 0.2s;
   min-height: 48px;
@@ -1037,13 +1083,14 @@ body {
   background: transparent;
   border: none;
   font-family: var(--serif);
-  font-size: 13px;
-  color: var(--ink-2);
+  font-size: 15px;                           /* v22: 13→15 */
+  font-weight: 600;                          /* v22: 強化 */
+  color: var(--ink);                         /* v22: ink-2→ink */
   cursor: pointer;
   /* Wave3 #10: タッチターゲット 44pt 保証 */
   padding: 11px 16px;
-  letter-spacing: 0.1em;
-  border-bottom: 1px solid var(--ink-3);
+  letter-spacing: 0.08em;
+  border-bottom: 1.5px solid var(--ink);     /* v22: ink-3→ink */
   min-height: 44px;
 }
 .doc-back:hover { color: var(--ink); border-bottom-color: var(--ink); }
@@ -1056,16 +1103,19 @@ body {
 }
 .doc-headline .ja {
   font-family: var(--serif);
-  font-size: 28px;
-  letter-spacing: 0.08em;
-  font-weight: 600;
+  font-size: 32px;                            /* v22: 28→32 */
+  letter-spacing: 0.06em;
+  font-weight: 700;                           /* v22: 600→700 */
+  color: var(--ink);
 }
 /* P0-08: .doc-headline .en 廃止 */
 
 .doc-section-title {
   font-family: var(--serif);
-  font-size: 15px;
-  letter-spacing: 0.18em;
+  font-size: 17px;                            /* v22: 15→17 */
+  font-weight: 700;                           /* v22: 強化 */
+  color: var(--ink);
+  letter-spacing: 0.14em;
   margin: 40px 0 16px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--line);
@@ -1073,8 +1123,9 @@ body {
 }
 .doc-section-title .count {
   font-family: var(--num);
-  font-size: 12px;
-  color: var(--ink-3);
+  font-size: 13px;                            /* v22: 12→13 */
+  font-weight: 600;
+  color: var(--ink-2);                        /* v22: ink-3→ink-2 */
   letter-spacing: 0.05em;
 }
 
@@ -1087,13 +1138,14 @@ body {
 }
 .preset-btn {
   background: transparent;
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink-3);            /* v22: line→ink-3 */
   /* Wave3 #10: タッチターゲット 44pt 保証 */
   padding: 14px 20px;
   font-family: var(--serif);
-  font-size: 12px;
-  color: var(--ink-2);
-  letter-spacing: 0.1em;
+  font-size: 14px;                            /* v22: 12→14 */
+  font-weight: 600;                           /* v22: 強化 */
+  color: var(--ink);                          /* v22: ink-2→ink */
+  letter-spacing: 0.08em;
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s;
   min-height: 44px;
@@ -1107,23 +1159,25 @@ body {
 }
 .period-block .lbl {
   font-family: var(--serif);
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  color: var(--ink-2);
+  font-size: 14px;                            /* v22: 13→14 */
+  font-weight: 600;                           /* v22: 強化 */
+  letter-spacing: 0.12em;
+  color: var(--ink);                          /* v22: ink-2→ink */
   margin-right: 8px;
 }
 .date-input {
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink-3);             /* v22: line→ink-3 */
   background: var(--bg);
   padding: 10px 13px;
   font-family: var(--num);
-  font-size: 14px;
+  font-size: 16px;                            /* v22: 14→16 */
+  font-weight: 600;                           /* v22: 強化 */
   color: var(--ink);
   min-height: 44px;
   border-radius: 0;
 }
 .date-input:focus { outline: none; border-color: var(--ink); }
-.period-tilde { font-family: var(--serif); color: var(--ink-3); }
+.period-tilde { font-family: var(--serif); color: var(--ink); font-weight: 600; }
 .period-go {
   margin-left: 8px;
   background: var(--ink);
@@ -1131,8 +1185,9 @@ body {
   border: 1px solid var(--ink);
   padding: 10px 22px;
   font-family: var(--serif);
-  font-size: 13px;
-  letter-spacing: 0.18em;
+  font-size: 14px;                            /* v22: 13→14 */
+  font-weight: 700;                           /* v22: 強化 */
+  letter-spacing: 0.14em;
   cursor: pointer;
   min-height: 44px;
 }
@@ -1153,21 +1208,23 @@ body {
 }
 .total-card .lbl {
   font-family: var(--serif);
-  font-size: 13px;
-  letter-spacing: 0.22em;
-  color: var(--ink-2);
+  font-size: 15px;                            /* v22: 13→15 */
+  font-weight: 700;                           /* v22: 強化 */
+  letter-spacing: 0.18em;
+  color: var(--ink);                          /* v22: ink-2→ink */
 }
 .total-card .val {
   font-family: var(--num);
-  font-size: 48px;
-  font-weight: 600;
+  font-size: 54px;                            /* v22: 48→54 */
+  font-weight: 700;                           /* v22: 600→700 */
   color: var(--ink);
 }
 
 .total-card .meta {
-  font-size: 11px;
-  color: var(--ink-3);
-  letter-spacing: 0.1em;
+  font-size: 13px;                            /* v22: 11→13 */
+  font-weight: 500;                           /* v22: 強化 */
+  color: var(--ink-2);                        /* v22: ink-3→ink-2 */
+  letter-spacing: 0.08em;
   grid-column: 1 / -1;
   margin-top: 12px;
   font-family: var(--serif);
@@ -1181,17 +1238,19 @@ body {
   padding: 12px 8px;
   text-align: right;
   font-family: var(--num);
-  font-size: 13px;
+  font-size: 15px;                            /* v22: 13→15 */
+  font-weight: 600;                           /* v22: 強化 */
+  color: var(--ink);
   border-bottom: 1px solid var(--hairline);
 }
 .breakdown-table th {
   font-family: var(--serif);
-  font-weight: 600;
-  color: var(--ink-2);
-  letter-spacing: 0.12em;
-  font-size: 11px;
+  font-weight: 700;                           /* v22: 600→700 */
+  color: var(--ink);                          /* v22: ink-2→ink */
+  letter-spacing: 0.1em;
+  font-size: 13px;                            /* v22: 11→13 */
   text-align: right;
-  border-bottom: 1px solid var(--line-2);
+  border-bottom: 1.5px solid var(--ink-3);    /* v22: line-2→ink-3 */
 }
 .breakdown-table td:first-child, .breakdown-table th:first-child {
   text-align: left;
@@ -1217,16 +1276,18 @@ body {
 .settings-table th {
   font-family: var(--serif);
   text-align: left;
-  font-size: 11px;
-  color: var(--ink-2);
-  letter-spacing: 0.12em;
+  font-size: 13px;                            /* v22: 11→13 */
+  font-weight: 700;                           /* v22: 強化 */
+  color: var(--ink);                          /* v22: ink-2→ink */
+  letter-spacing: 0.1em;
   padding: 12px 8px;
-  border-bottom: 1px solid var(--line-2);
+  border-bottom: 1.5px solid var(--ink-3);    /* v22: line-2→ink-3 */
 }
 .settings-table td.col-num {
   font-family: var(--num);
-  font-size: 12px;
-  color: var(--ink-3);
+  font-size: 14px;                            /* v22: 12→14 */
+  font-weight: 600;                           /* v22: 強化 */
+  color: var(--ink);                          /* v22: ink-3→ink */
   width: 32px;
   text-align: center;
 }
@@ -1238,8 +1299,8 @@ body {
   border: 1px solid transparent;
   background: transparent;
   font-family: var(--serif);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;                            /* v22: 15→17 */
+  font-weight: 700;                           /* v22: 600→700 */
   padding: 10px 10px;
   width: 100%;
   color: var(--ink);
@@ -1251,8 +1312,8 @@ body {
   border: 1px solid transparent;
   background: transparent;
   font-family: var(--num);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;                            /* v22: 15→17 */
+  font-weight: 700;                           /* v22: 600→700 */
   padding: 10px 10px;
   width: 100%;
   color: var(--ink);
@@ -1287,14 +1348,15 @@ body {
 }
 .icon-btn {
   background: transparent;
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink-3);             /* v22: line→ink-3 */
   /* Wave3 #10: タッチターゲット 44pt 保証 */
   padding: 11px 14px;
   font-family: var(--serif);
-  font-size: 11px;
-  color: var(--ink-2);
+  font-size: 13px;                            /* v22: 11→13 */
+  font-weight: 600;                           /* v22: 強化 */
+  color: var(--ink);                          /* v22: ink-2→ink */
   cursor: pointer;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   min-width: 44px;
   min-height: 44px;
   display: inline-flex;
@@ -1317,13 +1379,14 @@ body {
 
 .add-row-btn {
   background: transparent;
-  border: 1px dashed var(--line-2);
+  border: 1.5px dashed var(--ink-3);          /* v22: 1px line-2→1.5px ink-3 */
   padding: 16px;
   width: 100%;
   font-family: var(--serif);
-  font-size: 13px;
-  color: var(--ink-2);
-  letter-spacing: 0.18em;
+  font-size: 15px;                            /* v22: 13→15 */
+  font-weight: 600;                           /* v22: 強化 */
+  color: var(--ink);                          /* v22: ink-2→ink */
+  letter-spacing: 0.14em;
   cursor: pointer;
   margin: 16px 0 8px;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
@@ -1343,13 +1406,14 @@ body {
 }
 .data-actions button {
   background: var(--paper);
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink-3);             /* v22: line→ink-3 */
   padding: 14px 22px;
   font-family: var(--serif);
-  font-size: 13px;
+  font-size: 15px;                            /* v22: 13→15 */
+  font-weight: 600;                           /* v22: 強化 */
   color: var(--ink);
   cursor: pointer;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   transition: background 0.15s, border-color 0.15s;
   min-height: 48px;
 }
@@ -1366,18 +1430,20 @@ body {
 
 .info-note {
   font-family: var(--sans);
-  font-size: 11px;
-  color: var(--ink-3);
-  letter-spacing: 0.05em;
+  font-size: 13px;                            /* v22: 11→13 */
+  font-weight: 500;                           /* v22: 強化 */
+  color: var(--ink-2);                        /* v22: ink-3→ink-2 */
+  letter-spacing: 0.04em;
   margin-top: 12px;
-  line-height: 1.8;
+  line-height: 1.75;
 }
 
 .backup-status {
   font-family: var(--serif);
-  font-size: 12px;
-  color: var(--ink-2);
-  letter-spacing: 0.08em;
+  font-size: 14px;                            /* v22: 12→14 */
+  font-weight: 600;                           /* v22: 強化 */
+  color: var(--ink);                          /* v22: ink-2→ink */
+  letter-spacing: 0.06em;
   margin-top: 16px;
   padding: 12px 0 8px;
   border-top: 1px solid var(--hairline);
@@ -1392,10 +1458,11 @@ body {
   color: var(--ink);
   padding: 16px 32px;
   font-family: var(--serif);
-  font-size: 15px;
-  letter-spacing: 0.18em;
-  border: 1px solid var(--ink);
-  box-shadow: 0 1px 0 var(--ink), 0 8px 24px rgba(28, 24, 19, 0.08);
+  font-size: 16px;                            /* v22: 15→16 */
+  font-weight: 700;                           /* v22: 強化 */
+  letter-spacing: 0.14em;
+  border: 1.5px solid var(--ink);             /* v22: 1→1.5px */
+  box-shadow: 0 1px 0 var(--ink), 0 8px 24px rgba(14, 9, 5, 0.12);
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 200;
   display: flex;
@@ -1414,17 +1481,17 @@ body {
 
 .toast button {
   margin-left: 10px;
-  border: 1px solid var(--ink);
+  border: 1.5px solid var(--ink);             /* v22: 1→1.5px */
   background: transparent;
   color: var(--ink);
-  padding: 10px 20px;            /* 6/14 → 10/20、タッチ確実に */
+  padding: 10px 20px;
   font-family: var(--serif);
-  font-size: 13px;
-  letter-spacing: 0.18em;
+  font-size: 15px;                            /* v22: 13→15 */
+  letter-spacing: 0.14em;
   cursor: pointer;
-  min-height: 44px;              /* 32 → 44 (WCAG タッチターゲット保証) */
-  font-weight: 500;
-  touch-action: manipulation;    /* タップ遅延無し */
+  min-height: 44px;
+  font-weight: 700;                           /* v22: 500→700 */
+  touch-action: manipulation;
 }
 .toast button:hover { background: var(--ink); color: var(--paper); }
 .toast button:active { background: var(--ink); color: var(--paper); }

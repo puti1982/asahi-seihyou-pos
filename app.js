@@ -56,13 +56,18 @@ const LEGACY_TOPPING_NAMES = {
 };
 
 /* ===== Persistence keys ===== */
-const SALES_KEY       = 'asahi_seihyou_sales_v1';
-const FLAVORS_KEY     = 'asahi_seihyou_flavors_v1';
-const TOPPINGS_KEY    = 'asahi_seihyou_toppings_v1';
-const SEEDED_KEY      = 'asahi_seihyou_seeded_v1';
-const CART_DRAFT_KEY  = 'asahi_seihyou_cart_draft_v1';
-const LAST_BACKUP_KEY = 'asahi_seihyou_last_backup_v1';
-const WAKELOCK_KEY    = 'asahi_seihyou_wakelock_v1';
+const SALES_KEY              = 'asahi_seihyou_sales_v1';
+const FLAVORS_KEY            = 'asahi_seihyou_flavors_v1';
+const TOPPINGS_KEY           = 'asahi_seihyou_toppings_v1';
+const SEEDED_KEY             = 'asahi_seihyou_seeded_v1';
+const CART_DRAFT_KEY         = 'asahi_seihyou_cart_draft_v1';
+const LAST_BACKUP_KEY        = 'asahi_seihyou_last_backup_v1';
+const WAKELOCK_KEY           = 'asahi_seihyou_wakelock_v1';
+/* v22 新規: 「一度でも導入したDEFAULT項目」を記録するキー。
+   これらに記録された image / id は、ユーザーが rename / 削除しても
+   二度と自動再追加しない（幽霊復活バグの構造的解消）。 */
+const INTRODUCED_FLAVORS_KEY = 'asahi_seihyou_introduced_flavor_images_v1';
+const INTRODUCED_TOPPINGS_KEY = 'asahi_seihyou_introduced_topping_ids_v1';
 
 /* ===== State ===== */
 let FLAVORS  = loadJSON(FLAVORS_KEY, DEFAULT_FLAVORS.slice());
@@ -72,16 +77,36 @@ let nextId = 1;
 /* ★v19: カート表示モード - 'current'(現注文) / 'previous'(直前注文プレビュー) */
 let viewMode = 'current';
 
-/* Migration: 既存FLAVORSの image補完 / 旧色更新 / 新商品追加 */
+/* ============================================================
+   Migration: 品書きの image 補完 / 旧色更新 / 新DEFAULT項目の導入
+
+   ★v22 重要修正 (2026-05-13):
+   旧ロジックは「DEFAULT_FLAVORS にあって FLAVORS にない name」を
+   毎回再追加していたため、ユーザーが rename すると
+   元の name が「欠落」と判定されて毎回幽霊復活していた。
+   例: 「ダブルベリー」→「ダブル」にrename → 翌日「ダブルベリー」が
+   末尾に再出現。
+
+   新ロジックは「導入済み image キー」を localStorage に記録し、
+   一度導入した DEFAULT 由来 image は二度と自動追加しない。
+   - rename しても image は不変 → 導入済みとして認識
+   - ユーザーが意図的に削除した品も二度と復活しない
+   - 新規端末では DEFAULT_FLAVORS を全件導入
+   - 既存端末では現FLAVORS の image を全部「導入済み」と
+     見なすことで、レガシーデータでも安全に動く
+   ============================================================ */
 (function migrateFlavors() {
   let changed = false;
-  // image フィールド補完
+  let introChanged = false;
+
+  // image フィールド補完 (legacy保存に image が欠落していた場合)
   FLAVORS.forEach(f => {
     if (!f.image) {
       const def = DEFAULT_FLAVORS.find(d => d.name === f.name);
       if (def && def.image) { f.image = def.image; changed = true; }
     }
   });
+
   // ブルーハワイの旧色 #5DA9C8 → 新色 #0288D1 へ
   FLAVORS.forEach(f => {
     if (f.name === 'ブルーハワイ' && f.color === '#5DA9C8') {
@@ -89,24 +114,55 @@ let viewMode = 'current';
       changed = true;
     }
   });
-  /* DEFAULTに新規追加された味を既存ユーザーのFLAVORSにも追加
-     (32:塩みかん, 33:巨峰＆ベリー など) */
+
+  /* 導入済み image セットを構築:
+     - 保存された履歴 (前回までに導入したことが分かっている image)
+     - 現FLAVORS の image (rename 後も image は不変なので導入済み扱い)
+     ユーザーが削除した DEFAULT 項目も localStorage の履歴に残っているため、
+     一度導入したものは二度と自動復活しない。 */
+  const introducedRaw = loadJSON(INTRODUCED_FLAVORS_KEY, null);
+  const introSet = new Set(Array.isArray(introducedRaw) ? introducedRaw : []);
+  FLAVORS.forEach(f => { if (f.image) introSet.add(f.image); });
+
+  /* 新規DEFAULT項目の導入:
+     導入済みでない image のみ追加。一度導入したら二度と追加しない。 */
   DEFAULT_FLAVORS.forEach(def => {
-    if (!FLAVORS.find(f => f.name === def.name)) {
+    if (def.image && !introSet.has(def.image)) {
       FLAVORS.push({ ...def });
+      introSet.add(def.image);
       changed = true;
     }
   });
+
+  // 導入済みリストを永続化 (rename / 削除しても引き継ぐ)
+  const newIntro = Array.from(introSet).sort();
+  const oldIntro = (Array.isArray(introducedRaw) ? introducedRaw.slice() : []).sort();
+  if (JSON.stringify(newIntro) !== JSON.stringify(oldIntro)) {
+    introChanged = true;
+  }
+
   if (changed) {
     try { localStorage.setItem(FLAVORS_KEY, JSON.stringify(FLAVORS)); } catch {}
   }
+  if (introChanged) {
+    try { localStorage.setItem(INTRODUCED_FLAVORS_KEY, JSON.stringify(newIntro)); } catch {}
+  }
 })();
 
-/* Migration: 既存TOPPINGSの旧'cup'(特製カップ)を'george'(ジョージ)へrename。
-   tomjerry を未追加なら追加。価格は据え置き。
-   2026-04-29 クライアント要望: トッピング3→4個化 */
+/* ============================================================
+   Migration: トッピングの旧'cup'→'george' rename + tomjerry 導入
+
+   ★v22 重要修正 (2026-05-13):
+   トッピングも「id ベースで find しない＝再追加」のため、
+   ユーザーが削除すると幽霊復活する同種バグがあった。
+   FLAVORS と同じく INTRODUCED_TOPPINGS_KEY で
+   「一度導入した id」を記録して二度と再追加しない。
+   ============================================================ */
 (function migrateToppings() {
   let changed = false;
+  let introChanged = false;
+
+  // 旧 cup → george への rename (legacy 救済)
   TOPPINGS.forEach(t => {
     if (t.id === 'cup' || t.name === '特製カップ') {
       t.id = 'george';
@@ -115,13 +171,42 @@ let viewMode = 'current';
       changed = true;
     }
   });
-  // tomjerry が無ければ追加
-  if (!TOPPINGS.find(t => t.id === 'tomjerry')) {
-    TOPPINGS.push({ id:'tomjerry', name:'トムジェリ', price:200 });
-    changed = true;
+
+  /* 導入済み id セット構築 */
+  const introducedRaw = loadJSON(INTRODUCED_TOPPINGS_KEY, null);
+  const introSet = new Set(Array.isArray(introducedRaw) ? introducedRaw : []);
+  TOPPINGS.forEach(t => { if (t.id) introSet.add(t.id); });
+
+  /* 既存端末で INTRODUCED_TOPPINGS_KEY が未保存なら、
+     現状の TOPPINGS の id だけ「導入済み」と見なす。
+     かつ「旧ロジックで導入されただろう DEFAULT id」も記録する。
+     ユーザーが削除した場合も復活させない。 */
+  if (introducedRaw === null) {
+    DEFAULT_TOPPINGS.forEach(def => {
+      if (TOPPINGS.find(t => t.id === def.id)) introSet.add(def.id);
+    });
   }
+
+  /* DEFAULT 新規 (例: tomjerry) の導入は「未導入のもの」だけ */
+  DEFAULT_TOPPINGS.forEach(def => {
+    if (def.id && !introSet.has(def.id)) {
+      TOPPINGS.push({ ...def });
+      introSet.add(def.id);
+      changed = true;
+    }
+  });
+
+  const newIntro = Array.from(introSet).sort();
+  const oldIntro = (Array.isArray(introducedRaw) ? introducedRaw.slice() : []).sort();
+  if (JSON.stringify(newIntro) !== JSON.stringify(oldIntro)) {
+    introChanged = true;
+  }
+
   if (changed) {
     try { localStorage.setItem(TOPPINGS_KEY, JSON.stringify(TOPPINGS)); } catch {}
+  }
+  if (introChanged) {
+    try { localStorage.setItem(INTRODUCED_TOPPINGS_KEY, JSON.stringify(newIntro)); } catch {}
   }
 })();
 
@@ -951,6 +1036,10 @@ function exportJSON() {
     flavors: FLAVORS,
     toppings: TOPPINGS,
     sales: loadSales(),
+    /* v22: 導入済みリストもバックアップに含める。
+       別端末への復元時も rename / 削除の意思が引き継がれる。 */
+    introducedFlavors: loadJSON(INTRODUCED_FLAVORS_KEY, []),
+    introducedToppings: loadJSON(INTRODUCED_TOPPINGS_KEY, []),
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -1024,6 +1113,13 @@ function importJSON() {
         if (!confirm('現在のデータを上書きします。よろしいですか？')) return;
         if (data.flavors)  { FLAVORS = data.flavors;   saveJSON(FLAVORS_KEY, FLAVORS); }
         if (data.toppings) { TOPPINGS = data.toppings; saveJSON(TOPPINGS_KEY, TOPPINGS); }
+        /* v22: 導入済みリストの復元 (古いバックアップは未保持=undefined→スキップ) */
+        if (Array.isArray(data.introducedFlavors)) {
+          try { saveJSON(INTRODUCED_FLAVORS_KEY, data.introducedFlavors); } catch {}
+        }
+        if (Array.isArray(data.introducedToppings)) {
+          try { saveJSON(INTRODUCED_TOPPINGS_KEY, data.introducedToppings); } catch {}
+        }
         if (data.sales)    {
           try { localStorage.setItem(SALES_KEY, JSON.stringify(data.sales)); }
           catch (e) {

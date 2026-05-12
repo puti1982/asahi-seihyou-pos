@@ -1,8 +1,8 @@
 # 朝日製氷 POS — プロジェクト総括コンテキスト
 
-**最終更新**: 2026-04-28
+**最終更新**: 2026-04-29
 **ステータス**: 本番稼働中（引渡し直前・販売履歴クリーン待ち）
-**バージョン**: v20260428004212
+**バージョン**: v20260429200951
 
 ---
 
@@ -131,11 +131,15 @@ projects/kajigoria-pos/
 
 | 表記 | 意味 |
 |---|---|
-| 御注文 | カート見出し |
+| 御注文 | カート見出し（current モード時） |
+| 前回 HH:MM | カート見出し（previous モード時・v19） |
 | 御会計 | 合計金額バー左ラベル |
 | 品書 | 商品一覧 |
 | 売上帳 | 売上集計 |
 | 会計確定 (CTA) | 会計確定ボタン（横一列バー右端） |
+| 確定済 (CTA disabled) | 直前注文プレビュー時のCTA文言（v19） |
+| 直前の注文 ▶ | プレビュートグル（current時表示・v19） |
+| ◀ 現在に戻る | プレビュートグル（previous時表示・v19） |
 
 **注**: お預かり / 御釣銭 は v15 で機能廃止（クライアント要望: 釣銭計算を頭の中で行うため不要）。
 
@@ -247,10 +251,13 @@ cd ..
   - 抹茶, コーヒー, 紅茶, ドラキュラ, エイリアン, プリンセス, 王子様
   - パワーエナジー, イナズマジンジャー, 紅いも, 塩みかん, 巨峰＆ベリー
 
-- **トッピング3種**
+- **トッピング4種**（v19で3→4化）
   - ミルク +¥50
   - スプーン +¥10
-  - 特製カップ +¥200
+  - ジョージ +¥200（旧「特製カップ」を v19 で rename）
+  - トムジェリ +¥200（v19 で新規追加）
+
+- **legacy 互換**: `LEGACY_TOPPING_NAMES = { cup: { name:'特製カップ', price:200 } }` で旧履歴の英字tid「cup」を「特製カップ」表示に救済。renderCart preview / renderTodayTransactions / aggregateRange の3箇所で参照
 
 - **価格設定**: 設定画面から個別価格変更可能。一律変更/部分変更どちらも可。
 
@@ -266,13 +273,33 @@ cd ..
 ### 8.4 売上帳
 
 - **当日売上モーダル**: ヘッダー右の「売上帳」タップ
-  - 価格項目別集計（かき氷/ミルク/スプーン/特製カップ）
+  - **★v19: かき氷を価格別に行展開**（「かき氷 ¥250 ×N」「かき氷 ¥300 ×M」など、qty>0のみ昇順）
+  - トッピング4種（ミルク/スプーン/ジョージ/トムジェリ）
   - 合計金額・取引件数・平均単価
   - **本日の取引一覧**（HH:MM時刻 + 内容 + 金額 + 削除ボタン）
 - **詳細ビュー**: モーダル内「詳細を見る →」
   - 期間プリセット（直近7/30/90/今月/全期間）
   - カスタム期間ピッカー
-  - 日別表（味/トッピング/取引/売上）
+  - 日別表（**★v19: 期間内の価格集合を動的検出して列展開**。例: ¥250と¥300両方あれば「かき氷 ¥250」「かき氷 ¥300」の2列）
+
+### 8.4b 直前注文プレビュー（v19新規）
+
+- **目的**: 会計確定後カートクリア後に「さっきの注文なんだったっけ」を即座に確認
+- **データ源**: `getLastSale() = loadSales().sort(by ts desc)[0]` — localStorage SALES_KEY の最新取引
+- **状態管理**: `viewMode = 'current' | 'previous'` グローバル変数
+- **UI**: cart-header右の `cart-mode-btn`
+  - current時: `直前の注文 ▶` 表示。タップでpreviousへ
+  - previous時: `◀ 現在に戻る` 表示。タップでcurrentへ
+- **previewレンダリング**:
+  - cart-list: read-only表示（`.cart-item-readonly` クラス）。toggle/delete無し
+  - section-label: `前回 HH:MM`（過去取引時刻）
+  - subtotal: 前回の総額表示
+  - CTA: disabled、テキスト `確定済`
+- **自動退出ルール**:
+  - previous中に味タップ → 自動的にcurrent復帰してカート追加
+  - setView('pos') → previewモード解除（設定/売上帳から戻った時の混乱防止）
+  - resetSettings → previewモード解除
+  - deleteTransaction / clearAllSales → previewモードでも同期再描画
 
 ### 8.5 取引修正（誤会計の取消）
 
@@ -438,7 +465,8 @@ deploy.sh は以下を自動実行:
 | **v15** | **お預かり/お釣り/テンキー全廃止**（クライアント要望: 釣銭計算は頭で） |
 | **v16** | **app-footer廃止 + .app の grid-template-rows: 1fr 化 + padding-bottom: max(24px, safe-area)** |
 | **v17** | **横一列バー化 .checkout-bar [御会計][¥金額][会計確定]を1バー統合**。CTA見切れ問題の構造的解消 |
-| **v18（最新）** | **`.view.active { grid-template-rows: 1fr; min-height: 0 }` 追加（会計確定ボタン消失バグの根本修正） + cart-panel/flavor-panel に height:100% / overflow:hidden 多層防御** |
+| **v18** | **`.view.active { grid-template-rows: 1fr; min-height: 0 }` 追加（会計確定ボタン消失バグの根本修正） + cart-panel/flavor-panel に height:100% / overflow:hidden 多層防御** |
+| **v19（最新）** | **トッピング3→4個化**（ジョージ/トムジェリ追加・cup→georgeマイグレ・LEGACY_TOPPING_NAMESで履歴互換）/ **本日売上を価格別行展開**（kakigoriByPrice / 動的列）/ **直前注文プレビュー機能**（viewMode current/previous切替） |
 
 ---
 
@@ -497,6 +525,10 @@ Wave 4以降 — L統合 + Gardevoir修正パス（複数回）
 11. **`.view.active { grid-template-rows: 1fr; min-height: 0 }` を絶対削除しない** ★v18確定（未指定だとカート品数増加で会計確定ボタンが消える）
 12. **app-footer を復活させない** ★v16確定（`.app { grid-template-rows: 1fr }` のままに保つ）
 13. **app の `padding-bottom: max(24px, env(safe-area-inset-bottom))` を維持** ★Hitab Android ナビバー回避必須
+14. **トッピング名称「ジョージ」「トムジェリ」を変更しない** ★v19確定（クライアント命名）
+15. **`LEGACY_TOPPING_NAMES` テーブルを削除しない** ★v19確定（旧履歴の cup → 特製カップ 救済に必須。3箇所で参照）
+16. **`viewMode` 自動復帰3点セット維持**: setView('pos') / addToCart / resetSettings で必ず current 強制 ★v19確定（previewモード残存による誤操作防止）
+17. **トッピングchipは `flex: 1 1 calc(25% - 3px)` 4個1列で固定** ★v19確定（2×2グリッドや3個に戻さない）
 
 ---
 
@@ -558,23 +590,75 @@ Wave 4以降 — L統合 + Gardevoir修正パス（複数回）
 
 ---
 
-## 18. 今回セッション（2026-04-28）変更ログ
+## 18. 過去セッション変更ログ
+
+### 2026-04-28 セッション（v15〜v18）
 
 | 時刻 | 変更内容 | コミット |
 |---|---|---|
 | 00:18 | お預かり/お釣り機能完全廃止（HTML+CSS+JS） | (v15) |
 | 00:22 | app-footer 廃止 + .app grid-template-rows: 1fr + safe-area-inset 24px | v20260428002257 |
 | 00:24 | 底部余白 24px 最低保証（Hitab Android safe-area非対応対策） | v20260428002403 |
-| 00:33 | **横一列バー化** [御会計][¥金額][会計確定] 1バー統合（金額28px主役化、ボタン48pt Apple HIG） | v20260428003314 |
+| 00:33 | 横一列バー化 [御会計][¥金額][会計確定] 1バー統合（金額28px主役化、ボタン48pt Apple HIG） | v20260428003314 |
 | 00:42 | **★根本修正**: `.view.active` に `grid-template-rows: 1fr` 追加（会計確定ボタン消失バグ）+ cart/flavor-panel 多層防御 | v20260428004212 |
 
-### バグ究明エピソード（v18）
-
+#### バグ究明エピソード（v18）
 **症状**: 「更新があります」適用後、会計確定ボタンが消える
-
 **根本原因**: `.view.active { display: grid }` に `grid-template-columns` のみ指定で `grid-template-rows` が未指定。デフォルトの `grid-auto-rows: auto` でカート品数に応じて行高がコンテンツ高に依存 → cart-panel が親(.app 100dvh)を超過 → `.app { overflow: hidden }` で底部クリップ。横一列バー化で底部に集約したことで、クリップ対象がボタン全体になり「ボタンが消える」症状として顕在化。
-
 **修正**: `.view.active { display: grid; grid-template-rows: 1fr; min-height: 0 }` で単行を親と同じ高さに固定。さらに `.cart-panel` と `.flavor-panel` に `height: 100%; overflow: hidden` を追加して多層防御。
+
+---
+
+### 2026-04-29 セッション（v19）
+
+クライアント要望3点セット + audit指摘5点を一括反映。
+
+| 時刻 | 変更内容 | コミット |
+|---|---|---|
+| 20:09 | v19 一括リリース | v20260429200951 |
+
+#### v19 機能変更
+
+**A. トッピング 3→4個化**
+- `DEFAULT_TOPPINGS`: ミルク(50)/スプーン(10)/**ジョージ(200)**/**トムジェリ(200)**
+- `migrateToppings()` 追加: 旧 'cup'/'特製カップ' → 'george'/'ジョージ' に rename。'tomjerry' 自動追加。冪等性保証
+- CSS: `.topping-chip { flex: 1 1 calc(25% - 3px) }` で4個1列。font-size 11px / min-height 36px（年配スタッフ視認性）
+- `.toppings { gap: 3px }` で4chip + 3gap = 100% フィット
+- `restoreCartDraft` 内で旧3個カート下書きを4個に自動補完（cup→george active状態引継）
+
+**B. 本日売上 価格別行展開**
+- `aggregateRange()` 戻り値に `kakigoriByPrice: { '250': qty, '300': qty }` を追加
+- `byDate[k].kakigoriByPrice` も同様に保持（日別表用）
+- `sortedKakigoriPrices()` ヘルパ追加（昇順、qty>0のみ）
+- `openToday()`: かき氷行を価格別に展開（「かき氷 ¥250 ×5」「かき氷 ¥300 ×2」）
+- `renderLedger()` の breakdown行も同様に展開
+- 日別表（daily-thead/body）: 期間内の価格集合を動的検出して列展開（将来 ¥350追加にも自動対応）
+
+**C. 直前注文プレビュー機能**
+- `viewMode` グローバル変数（'current' | 'previous'）
+- `getLastSale()`: loadSales().sort by ts desc [0]
+- `renderCart()` をモード分岐: previousは read-only、cta disabled "確定済"、subtotal=前回total
+- `toggleViewMode()`: 双方向トグル
+- `addToCart()` で previous時に自動 current復帰
+- `setView('pos')` で previewモード自動解除（設定/売上帳から戻った時の混乱防止）
+- `deleteTransaction()` / `clearAllSales()` 後にviewMode='previous'なら同期再描画
+- HTML: cart-headerに `<button class="cart-mode-btn" data-action="toggle-cart-mode">直前の注文 ▶</button>` 追加
+- CSS: `.cart-header { display:flex; justify-content:space-between }`、`.cart-mode-btn`（12px serif / 36px min-height / hover墨地反転）、`.cart-item-readonly`（薄背景 / 墨字-2 / toppings無 / .readonly-tops インライン表示）
+
+#### audit指摘修正（Chansey B1〜B5）
+
+| # | 重大度 | 内容 | 修正 |
+|---|---|---|---|
+| B1 | High | `renderCart` プレビューで旧 'cup' tid が「cup」と英字生表示 | `LEGACY_TOPPING_NAMES[t]?.name` フォールバック追加 |
+| B2 | High | `aggregateRange` で旧 cup が `cup（削除済）` 英字表示 | `toppingMeta` 補完時に LEGACY_TOPPING_NAMES 参照 |
+| B3 | High | `renderTodayTransactions` の itemsSummary で同様 | LEGACY フォールバック追加 |
+| B4 | Med | `resetSettings` 後も viewMode='previous' のままでCTA disabled残存 | `viewMode = 'current'` 強制 |
+| B5 | Med | `setView('pos')` で viewMode リセットなし | `setView('pos')` 内で previewなら current復帰 + renderCart再呼出 |
+
+#### audit評価（v19完了時）
+- **Luxray**: PASS（構造・論理・整合性すべて健全）
+- **Absol**: 64→改善版で約75点（chip拡大11px/36px・mode-btn 12px/36px・hover墨地反転で和モダン整合）
+- **Chansey**: B1〜B5 全修正済
 
 ---
 
