@@ -7,7 +7,9 @@
 //                    disabledでも濃グレー+白文字+opacity1で屋外日差し下でも確実視認
 // v26 (2026-05-17): CTAをさらに太字・大型化 (font 19px/800、border 2px、min 56×130)
 //                    .lbl と .val も太字800化。全機能E2E 30/30 PASS で回帰なし確認
-const VERSION = 'v20260517163128';
+// v27 (2026-05-17): 味名(いちご/メロン等)を 17→22px に拡大、カードのスペースをフル活用
+//                    カード高さ 110px・grid 3列・padding は完全維持、文字サイズのみ拡大
+const VERSION = 'v20260517171747';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [
