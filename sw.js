@@ -2,7 +2,8 @@
 // 戦略: cache-first + バージョン固定precache (店舗にWi-Fi無し前提)
 // v22 (2026-05-13): 文字視認性強化 + 品書きrename後の幽霊復活バグ修正
 // v23 (2026-05-17): 会計確定ボタンの構造的可視保証 + 縦持ち時の長味名 wrap 対応
-const VERSION = 'v20260517152411';
+// v24 (2026-05-17): disabled CTAの視覚的存在感を確保 (bg-2塗り+1.5px濃枠)、position:sticky撤去
+const VERSION = 'v20260517153732';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [

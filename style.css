@@ -391,28 +391,26 @@ body {
 .delete-btn:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
 /* ========== Checkout (CTA絶対視認 — 合計+CTA最圧縮) ========== */
-/* v23 (2026-05-17) 構造的修正:
+/* v23-24 構造的修正:
    ① flex-wrap: wrap で例外時の自動折り返し (CTA は必ず可視)
    ② .val は clamp() で狭い時に自動縮小し横幅予算を確保
    ③ .lbl の letter-spacing を 0.18→0.12em に詰めて幅予算
    ④ padding-bottom に safe-area-inset を加算 (PWA standalone 時の home indicator 対応)
-   ⑤ position: sticky + bottom:0 で どんな時も画面下に固定 (cart-list overflow から独立) */
+   v24: position:sticky は PWA standalone での副作用懸念から撤去。
+        flex-shrink:0 + parent overflow:hidden で十分に確保される。 */
 .checkout-bar {
   display: flex;
-  flex-wrap: wrap;                         /* v23: 横が足りなければ折り返し (CTAは必ず可視) */
+  flex-wrap: wrap;                         /* 横が足りなければ折り返し (CTAは必ず可視) */
   align-items: center;
   justify-content: space-between;
   row-gap: 4px;
   column-gap: 10px;
   padding: 10px 12px;
-  padding-bottom: max(10px, calc(10px + env(safe-area-inset-bottom, 0px))); /* v23: PWA bottom safe-area */
+  padding-bottom: max(10px, calc(10px + env(safe-area-inset-bottom, 0px))); /* PWA bottom safe-area */
   border-top: 1.5px solid var(--ink);
   background: var(--paper);
   flex-shrink: 0;
   min-height: 64px;
-  position: sticky;                        /* v23: cart-list が膨張しても下に固定 */
-  bottom: 0;
-  z-index: 5;
 }
 .checkout-bar .lbl {
   font-family: var(--serif);
@@ -671,13 +669,22 @@ body {
   white-space: nowrap;
 }
 .cta:hover { background: #0E0A06; }
+/* v24 (2026-05-17) 重要修正:
+   旧 disabled スタイルは「背景透明 + 薄グレー枠 + ink-2文字」で、
+   一見「ボタンが存在しない」と誤認されるクライアント報告。
+   - 背景を bg-2 (薄ベージュ) に変更 → カートパネル背景と区別され「ボタン」と認識可能
+   - 枠を 1.5px ink (濃墨) に変更 → 輪郭をはっきり描画
+   - 文字を ink (濃墨) に変更 → 確実に読める
+   - opacity 0.65 で「無効状態」感は保つ
+   この組合せで「ボタンの存在は明確、ただし押せない状態」が一目で分かる。 */
 .cta:disabled {
-  background: transparent;
-  color: var(--ink-2);                          /* v22: ink-3→ink-2 (disabled でも判読可能に) */
-  border-color: var(--ink-3);                   /* v22: line→ink-3 */
+  background: var(--bg-2);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  opacity: 0.65;
   cursor: not-allowed;
 }
-.cta:disabled:hover { background: transparent; }
+.cta:disabled:hover { background: var(--bg-2); }
 
 /* ========== Flavor Grid ========== */
 .flavor-panel {
