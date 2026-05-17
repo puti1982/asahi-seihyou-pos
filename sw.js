@@ -9,7 +9,10 @@
 //                    .lbl と .val も太字800化。全機能E2E 30/30 PASS で回帰なし確認
 // v27 (2026-05-17): 味名(いちご/メロン等)を 17→22px に拡大、カードのスペースをフル活用
 //                    カード高さ 110px・grid 3列・padding は完全維持、文字サイズのみ拡大
-const VERSION = 'v20260517171747';
+// v28 (2026-05-17): 味名を 20-28px に大胆拡大 (v26比+65%)、実機タブレットで確実体感。
+//                    SW install を cache:'reload' に変更し、HTTPキャッシュをbypass。
+//                    PWAキャッシュ残存問題を構造的に解消し「更新を押しても変わらない」を防止。
+const VERSION = 'v20260517173200';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [
