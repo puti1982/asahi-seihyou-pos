@@ -65,9 +65,26 @@ const PRECACHE_URLS = [
 self.addEventListener('install', (event) => {
   // auto-skipWaiting 削除: ユーザーが「適用」タップするまでwaiting状態を維持
   // (これがないと新SWが即座にactive化し、postMessage('SKIP_WAITING')が no-op になる)
+
+  // v28 重要修正: cache.addAll() は内部で fetch() を呼ぶが、デフォルトでは
+  // ブラウザの HTTP キャッシュを経由する。古い CSS/JS が HTTP キャッシュに
+  // 残っていると、新 SW がそれを SW キャッシュに保存してしまう
+  // (= 「更新」を押しても変化を感じない真因)。
+  // cache: 'reload' で HTTP キャッシュを bypass し、必ず CDN から最新を取得する。
   event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.addAll(PRECACHE_URLS))
+    caches.open(CACHE).then((cache) =>
+      Promise.all(
+        PRECACHE_URLS.map((url) =>
+          fetch(new Request(url, { cache: 'reload' }))
+            .then((response) => {
+              if (!response || response.status !== 200) {
+                throw new Error(`Failed to fetch ${url}: ${response && response.status}`);
+              }
+              return cache.put(url, response);
+            })
+        )
+      )
+    )
   );
 });
 

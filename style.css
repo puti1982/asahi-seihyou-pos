@@ -840,8 +840,8 @@ body {
   position: absolute;
   top: 6px;
   right: 6px;
-  width: 28px;                               /* v27: 26→28 (僅か拡大) */
-  height: 28px;
+  width: 30px;                               /* v28: 28→30 (味名拡大に合わせて視認性UP) */
+  height: 30px;
   border-radius: 50%;
   background: rgba(255, 252, 245, 0.98);
   border: 1px solid rgba(14, 9, 5, 0.55);
@@ -849,7 +849,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: var(--num);
-  font-size: 14px;                           /* v27: 13→14 */
+  font-size: 16px;                           /* v28: 14→16 */
   color: var(--ink);
   letter-spacing: 0.02em;
   z-index: 3;
@@ -858,18 +858,17 @@ body {
 }
 .flavor-name {
   font-family: var(--serif);
-  /* v27: クライアント要求「文字を大きく」対応。
-     セル高さ 110px のうち味名は約 19% しか使っていなかった (17px×2行=42px)。
-     22px に拡大しても 53px = セル高の 48% で余裕。
-     カード自体・padding・grid 3列レイアウトは厳守、文字サイズのみ拡大。
-     - 下限: 17px (狭い画面でも判読可能)
-     - 上限: 22px (大型タブレットで圧倒的視認性)
-     - 中央値: 1.95vw でセル幅に追従 */
-  font-size: clamp(17px, 1.95vw, 22px);
+  /* v28 (2026-05-17): クライアント実機で v27 の +17% が体感ほぼ無感だった報告。
+     v26 比で +50% 超の大胆な拡大に踏み切る。カード110pxはそのまま、文字のみ拡大。
+     - 下限: 20px (極小縦持ちでも明確視認)
+     - 上限: 28px (横持ちタブレットで圧倒的視認性、v26比 +65%)
+     - 中央: 2.5vw でセル幅に追従
+     セル高さ 110px - padding(18) = 92px。28px×2行 line-height1.2 = 67px → 余裕で収まる */
+  font-size: clamp(20px, 2.5vw, 28px);
   font-weight: 700;
   color: var(--ink);
   letter-spacing: 0;
-  line-height: 1.2;                          /* v27: 1.22→1.2 大きな文字に合わせて圧縮 */
+  line-height: 1.18;                          /* v28: 1.2→1.18 (大文字でwrap時の高さ抑制) */
   margin-top: auto;
   word-break: keep-all;
   overflow-wrap: anywhere;
@@ -879,16 +878,16 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   /* 背景画像の上でも読みやすいよう、薄い影で文字を浮かせる */
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.75);  /* v27: 0.7→0.75 強化 */
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);  /* v28: 0.75→0.8 強化 */
 }
 .flavor-priceTag {
   font-family: var(--num);
-  font-size: 15px;                            /* v27: 13→15 (味名拡大に合わせて) */
-  font-weight: 700;                           /* v27: 600→700 */
+  font-size: 17px;                            /* v28: 15→17 (味名拡大に追随) */
+  font-weight: 700;
   color: var(--ink);
   margin-top: 4px;
 }
-.flavor-priceTag .yen { font-size: 11px; opacity: 0.75; margin-right: 1px; font-weight: 600; }
+.flavor-priceTag .yen { font-size: 12px; opacity: 0.8; margin-right: 1px; font-weight: 600; }
 
 /* P2-24: 空セルに直径2px墨点 */
 .flavor-cell.empty {
