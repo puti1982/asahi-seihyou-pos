@@ -413,18 +413,16 @@ body {
 }
 .checkout-bar .lbl {
   font-family: var(--serif);
-  font-size: 14px;
-  font-weight: 700;                        /* v23: 600→700 */
-  letter-spacing: 0.12em;                  /* v23: 0.18→0.12em で横幅予算 */
+  font-size: 15px;                          /* v26: 14→15 */
+  font-weight: 800;                         /* v26: 700→800 (Heavy) */
+  letter-spacing: 0.10em;
   color: var(--ink);
   flex-shrink: 0;
 }
 .checkout-bar .val {
   font-family: var(--num);
-  /* v25: clamp() 撤去。古い WebView 互換性のため固定 font-size に。
-     金額が長くなる場合は overflow:hidden + ellipsis で省略される。 */
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 30px;                          /* v26: 26→30 (主役の金額を大型化) */
+  font-weight: 800;                         /* v26: 700→800 */
   color: var(--shu-2);
   letter-spacing: 0.02em;
   flex: 1 1 0;
@@ -649,11 +647,11 @@ body {
 .change-row .val .yen { font-size: 12px; opacity: 0.7; margin-right: 2px; font-weight: 600; }
 
 /* 会計確定ボタン: checkout-bar 内インライン配置。
-   v25 (2026-05-17) 「物理的に消えない」防御設計:
-   - !important で display / visibility / opacity を多重ロック
-   - clamp() 撤去、固定 font-size
-   - min-width 明示で flex shrink 攻撃から保護
-   - flex-basis 明示で確実に予約スペース確保 */
+   v26 (2026-05-17) クライアント要求「もっと太字・はっきり」対応:
+   - font-size 16→19px (+19%)、font-weight 700→800 (Heavy)
+   - padding 12/18 → 14/24、min-height 48→56、min-width 110→130
+   - border 1.5px → 2px (枠線も太く)
+   v25 構造防御維持: !important multi-lock、clamp 撤去、min-width 明示 */
 .cta {
   display: inline-flex !important;
   visibility: visible !important;
@@ -665,29 +663,29 @@ body {
   flex-basis: auto;
   background: var(--ink);
   color: var(--bg);
-  border: 1.5px solid var(--ink);
-  padding: 12px 18px;
+  border: 2px solid var(--ink);              /* v26: 1.5→2px */
+  padding: 14px 24px;                         /* v26: 12/18→14/24 */
   font-family: var(--serif);
-  font-size: 16px;                          /* v25: clamp 撤去、固定 16px */
-  font-weight: 700;
+  font-size: 19px;                            /* v26: 16→19 (+19%) */
+  font-weight: 800;                           /* v26: 700→800 (Heavy) */
   letter-spacing: 0.10em;
   text-indent: 0.10em;
   cursor: pointer;
   transition: background 0.2s;
-  min-height: 48px;
-  min-width: 110px;                          /* v25: 確実に視認可能なサイズ確保 */
+  min-height: 56px;                           /* v26: 48→56 */
+  min-width: 130px;                           /* v26: 110→130 (大型化) */
   white-space: nowrap;
 }
 .cta:hover { background: #0E0A06; }
-/* v25 (2026-05-17) disabled も「圧倒的に視認可能」に:
-   - 屋外日差し下でも消えないよう opacity 1 を維持 (!important で他からの上書き禁止)
-   - 背景は ink-3 (濃グレー)、文字は paper (白) → 高 contrast で確実視認
-   - enabled (黒背景) と disabled (グレー背景) の差で押せない状態を伝える */
+/* v26 disabled も同じ太さ・大きさを維持:
+   - font-weight 800 を継承で大太字
+   - 背景は ink-3 (濃グレー)、文字 paper (白) で確実視認
+   - enabled (黒) vs disabled (濃グレー) で押せない状態を視覚的に伝える */
 .cta:disabled {
-  background: var(--ink-3) !important;       /* 濃グレー: 屋外でも見える */
-  color: var(--paper) !important;             /* 白文字: 高contrast */
-  border: 1.5px solid var(--ink) !important;  /* 濃墨枠: 輪郭明確 */
-  opacity: 1 !important;                       /* 透けない */
+  background: var(--ink-3) !important;
+  color: var(--paper) !important;
+  border: 2px solid var(--ink) !important;
+  opacity: 1 !important;
   cursor: not-allowed;
 }
 .cta:disabled:hover { background: var(--ink-3) !important; }
