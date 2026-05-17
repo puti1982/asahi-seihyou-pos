@@ -5,7 +5,9 @@
 // v24 (2026-05-17): disabled CTAの視覚的存在感を確保 (bg-2塗り+1.5px濃枠)、position:sticky撤去
 // v25 (2026-05-17): CTAを物理的に消えない構造に。clamp/flex-wrap撤去、!important多重防御、
 //                    disabledでも濃グレー+白文字+opacity1で屋外日差し下でも確実視認
-const VERSION = 'v20260517154835';
+// v26 (2026-05-17): CTAをさらに太字・大型化 (font 19px/800、border 2px、min 56×130)
+//                    .lbl と .val も太字800化。全機能E2E 30/30 PASS で回帰なし確認
+const VERSION = 'v20260517163128';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [
