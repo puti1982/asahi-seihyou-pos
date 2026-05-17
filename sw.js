@@ -3,7 +3,9 @@
 // v22 (2026-05-13): 文字視認性強化 + 品書きrename後の幽霊復活バグ修正
 // v23 (2026-05-17): 会計確定ボタンの構造的可視保証 + 縦持ち時の長味名 wrap 対応
 // v24 (2026-05-17): disabled CTAの視覚的存在感を確保 (bg-2塗り+1.5px濃枠)、position:sticky撤去
-const VERSION = 'v20260517153732';
+// v25 (2026-05-17): CTAを物理的に消えない構造に。clamp/flex-wrap撤去、!important多重防御、
+//                    disabledでも濃グレー+白文字+opacity1で屋外日差し下でも確実視認
+const VERSION = 'v20260517154835';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [

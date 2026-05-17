@@ -391,22 +391,21 @@ body {
 .delete-btn:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
 /* ========== Checkout (CTA絶対視認 — 合計+CTA最圧縮) ========== */
-/* v23-24 構造的修正:
-   ① flex-wrap: wrap で例外時の自動折り返し (CTA は必ず可視)
-   ② .val は clamp() で狭い時に自動縮小し横幅予算を確保
-   ③ .lbl の letter-spacing を 0.18→0.12em に詰めて幅予算
-   ④ padding-bottom に safe-area-inset を加算 (PWA standalone 時の home indicator 対応)
-   v24: position:sticky は PWA standalone での副作用懸念から撤去。
-        flex-shrink:0 + parent overflow:hidden で十分に確保される。 */
+/* v25 (2026-05-17) 全面構造修正:
+   クライアント実機で「更新適用後に CTA が消える」が 3 回連続発生。
+   原因候補: flex-wrap / clamp() / env() の古い WebView 互換性、
+            PWA standalone モードでの safe-area-inset の異常値。
+   → これら全てを撤去し、最も保守的な「絶対に消えない」実装にする。 */
 .checkout-bar {
   display: flex;
-  flex-wrap: wrap;                         /* 横が足りなければ折り返し (CTAは必ず可視) */
+  /* v25: flex-wrap 撤去 (古い WebView で wrap 時の挙動が不定だった可能性) */
   align-items: center;
   justify-content: space-between;
-  row-gap: 4px;
-  column-gap: 10px;
+  gap: 8px;
   padding: 10px 12px;
-  padding-bottom: max(10px, calc(10px + env(safe-area-inset-bottom, 0px))); /* PWA bottom safe-area */
+  /* v25: env(safe-area-inset-bottom) に min() で 34px 上限を設定。
+     PWA standalone で異常に大きな値を返す端末への防御。 */
+  padding-bottom: min(34px, max(10px, calc(10px + env(safe-area-inset-bottom, 0px))));
   border-top: 1.5px solid var(--ink);
   background: var(--paper);
   flex-shrink: 0;
@@ -422,16 +421,15 @@ body {
 }
 .checkout-bar .val {
   font-family: var(--num);
-  /* v23: 横幅予算が無い時 24px まで自動縮小、十分にあれば 32px。
-     カート幅 340-420px、CTA ~140px、ラベル ~70px、gap 20px → 残 110-190px。
-     ¥10,000円(7字 × ~16px = 112px) も 24-26px で収まる。 */
-  font-size: clamp(24px, 5.5vw, 32px);
+  /* v25: clamp() 撤去。古い WebView 互換性のため固定 font-size に。
+     金額が長くなる場合は overflow:hidden + ellipsis で省略される。 */
+  font-size: 26px;
   font-weight: 700;
   color: var(--shu-2);
   letter-spacing: 0.02em;
-  flex: 1 1 0;                             /* v23: 1 1 auto → 1 1 0 で確実に縮む */
+  flex: 1 1 0;
   text-align: center;
-  min-width: 60px;                         /* 最小幅確保 */
+  min-width: 50px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -650,41 +648,49 @@ body {
 }
 .change-row .val .yen { font-size: 12px; opacity: 0.7; margin-right: 2px; font-weight: 600; }
 
-/* 会計確定ボタン: checkout-bar 内インライン配置。Apple HIG 48pt 親指タップ最適化
-   v23: padding を 12 18 → 12 16 に微縮小して横幅予算を稼ぐ。letter-spacing も 0.14→0.10em。 */
+/* 会計確定ボタン: checkout-bar 内インライン配置。
+   v25 (2026-05-17) 「物理的に消えない」防御設計:
+   - !important で display / visibility / opacity を多重ロック
+   - clamp() 撤去、固定 font-size
+   - min-width 明示で flex shrink 攻撃から保護
+   - flex-basis 明示で確実に予約スペース確保 */
 .cta {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
   background: var(--ink);
   color: var(--bg);
-  border: 1px solid var(--ink);
-  padding: 12px 16px;
+  border: 1.5px solid var(--ink);
+  padding: 12px 18px;
   font-family: var(--serif);
-  font-size: clamp(15px, 1.9vw, 17px);     /* v23: clamp で狭い時に縮む */
+  font-size: 16px;                          /* v25: clamp 撤去、固定 16px */
   font-weight: 700;
-  letter-spacing: 0.10em;                   /* v23: 0.14→0.10em */
+  letter-spacing: 0.10em;
   text-indent: 0.10em;
   cursor: pointer;
   transition: background 0.2s;
   min-height: 48px;
+  min-width: 110px;                          /* v25: 確実に視認可能なサイズ確保 */
   white-space: nowrap;
 }
 .cta:hover { background: #0E0A06; }
-/* v24 (2026-05-17) 重要修正:
-   旧 disabled スタイルは「背景透明 + 薄グレー枠 + ink-2文字」で、
-   一見「ボタンが存在しない」と誤認されるクライアント報告。
-   - 背景を bg-2 (薄ベージュ) に変更 → カートパネル背景と区別され「ボタン」と認識可能
-   - 枠を 1.5px ink (濃墨) に変更 → 輪郭をはっきり描画
-   - 文字を ink (濃墨) に変更 → 確実に読める
-   - opacity 0.65 で「無効状態」感は保つ
-   この組合せで「ボタンの存在は明確、ただし押せない状態」が一目で分かる。 */
+/* v25 (2026-05-17) disabled も「圧倒的に視認可能」に:
+   - 屋外日差し下でも消えないよう opacity 1 を維持 (!important で他からの上書き禁止)
+   - 背景は ink-3 (濃グレー)、文字は paper (白) → 高 contrast で確実視認
+   - enabled (黒背景) と disabled (グレー背景) の差で押せない状態を伝える */
 .cta:disabled {
-  background: var(--bg-2);
-  color: var(--ink);
-  border: 1.5px solid var(--ink);
-  opacity: 0.65;
+  background: var(--ink-3) !important;       /* 濃グレー: 屋外でも見える */
+  color: var(--paper) !important;             /* 白文字: 高contrast */
+  border: 1.5px solid var(--ink) !important;  /* 濃墨枠: 輪郭明確 */
+  opacity: 1 !important;                       /* 透けない */
   cursor: not-allowed;
 }
-.cta:disabled:hover { background: var(--bg-2); }
+.cta:disabled:hover { background: var(--ink-3) !important; }
 
 /* ========== Flavor Grid ========== */
 .flavor-panel {
