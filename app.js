@@ -1428,9 +1428,14 @@ function registerServiceWorker() {
       }
     }).catch(() => { /* 登録失敗してもアプリは動作 */ });
 
-    // ユーザーが「適用」を押した場合のみ reload
+    /* v29: 新SWが制御を引き継いだら最新を反映するため自動reload。
+       - ユーザーが「適用」を押した場合 (userInitiatedReload)
+       - もしくは既存SWからの更新 (hadControllerAtLoad) → バナー押し損ねでも自動反映
+       初回インストール時(以前コントローラ無し)はreloadしない。多重防止に swReloadDone。 */
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!userInitiatedReload) return;
+      if (swReloadDone) return;
+      if (!userInitiatedReload && !hadControllerAtLoad) return;
+      swReloadDone = true;
       window.location.reload();
     });
   });
