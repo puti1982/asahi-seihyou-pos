@@ -345,20 +345,24 @@ body {
   min-height: 36px;
   font-family: var(--sans);
 }
-.topping-chip:hover { border-color: var(--ink-3); }
-/* P1-14: active 状態を朱の極細罫線 + ◇印に変更 */
+.topping-chip:hover { border-color: var(--chip-color, var(--ink-3)); }
+/* ★v29: active 状態を「項目固有色のベタ塗り＋白文字」に変更。
+   --chip-color は app.js が各チップへ inline で注入（トッピングごとに別色）。
+   遠目でも「どれを選んだか」が一目で判別できるよう、薄枠+◇から塗りつぶしへ。 */
 .topping-chip.active {
-  background: var(--paper);
-  border-color: var(--shu);
-  color: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--shu);
+  background: var(--chip-color, var(--shu));
+  border-color: var(--chip-color, var(--shu));
+  color: #fff;
+  box-shadow: inset 0 0 0 1px var(--chip-color, var(--shu)),
+              0 1px 3px rgba(14, 9, 5, 0.20);
+  font-weight: 700;
 }
 .topping-chip.active::after {
   content: '';
   position: absolute;
   top: 4px; right: 4px;
   width: 5px; height: 5px;
-  background: var(--shu);
+  background: #fff;                         /* v29: 塗りつぶし上の選択印は白◇ */
   transform: rotate(45deg);
 }
 .topping-chip .topping-add {
@@ -371,7 +375,7 @@ body {
   font-feature-settings: "tnum" 1, "lnum" 1;
   letter-spacing: 0.01em;
 }
-.topping-chip.active .topping-add { opacity: 1; }
+.topping-chip.active .topping-add { opacity: 1; color: #fff; }
 
 .item-foot { display: flex; justify-content: flex-end; margin-top: 4px; }
 .delete-btn {
