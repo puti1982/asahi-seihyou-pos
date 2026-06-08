@@ -72,8 +72,10 @@ const PRECACHE_URLS = [
 ];
 
 self.addEventListener('install', (event) => {
-  // auto-skipWaiting 削除: ユーザーが「適用」タップするまでwaiting状態を維持
-  // (これがないと新SWが即座にactive化し、postMessage('SKIP_WAITING')が no-op になる)
+  // v29: 新SWを待機状態で止めず即座に有効化。これにより「更新があります」バナーを
+  // 押し損ねても、アプリを開き直すだけで最新が配信される。reloadの是非(取引中事故防止)は
+  // app.js 側の controllerchange ハンドラがカート復元前提で安全に判断する。
+  self.skipWaiting();
 
   // v28 重要修正: cache.addAll() は内部で fetch() を呼ぶが、デフォルトでは
   // ブラウザの HTTP キャッシュを経由する。古い CSS/JS が HTTP キャッシュに
