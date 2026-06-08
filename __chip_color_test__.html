@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<style>
+  body{padding:24px;background:var(--bg);overflow:auto;position:static;height:auto;}
+  .cart-list{max-width:380px;}
+  h2{font-family:var(--serif);margin:18px 0 8px;font-size:15px;}
+</style>
+</head>
+<body>
+<div class="cart-list" id="out"></div>
+<script>
+/* 本番 app.js と同一の色割り当てロジック（faithful copy for visual test） */
+const TOPPING_FIXED_COLORS={milk:'#245C8C',spoon:'#5F7142',george:'#B43A2A',tomjerry:'#9A6A1E'};
+const TOPPING_PALETTE=['#245C8C','#5F7142','#B43A2A','#9A6A1E','#6B4A8A','#2C7A6B','#7A4A2A','#9C3A6A'];
+function toppingColor(tid,index){return TOPPING_FIXED_COLORS[tid]||TOPPING_PALETTE[index%TOPPING_PALETTE.length];}
+const fmtNum=n=>String(n);
+function chip(tid,name,price,active){
+  return `<button class="topping-chip ${active?'active':''}" style="--chip-color:${toppingColor(tid,0)===toppingColor(tid,0)?toppingColor(tid,0):''}" data-topping="${tid}">${name}<span class="topping-add">+¥${fmtNum(price)}</span></button>`;
+}
+// 実 index 順を再現するため idx 付きで生成
+function item(flavor,color,tops){
+  const chips=tops.map((t,idx)=>`<button class="topping-chip ${t.active?'active':''}" style="--chip-color:${toppingColor(t.id,idx)}" data-topping="${t.id}">${t.name}<span class="topping-add">+¥${t.price}</span></button>`).join('');
+  return `<div class="cart-item" style="--flavor-color:${color}">
+    <div class="item-row"><div class="item-name">${flavor}</div><div class="item-price"><span class="yen">¥</span>700</div></div>
+    <div class="toppings">${chips}</div>
+    <div class="item-foot"><button class="delete-btn">削 除</button></div>
+  </div>`;
+}
+const TOPS=[{id:'milk',name:'ミルク',price:50},{id:'spoon',name:'スプーン',price:10},{id:'george',name:'ジョージ',price:200},{id:'tomjerry',name:'トムジェリ',price:200}];
+function withActive(activeIds){return TOPS.map(t=>({...t,active:activeIds.includes(t.id)}));}
+document.getElementById('out').innerHTML =
+  '<h2>全選択（4色が別々に出るか）</h2>'+item('いちごみるく','#D94C6A',withActive(['milk','spoon','george','tomjerry']))+
+  '<h2>一部選択（ミルク=藍 / ジョージ=朱 のみ点灯）</h2>'+item('抹茶','#5F7142',withActive(['milk','george']))+
+  '<h2>未選択（全部 生成り）</h2>'+item('レモン','#E8C84B',withActive([]));
+</script>
+</body></html>
