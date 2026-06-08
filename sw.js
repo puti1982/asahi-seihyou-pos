@@ -12,6 +12,12 @@
 // v28 (2026-05-17): 味名を 20-28px に大胆拡大 (v26比+65%)、実機タブレットで確実体感。
 //                    SW install を cache:'reload' に変更し、HTTPキャッシュをbypass。
 //                    PWAキャッシュ残存問題を構造的に解消し「更新を押しても変わらない」を防止。
+// v29 (2026-06-09): トッピング選択を項目別の和色ベタ塗りで識別化。
+//                    ★更新配信の構造改善: install で self.skipWaiting() を呼び、新SWを
+//                    即座に有効化(待機状態で止まらない)。activate の clients.claim() と
+//                    app.js の controllerchange 自動reloadにより、「適用」タップ無しでも
+//                    開き直すだけで最新が反映される(カート下書きはrestoreで保全=取引中も安全)。
+//                    旧来「バナーを押さないと変わらない」問題を構造的に解消。
 const VERSION = 'v20260609001745';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
