@@ -18,7 +18,7 @@
 //                    app.js の controllerchange 自動reloadにより、「適用」タップ無しでも
 //                    開き直すだけで最新が反映される(カート下書きはrestoreで保全=取引中も安全)。
 //                    旧来「バナーを押さないと変わらない」問題を構造的に解消。
-const VERSION = 'v20260609001745';
+const VERSION = 'v20260609005143';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [
