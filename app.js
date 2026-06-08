@@ -55,6 +55,25 @@ const LEGACY_TOPPING_NAMES = {
   cup: { name: '特製カップ', price: 200 },
 };
 
+/* ★v29: トッピング選択色 — 「選んだ項目が遠目でも一目で分かる」ため
+   各トッピングに固有の和色を割り当て、選択時にチップを塗りつぶす。
+   既定4品は固定色（藍/苔/朱/琥珀＝色相が大きく離れ識別容易）。
+   ユーザーが追加したカスタムトッピングは拡張パレットを index で循環適用。
+   全色とも白文字で 4.3:1 以上のコントラストを確保（屋外/年配スタッフ運用想定）。 */
+const TOPPING_FIXED_COLORS = {
+  milk:     '#245C8C',   /* 藍   (indigo) */
+  spoon:    '#5F7142',   /* 苔   (moss green) */
+  george:   '#B43A2A',   /* 朱   (vermilion) */
+  tomjerry: '#9A6A1E',   /* 琥珀 (amber) */
+};
+const TOPPING_PALETTE = [
+  '#245C8C', '#5F7142', '#B43A2A', '#9A6A1E',
+  '#6B4A8A', '#2C7A6B', '#7A4A2A', '#9C3A6A',
+];
+function toppingColor(tid, index) {
+  return TOPPING_FIXED_COLORS[tid] || TOPPING_PALETTE[index % TOPPING_PALETTE.length];
+}
+
 /* ===== Persistence keys ===== */
 const SALES_KEY              = 'asahi_seihyou_sales_v1';
 const FLAVORS_KEY            = 'asahi_seihyou_flavors_v1';
