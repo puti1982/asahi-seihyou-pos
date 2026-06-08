@@ -564,8 +564,9 @@ function renderCart() {
           <div class="item-price"><span class="yen">¥</span>${fmtNum(calcItem(it))}</div>
         </div>
         <div class="toppings">
-          ${Object.entries(it.toppings).map(([tid, t]) => `
+          ${Object.entries(it.toppings).map(([tid, t], idx) => `
             <button class="topping-chip ${t.active ? 'active' : ''}"
+                    style="--chip-color:${toppingColor(tid, idx)}"
                     data-action="toggle-topping" data-item="${it.id}" data-topping="${escapeAttr(tid)}">
               ${escapeHtml(t.name)}
               <span class="topping-add">+¥${fmtNum(t.price)}</span>
