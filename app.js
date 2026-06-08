@@ -1395,9 +1395,14 @@ function showUpdateBanner(onAccept) {
   }, { once: true });
 }
 
+let swReloadDone = false;
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
   window.addEventListener('load', () => {
+    /* v29: ページ読込時点で既存SWが居たか記録。居た(=更新)なら新SWへ自動切替時に
+       reloadして最新を反映。初回インストール(以前コントローラ無し)は不要reloadを回避。
+       カート下書きは init() の restoreCartDraft() で復元されるため取引中でも安全。 */
+    const hadControllerAtLoad = !!navigator.serviceWorker.controller;
     /* updateViaCache:'none' → ブラウザのHTTPキャッシュをバイパスして毎回sw.jsを fetch。
      * これがないと max-age に従い 24h 古いSWが残り続ける。 */
     navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then((reg) => {
