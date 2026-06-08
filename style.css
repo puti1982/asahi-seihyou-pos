@@ -357,14 +357,8 @@ body {
               0 1px 3px rgba(14, 9, 5, 0.20);
   font-weight: 700;
 }
-.topping-chip.active::after {
-  content: '';
-  position: absolute;
-  top: 4px; right: 4px;
-  width: 5px; height: 5px;
-  background: #fff;                         /* v29: 塗りつぶし上の選択印は白◇ */
-  transform: rotate(45deg);
-}
+/* v29: 選択印の◇は廃止。ベタ塗り(選択)/白地(未選択)の塗り分け自体が
+   色覚に依存しない選択シグナルになり、かつ長いラベルへの被りも解消する。 */
 .topping-chip .topping-add {
   display: block;
   font-family: var(--num);
