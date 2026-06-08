@@ -12,7 +12,7 @@
 // v28 (2026-05-17): 味名を 20-28px に大胆拡大 (v26比+65%)、実機タブレットで確実体感。
 //                    SW install を cache:'reload' に変更し、HTTPキャッシュをbypass。
 //                    PWAキャッシュ残存問題を構造的に解消し「更新を押しても変わらない」を防止。
-const VERSION = 'v20260517173200';
+const VERSION = 'v20260609001745';
 const CACHE = `asahi-seihyou-${VERSION}`;
 
 const PRECACHE_URLS = [
